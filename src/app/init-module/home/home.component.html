@@ -1,0 +1,128 @@
+<div>
+  <div class="text-center">
+    <p class="fs-1">Triggers generator</p>
+  </div>
+  <div
+    class="my-5 mx-auto d-flex align-items-center justify-content-center"
+    style="width: 50vw"
+  >
+    <div style="position: relative">
+      <div
+        (click)="goto(1)"
+        role="button"
+        class="rounded-circle d-flex align-items-center justify-content-center fs-5 pb-1"
+        [ngStyle]="getStepsCss(1)"
+        style="position: relative"
+      >
+        1
+      </div>
+      <div style="position: absolute; bottom: -30px; left: -100%; width: 200px">
+        Source database
+      </div>
+    </div>
+    <div
+      class="rounded-pill flex-grow-1 mx-2"
+      style="height: 10px; background-color: #e7eeec"
+    ></div>
+    <div style="position: relative">
+      <div
+        (click)="goto(2)"
+        role="button"
+        class="rounded-circle d-flex align-items-center justify-content-center fs-5 pb-1"
+        [ngStyle]="getStepsCss(2)"
+        style="position: relative"
+      >
+        2
+      </div>
+      <div style="position: absolute; bottom: -30px; left: -90%; width: 200px">
+        Target database
+      </div>
+    </div>
+    <div
+      class="rounded-pill flex-grow-1 mx-2"
+      style="height: 10px; background-color: #e7eeec"
+    ></div>
+    <div style="position: relative">
+      <div
+        (click)="goto(3)"
+        role="button"
+        class="rounded-circle d-flex align-items-center justify-content-center fs-5 pb-1"
+        [ngStyle]="getStepsCss(3)"
+        style="position: relative"
+      >
+        3
+      </div>
+      <div style="position: absolute; bottom: -30px; left: -130%; width: 200px">
+        Configuration tables
+      </div>
+    </div>
+    <div
+      class="rounded-pill flex-grow-1 mx-2"
+      style="height: 10px; background-color: #e7eeec"
+    ></div>
+    <div style="position: relative">
+      <div
+        (click)="goto(4)"
+        role="button"
+        class="rounded-circle d-flex align-items-center justify-content-center fs-5 pb-1"
+        [ngStyle]="getStepsCss(4)"
+        style="position: relative"
+      >
+        4
+      </div>
+      <div style="position: absolute; bottom: -30px; left: -40%; width: 200px">
+        Initial state
+      </div>
+    </div>
+    <div
+      class="rounded-pill flex-grow-1 mx-2"
+      style="height: 10px; background-color: #e7eeec"
+    ></div>
+    <div style="position: relative">
+      <div
+        (click)="goto(5)"
+        role="button"
+        class="rounded-circle d-flex align-items-center justify-content-center fs-5 pb-1"
+        [ngStyle]="getStepsCss(5)"
+        style="position: relative"
+      >
+        5
+      </div>
+      <div style="position: absolute; bottom: -30px; left: -60%; width: 200px">
+        Audit scripts
+      </div>
+    </div>
+  </div>
+
+  <app-connect
+    *ngIf="currentStep == 1"
+    [con_step]="1"
+    [current_configuration]="this.current_configuration"
+    (step)="step($event)"
+  ></app-connect>
+  <app-connect
+    *ngIf="currentStep == 2"
+    [con_step]="2"
+    [current_configuration]="this.current_configuration"
+    (step_back)="step_back($event)"
+    (step)="step($event)"
+  ></app-connect>
+  <app-tables
+    *ngIf="currentStep == 3"
+    (step)="step($event)"
+    (step_back)="step_back($event)"
+    [current_configuration]="this.current_configuration"
+  ></app-tables>
+  <app-head
+    *ngIf="currentStep == 4"
+    (step)="step($event)"
+    (step_back)="step_back($event)"
+    [current_configuration]="this.current_configuration"
+  ></app-head>
+  <app-scripts
+    *ngIf="currentStep == 5"
+    (step_back)="step_back($event)"
+    (save)="save($event)"
+    [current_configuration]="this.current_configuration"
+  ></app-scripts>
+</div>

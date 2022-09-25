@@ -1,0 +1,149 @@
+<div class="w-50 mx-auto mt-5">
+  <div style="height: 310px">
+    <div class="btn-group w-100" role="group">
+      <button
+        (click)="generateScripts()"
+        [disabled]="generating || this.current_configuration.scripts.generated"
+        type="button"
+        class="btn btn-primary me-3 w-25"
+      >
+        <div class="d-flex align-items-center justify-content-center">
+          <strong>Generate scripts</strong>
+          <div
+            *ngIf="generating"
+            class="spinner-border ms-auto"
+            style="width: 25px; height: 25px"
+            role="status"
+            aria-hidden="true"
+          ></div>
+        </div>
+      </button>
+      <button
+        (click)="runScripts()"
+        [disabled]="
+          !this.current_configuration.scripts.generated ||
+          running ||
+          this.current_configuration.scripts.executed
+        "
+        type="button"
+        class="btn btn-success me-3 w-25"
+      >
+        <div class="d-flex align-items-center justify-content-center">
+          <strong>Run scripts</strong>
+          <div
+            *ngIf="running"
+            class="spinner-border ms-auto"
+            style="width: 25px; height: 25px"
+            role="status"
+            aria-hidden="true"
+          ></div>
+        </div>
+      </button>
+      <button
+        (click)="downloadScripts()"
+        [disabled]="
+          !this.current_configuration.scripts.generated ||
+          downloading ||
+          this.current_configuration.scripts.downloaded
+        "
+        type="button"
+        class="btn btn-info w-25"
+      >
+        <div class="d-flex align-items-center justify-content-center">
+          <strong>Download scripts</strong>
+          <div
+            *ngIf="downloading"
+            class="spinner-border ms-auto"
+            style="width: 25px; height: 25px"
+            role="status"
+            aria-hidden="true"
+          ></div>
+        </div>
+      </button>
+    </div>
+    <div class="mt-5">
+      <div
+        *ngFor="let message of messages"
+        class="alert alert-{{ message.type }} alert-dismissible fade show"
+        role="alert"
+      >
+        <strong>{{ message.title }}</strong> {{ message.message }}
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="alert"
+          aria-label="Close"
+        ></button>
+      </div>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-between mt-4">
+    <button (click)="step_back()" class="btn btn-secondary" type="button">
+      Back
+    </button>
+    <div>
+      <!-- Button trigger modal -->
+      <button
+        [disabled]="saved"
+        type="button"
+        class="btn btn-success"
+        data-bs-toggle="modal"
+        data-bs-target="#save"
+      >
+        Save configuration
+      </button>
+      <a href="/" class="ms-2 btn btn-outline-success" type="button">Finish</a>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="save"
+  tabindex="-1"
+  aria-labelledby="saveLabl"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="saveLabl">New configuration</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="input-group mb-1">
+          <span class="input-group-text">name : </span>
+          <input
+            [(ngModel)]="this.current_configuration.name"
+            type="text"
+            class="form-control"
+          />
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-{{ saved ? '' : 'outline-' }}secondary"
+          data-bs-dismiss="modal"
+        >
+          Close
+        </button>
+        <button
+          [disabled]="!this.current_configuration.name || saved"
+          (click)="saveConfig()"
+          type="button"
+          class="btn btn-primary"
+        >
+          Save changes
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

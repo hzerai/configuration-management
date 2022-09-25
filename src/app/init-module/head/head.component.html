@@ -1,0 +1,69 @@
+<div class="w-50 mx-auto mt-5 overflow-hidden">
+  <div style="height: 310px">
+    <div class="btn-group w-100" role="group">
+      <button
+        (click)="generateInitialState()"
+        [disabled]="generating || current_configuration.initial_state.generated"
+        type="button"
+        class="btn btn-primary me-3 w-25"
+      >
+        <div class="d-flex align-items-center justify-content-center">
+          <strong>Generate initial state</strong>
+          <div
+            *ngIf="generating"
+            class="spinner-border ms-auto"
+            style="width: 25px; height: 25px"
+            role="status"
+            aria-hidden="true"
+          ></div>
+        </div>
+      </button>
+      <button
+        (click)="download()"
+        [disabled]="
+          !current_configuration.initial_state.generated &&
+          current_configuration.initial_state.downloaded
+        "
+        type="button"
+        class="btn btn-{{
+          current_configuration.initial_state.generated
+            ? 'info'
+            : 'outline-info'
+        }} me-3 w-25"
+      >
+        <div class="d-flex align-items-center justify-content-center">
+          <strong>Download initial state</strong>
+        </div>
+      </button>
+    </div>
+    <div class="mt-5">
+      <div
+        *ngIf="current_configuration.initial_state.generated"
+        class="alert alert-success alert-dismissible fade show"
+        role="alert"
+      >
+        <strong>Initial state generated successfully!</strong> you can now
+        download the json file.
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="alert"
+          aria-label="Close"
+        ></button>
+      </div>
+    </div>
+  </div>
+  <div class="d-grid gap-2 d-md-flex justify-content-between mt-4">
+    <button (click)="step_back()" class="btn btn-secondary" type="button">
+      Back
+    </button>
+    <button
+      [disabled]="false"
+      (click)="step()"
+      class="btn btn-primary"
+      type="button"
+    >
+      Next
+    </button>
+  </div>
+</div>
