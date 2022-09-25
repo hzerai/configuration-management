@@ -1,5 +1,5 @@
 <div class="text-center">
-  <p class="fs-1">Compare configurations</p>
+  <p class="fs-4">Current configuration : <b>{{ current_configuration.name }}</b></p>
 </div>
 <div
   class="my-5 mx-auto d-flex align-items-center justify-content-center"
@@ -75,3 +75,5 @@
     </div>
   </div>
 </div>
+
+<app-delta [current_configuration]="current_configuration" *ngIf="currentStep == 1"></app-delta>

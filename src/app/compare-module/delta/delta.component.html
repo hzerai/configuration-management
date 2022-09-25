@@ -1,0 +1,80 @@
+<div *ngIf="!delta.changes" class="w-75 mx-auto">
+  <section id="search_input">
+    <div id="inputs">
+      <div class="input-group">
+        <span class="input-group-text w-25">Start & end date</span>
+        <input
+          [(ngModel)]="this.delta.start_date"
+          type="datetime-local"
+          class="form-control"
+        />
+        <input
+          [(ngModel)]="this.delta.end_date"
+          type="datetime-local"
+          class="form-control"
+        />
+      </div>
+
+      <div class="input-group mb-1">
+        <span class="input-group-text w-25">Issues list</span>
+        <input
+          [(ngModel)]="this.delta.issues"
+          placeholder="example : ISSUE-1001, ISSUE-1002, ISSUE-1003... (this should be a multiselect, get issues from db)"
+          type="text"
+          class="form-control"
+        />
+      </div>
+      <div class="input-group mb-1">
+        <span class="input-group-text w-25">Tables list</span>
+        <input
+          [(ngModel)]="this.delta.tables"
+          placeholder="example : ent_screen, ing_mapping... (this should be a multiselect, get tables from config)"
+          type="text"
+          class="form-control"
+        />
+      </div>
+      <div class="input-group mb-1">
+        <span class="input-group-text w-25">configurator</span>
+        <input
+          [(ngModel)]="this.delta.user"
+          placeholder="username of the configurator"
+          type="text"
+          class="form-control"
+        />
+      </div>
+    </div>
+    <div id="buttons" class="w-50 ms-auto mt-2">
+      <div class="btn-group w-100" role="group">
+        <button
+          (click)="uploadExistentDelta()"
+          type="button"
+          class="btn btn-outline-dark me-3 w-25"
+        >
+          <div class="d-flex align-items-center justify-content-center">
+            Upload existent Delta
+          </div>
+        </button>
+        <button
+          [disabled]="generatingDelta || generatedDelta"
+          (click)="generateDelta()"
+          type="button"
+          class="btn btn-primary me-3 w-25"
+        >
+          <div class="d-flex align-items-center justify-content-center">
+            <strong>Generate Delta</strong>
+            <div
+              *ngIf="generatingDelta"
+              class="spinner-border ms-auto"
+              style="width: 25px; height: 25px"
+              role="status"
+              aria-hidden="true"
+            ></div>
+          </div>
+        </button>
+      </div>
+    </div>
+  </section>
+</div>
+<div *ngIf="delta.changes" class="mx-auto">
+  <app-delta-view [current_configuration]="current_configuration" [delta]="delta"></app-delta-view>
+</div>

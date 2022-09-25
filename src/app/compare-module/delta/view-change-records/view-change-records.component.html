@@ -1,0 +1,81 @@
+<div>
+  <table class="table mb-0">
+    <thead>
+      <tr style="font-size: 12px">
+        <th style="width: 10px" scope="col">#</th>
+        <th scope="col">Operation</th>
+        <th scope="col">Identifier</th>
+        <th scope="col">Date</th>
+        <th scope="col">User</th>
+        <th scope="col">Modules</th>
+        <th scope="col">Issues</th>
+      </tr>
+    </thead>
+    <tbody *ngFor="let record of records">
+      <tr
+        style="font-size: 12px"
+        class="table-{{
+          record.operation === 'INSERT'
+            ? 'success'
+            : record.operation === 'UPDATE'
+            ? 'warning'
+            : 'danger'
+        }}"
+      >
+        <td scope="row" style="width: 10px">
+          <div id="expand-no-expand">
+            <div
+              *ngIf="record.expanded"
+              (click)="record.expanded = !record.expanded"
+              role="button"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="12"
+                height="12"
+                fill="currentColor"
+                class="bi bi-chevron-down"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"
+                />
+              </svg>
+            </div>
+            <div
+              *ngIf="!record.expanded"
+              (click)="record.expanded = !record.expanded"
+              role="button"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="12"
+                height="12"
+                fill="currentColor"
+                class="bi bi-chevron-right"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"
+                />
+              </svg>
+            </div>
+          </div>
+        </td>
+        <td>{{ record.operation }}</td>
+        <td>{{ record.identifier }}</td>
+        <td>{{ record.date | date: "short" }}</td>
+        <td>{{ record.user }}</td>
+        <td>{{ record.modules }}</td>
+        <td>{{ record.issues }}</td>
+      </tr>
+      <tr *ngIf="record.expanded">
+        <td colspan="7">
+          <app-view-record-state [record]="record"></app-view-record-state>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

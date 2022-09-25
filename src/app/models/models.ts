@@ -6,6 +6,7 @@ export class Configuration {
   scripts: Script;
   initial_state: InitialState;
   created_at: Date;
+  deltas: Delta[];
 }
 
 export class Connection {
@@ -28,6 +29,16 @@ export class Script {
   generated: boolean;
   executed: boolean;
   downloaded: boolean;
+}
+
+export class Delta {
+  start_date: Date;
+  end_date: Date;
+  issues: string;
+  modules: string;
+  user: string;
+  tables: string;
+  changes: Table[];
 }
 
 export class Table {

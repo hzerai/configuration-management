@@ -25,6 +25,9 @@ export class HomeComponent implements OnInit {
         const toEdit = db.find((c) => c.name == edit);
         if (toEdit) {
           this.current_configuration = toEdit;
+          this.current_configuration.scripts.generated = false;
+          this.current_configuration.scripts.executed = false;
+          this.current_configuration.scripts.downloaded = false;
         }
       }
     }
@@ -61,6 +64,7 @@ export class HomeComponent implements OnInit {
           downloaded: null,
         },
         created_at: null,
+        deltas: [],
       };
     }
   }

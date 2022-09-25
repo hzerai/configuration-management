@@ -1,0 +1,10 @@
+<div class="bg-dark rounded p-3" *ngIf="record.expanded">
+  <div *ngIf="record.operation !== 'DELETE'">
+    <pre [innerHTML]="record.state | printjson: [true, 3]"></pre>
+  </div>
+
+  <p class="text-light" *ngIf="record.operation === 'DELETE'">
+    The record was deleted. Compare with the initial state to retrieve it's old
+    state.
+  </p>
+</div>

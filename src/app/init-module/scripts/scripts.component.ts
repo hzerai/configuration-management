@@ -1,3 +1,4 @@
+import { formatDate } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Configuration } from 'src/app/models/models';
 
@@ -49,6 +50,12 @@ export class ScriptsComponent implements OnInit {
 
   downloadScripts() {
     this.downloading = true;
+    var a = document.createElement('a');
+    const blob = new Blob(['mock scripts'], { type: 'sql' });
+    a.href = URL.createObjectURL(blob);
+    a.download = this.current_configuration.name + '-triggers' + '.sql';
+    a.click();
+
     setTimeout(() => {
       this.downloading = false;
       this.current_configuration.scripts.downloaded = true;
@@ -60,7 +67,7 @@ export class ScriptsComponent implements OnInit {
           : 'You can now execute the execute the scripts manually or by clicking the Run script button',
       };
       this.messages.unshift(msg);
-    }, 5000);
+    }, 1000);
   }
 
   @Output('step_back')

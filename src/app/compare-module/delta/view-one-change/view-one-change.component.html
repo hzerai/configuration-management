@@ -1,0 +1,66 @@
+<div class="">
+  <section
+    id="table-header"
+    class="d-flex align-items-center border rounded-top bg-light ps-2 py-1"
+  >
+    <div id="expand-no-expand">
+      <div *ngIf="expanded" (click)="expanded = !expanded" role="button">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          fill="currentColor"
+          class="bi bi-chevron-down"
+          viewBox="0 0 16 16"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"
+          />
+        </svg>
+      </div>
+      <div *ngIf="!expanded" (click)="expanded = !expanded" role="button">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          fill="currentColor"
+          class="bi bi-chevron-right"
+          viewBox="0 0 16 16"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"
+          />
+        </svg>
+      </div>
+    </div>
+    <div
+      id="changes-summary-logo"
+      class="d-flex align-items-center ms-1"
+      [title]="changes_summary"
+    >
+      <div class="me-1">
+        <small
+          ><b>{{ this.total_changes }}</b></small
+        >
+      </div>
+      <div
+        *ngFor="let st of changes_style"
+        style="width: 13px; height: 13px"
+        class="border mt-1"
+        [ngStyle]="{ 'background-color': st.style }"
+      ></div>
+    </div>
+    <div id="table-name" class="ms-2 font-monospace">
+      {{ table.table_name }}
+    </div>
+  </section>
+  <section
+    class="border border-top-0 rounded-bottom"
+    *ngIf="expanded"
+    id="table-body"
+  >
+  <app-view-change-records [records]="table.records"></app-view-change-records>
+  </section>
+</div>
