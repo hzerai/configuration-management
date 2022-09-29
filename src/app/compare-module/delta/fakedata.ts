@@ -81,4 +81,4 @@ const table3: Table = {
   records: [record33,record33,record33,record33],
 };
 
-export const fake_tables_changes = [table1, table2, table3];
+export const fake_tables_changes = [JSON.parse(JSON.stringify(table1)), JSON.parse(JSON.stringify(table2)), JSON.parse(JSON.stringify(table3))];

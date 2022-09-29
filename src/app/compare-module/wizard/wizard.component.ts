@@ -8,7 +8,7 @@ import { Configuration } from 'src/app/models/models';
   styleUrls: ['./wizard.component.css'],
 })
 export class WizardComponent implements OnInit {
-  currentStep: number = 1;
+  currentStep: number = 3;
   current_configuration: Configuration;
   constructor(private activatedRouter: ActivatedRoute) {}
 
@@ -55,5 +55,7 @@ export class WizardComponent implements OnInit {
     this.currentStep--;
   }
 
-  goto(step) {}
+  goto(step) {
+    this.currentStep = step;
+  }
 }

@@ -1,0 +1,20 @@
+<div class=" w-25 mx-auto" *ngFor="let diff of diffs">
+  <p class="fs-3">{{ diff.entity_name }}</p>
+
+  <table class="table table-striped">
+    <tr class="fs-4">
+      <th>Old</th>
+      <th>New</th>
+    </tr>
+    <tr
+      *ngFor="let d of diff.diffs"
+      [ngStyle]="{
+        'background-color': d.changed ? 'yellow' : '',
+        'font-weight': d.changed ? 'bold' : ''
+      }"
+    >
+      <td>{{ d.old_value }}</td>
+      <td>{{ d.new_value }}</td>
+    </tr>
+  </table>
+</div>

@@ -1,28 +1,4 @@
 <div>
-  <section id="delta-criteria" class="d-flex flex-column align-items-center">
-    <span
-      *ngIf="
-        delta.start_date ||
-        delta.end_date ||
-        delta.issues ||
-        delta.tables ||
-        delta.user
-      "
-      class="fs-4"
-      >Delta criteria</span
-    >
-    <span *ngIf="delta.start_date"
-      ><b>from date : </b> {{ delta.start_date }}</span
-    >
-    <span *ngIf="delta.end_date"><b>to date : </b> {{ delta.end_date }}</span>
-    <span *ngIf="delta.issues"
-      ><b>selected issues : </b> {{ delta.issues }}</span
-    >
-    <span *ngIf="delta.tables"
-      ><b>selected tables : </b> {{ delta.tables }}</span
-    >
-    <span *ngIf="delta.user"><b>configurator : </b> {{ delta.user }}</span>
-  </section>
   <section id="show-delta">
     <div class="row">
       <div class="col-2"></div>
@@ -56,6 +32,34 @@
       style="font-size: 14px"
     >
       <div class="col-2">
+        <section id="delta-criteria" class="d-flex flex-column align-items-start mb-3">
+          <span
+            *ngIf="
+              delta.start_date ||
+              delta.end_date ||
+              delta.issues ||
+              delta.modules ||
+              delta.tables ||
+              delta.user
+            "
+            class="fs-4"
+            >Delta criteria</span
+          >
+          <span *ngIf="delta.start_date"
+            ><b>from date : </b> {{ delta.start_date }}</span
+          >
+          <span *ngIf="delta.end_date"><b>to date : </b> {{ delta.end_date }}</span>
+          <span *ngIf="delta.issues"
+            ><b>selected issues : </b> {{ delta.issues }}</span
+          >
+          <span *ngIf="delta.modules"
+            ><b>selected modules : </b> {{ delta.modules }}</span
+          >
+          <span *ngIf="delta.tables"
+            ><b>selected tables : </b> {{ delta.tables }}</span
+          >
+          <span *ngIf="delta.user"><b>configurator : </b> {{ delta.user }}</span>
+        </section>
         <div class="input-group rounded" style="position: relative">
           <input
             style="font-size: 14px"
@@ -64,6 +68,7 @@
             name="Filter changed tables"
             placeholder="Filter changed tables"
             [(ngModel)]="selectedTable"
+            (keyup)="filterTablNames()"
           />
           <svg
             style="position: absolute; left: 10px; top: 25%; color: gray"
@@ -86,7 +91,7 @@
           <div
             role="button"
             class="d-flex align-items-center font-monospace mt-1"
-            *ngFor="let t of table_names"
+            *ngFor="let t of table_names_filtered"
             (click)="scroll('scroll-' + t)"
           >
             <svg
@@ -117,9 +122,7 @@
         ></app-view-one-change>
       </div>
       <div class="col-2">
-        <app-view-filter
-          [delta]="delta"
-        ></app-view-filter>
+        <app-view-filter [delta]="delta"></app-view-filter>
       </div>
     </div>
   </section>

@@ -23,6 +23,7 @@ export class ViewComponent implements OnInit {
   changes_summary: string = null;
 
   table_names: string[] = [];
+  table_names_filtered: string[] = [];
   selectedTable: string;
 
   constructor() {}
@@ -34,6 +35,7 @@ export class ViewComponent implements OnInit {
       this.total_updates += t.updates;
       this.total_deletes += t.inserts;
     });
+    this.table_names_filtered = [...this.table_names];
     this.total_changes =
       this.total_inserts + this.total_deletes + this.total_updates;
 
@@ -90,6 +92,16 @@ export class ViewComponent implements OnInit {
     if (!this.delta.name || this.delta.name.length == 0)
       this.current_configuration.deltas.push(this.delta);
     this.saved = true;
+  }
+
+  filterTablNames() {
+    if (this.selectedTable && this.selectedTable.length > 0) {
+      this.table_names_filtered = this.table_names.filter((t) =>
+        t.toLowerCase().includes(this.selectedTable.toLowerCase())
+      );
+    } else {
+      this.table_names_filtered = [...this.table_names];
+    }
   }
 
   scroll(t) {

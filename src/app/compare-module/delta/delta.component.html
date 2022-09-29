@@ -1,8 +1,8 @@
 <div *ngIf="!delta.changes" class="w-75 mx-auto">
   <section id="search_input">
     <div id="inputs">
-      <div class="input-group">
-        <span class="input-group-text w-25">Start & end date</span>
+      <div class="input-group mb-1">
+        <span class="input-group-text w-25">Start & End date</span>
         <input
           [(ngModel)]="this.delta.start_date"
           type="datetime-local"
@@ -20,6 +20,15 @@
         <input
           [(ngModel)]="this.delta.issues"
           placeholder="example : ISSUE-1001, ISSUE-1002, ISSUE-1003... (this should be a multiselect, get issues from db)"
+          type="text"
+          class="form-control"
+        />
+      </div>
+      <div class="input-group mb-1">
+        <span class="input-group-text w-25">Modules list</span>
+        <input
+          [(ngModel)]="this.delta.modules"
+          placeholder="example : presentation, mapping ... (this should be a multiselect, get modules from db)"
           type="text"
           class="form-control"
         />

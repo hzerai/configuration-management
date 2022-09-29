@@ -59,3 +59,20 @@ export class Record {
   query: string;
   state: any;
 }
+
+export class Entity {
+  table_name: string;
+  entity_name: string;
+  super_class: string;
+  sub_classes: string[];
+  owner_class_name : string;
+  fields: Field[];
+}
+
+export class Field {
+  field_name: string;
+  column_name: string;
+  composition: boolean;
+  aggregation: boolean;
+  class_name : string;
+}

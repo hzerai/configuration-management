@@ -12,6 +12,8 @@ import { ViewChangeRecordsComponent } from './delta/view-change-records/view-cha
 import { ViewRecordStateComponent } from './delta/view-record-state/view-record-state.component';
 import { PrintjsonPipe } from '../printjson.pipe';
 import { ViewFilterComponent } from './delta/view-filter/view-filter.component';
+import { CompareComponent } from './compare/compare.component';
+import { CompareOneChangeComponent } from './compare/compare-one-change/compare-one-change.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +26,8 @@ import { ViewFilterComponent } from './delta/view-filter/view-filter.component';
     ViewChangeRecordsComponent,
     ViewRecordStateComponent,
     ViewFilterComponent,
+    CompareComponent,
+    CompareOneChangeComponent,
   ],
   imports: [
     FormsModule,
