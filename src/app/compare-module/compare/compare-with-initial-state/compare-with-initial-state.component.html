@@ -1,1 +1,10 @@
-<p>compare-with-initial-state works!</p>
+<div class="row w-100 py-3">
+  <div class="col-3 text-center fw-bold fs-5">{{ table }}</div>
+  <div class="col-9">
+    <app-compare-operation
+      *ngFor="let change_per_record of change_per_table; let i = index;"
+      [change_per_record]="change_per_record"
+      [hr]="i != change_per_table.length-1"
+    ></app-compare-operation>
+  </div>
+</div>

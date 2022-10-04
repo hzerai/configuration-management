@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import * as moment from 'moment';
-import { Configuration, Entity, Record, Table } from 'src/app/models/models';
+import { Configuration, InitialState, Table } from 'src/app/models/models';
 
 const table_changes: Table[] = [
   {
@@ -20,15 +20,42 @@ const table_changes: Table[] = [
         state: {
           identifier_: 'FLOW_1',
           name_: 'a simple flow 1',
+          nb_: '22',
           description_: 'we updated the description here ',
+          inputDevice_identifier_: 'Q1',
         },
+      },
+      {
+        identifier: 'FLOW_2',
+        operation: 'UPDATE',
+        issues: ['PALM-1541'],
+        modules: ['flow'],
+        date: moment('2022-03-12 10:55:20', 'YYYY-MM-DD HH:mm::ss').toDate(),
+        user: 'administrator',
+        query: 'UPDATE flow_flowin SET (...)',
+        state: {
+          identifier_: 'FLOW_2',
+          name_: 'a simple flow 2',
+          description_: 'we updated the description here ',
+          inputDevice_identifier_: 'Q2',
+        },
+      },
+      {
+        identifier: 'FLOW_3',
+        operation: 'DELETE',
+        issues: ['PALM-1541'],
+        modules: ['flow'],
+        date: moment('2022-03-12 10:55:20', 'YYYY-MM-DD HH:mm::ss').toDate(),
+        user: 'administrator',
+        query: 'DELETE flow_flowin SET (...)',
+        state: null,
       },
     ],
   },
   {
     table_name: 'io_inputDevice',
     deletes: 0,
-    inserts: 0,
+    inserts: 1,
     updates: 1,
     records: [
       {
@@ -45,10 +72,24 @@ const table_changes: Table[] = [
           qDesc_: 'we changed max connection for the Q ',
         },
       },
+      {
+        identifier: 'Qq5',
+        operation: 'INSERT',
+        issues: ['PALM-1541'],
+        modules: ['flow'],
+        date: moment('2022-04-12 10:55:20', 'YYYY-MM-DD HH:mm::ss').toDate(),
+        user: 'administrator',
+        query: 'INSERT INTO io_inputDevice VALUES (...)',
+        state: {
+          identifier_: 'Qq5',
+          qName_: 'a new qu',
+          qDesc_: 'insert of a new q ',
+        },
+      },
     ],
   },
 ];
-const initial_state_mock = [
+const initial_state_mock: any[] = [
   {
     table_name: 'flow_flowin',
     records: [
@@ -57,6 +98,7 @@ const initial_state_mock = [
         state: {
           identifier_: 'FLOW_1',
           name_: 'a simple flow 1',
+          nb_: null,
           description_: 'testing flow',
           inputDevice_identifier_: 'Q1',
         },
@@ -68,6 +110,15 @@ const initial_state_mock = [
           name_: 'another flow 2',
           description_: 'again, testing flow',
           inputDevice_identifier_: 'Q2',
+        },
+      },
+      {
+        identifier: 'FLOW_3',
+        state: {
+          identifier_: 'FLOW_3',
+          name_: 'another flow 3',
+          description_: 'again, testing flow',
+          inputDevice_identifier_: null,
         },
       },
     ],
@@ -95,89 +146,6 @@ const initial_state_mock = [
   },
 ];
 
-const metadata_mock: Entity[] = [
-  {
-    entity_name: 'com.palmyra.flow.FlowIn',
-    table_name: 'flow_flowin',
-    identifier: 'identifier_',
-    owner: null,
-    sub_classes: null,
-    super_class: null,
-    fields: [
-      {
-        field_name: 'identifier',
-        symetric_role: null,
-        aggregation: false,
-        entity_name: null,
-        column_name: 'identifier_',
-        composition: false,
-      },
-      {
-        field_name: 'name',
-        symetric_role: null,
-        aggregation: false,
-        entity_name: null,
-        column_name: 'name_',
-        composition: false,
-      },
-      {
-        field_name: 'description',
-        aggregation: false,
-        symetric_role: null,
-        entity_name: null,
-        column_name: 'description_',
-        composition: false,
-      },
-      {
-        field_name: 'inputDevice',
-        symetric_role: 'flow',
-        aggregation: false,
-        entity_name: 'com.palmyra.io.InputDevice',
-        column_name: 'inputDevice_identifier_',
-        composition: true,
-      },
-    ],
-  },
-  {
-    entity_name: 'com.palmyra.io.InputDevice',
-    table_name: 'io_inputDevice',
-    identifier: 'identifier_',
-    owner: {
-      name: 'com.palmyra.flow.FlowIn',
-      role: 'flow',
-      fk_table: 'owner',
-      fk_col: 'inputDevice_identifier_',
-    },
-    sub_classes: null,
-    super_class: null,
-    fields: [
-      {
-        field_name: 'identifier',
-        aggregation: false,
-        symetric_role: null,
-        entity_name: null,
-        column_name: 'identifier_',
-        composition: false,
-      },
-      {
-        field_name: 'qName',
-        aggregation: false,
-        symetric_role: null,
-        entity_name: null,
-        column_name: 'qName_',
-        composition: false,
-      },
-      {
-        field_name: 'qDesc',
-        aggregation: false,
-        symetric_role: null,
-        entity_name: null,
-        column_name: 'qDesc_',
-        composition: false,
-      },
-    ],
-  },
-];
 @Component({
   selector: 'app-compare',
   templateUrl: './compare.component.html',
@@ -187,84 +155,32 @@ export class CompareComponent implements OnInit {
   @Input('current_configuration')
   current_configuration: Configuration;
 
-  metadata = metadata_mock;
   initial_state = initial_state_mock;
   table_changes = table_changes;
-  mergedChanges: any[] = [];
+  change_with_initial: any[][any] = [];
+  changed_tables: string[] = [];
   constructor() {}
 
   ngOnInit(): void {
-    this.table_changes.forEach((oneChange) => {
-      oneChange.records.forEach((r) => {
-        this.findOwnerAndAttachSelf(
-          null,
-          oneChange,
-          r,
-          null,
-          this.metadata.find((m) => m.table_name === oneChange.table_name),
-          this.mergedChanges
-        );
+    this.table_changes.forEach((tc) => {
+      let ris = this.initial_state.find(
+        (is) => is.table_name === tc.table_name
+      );
+      tc.records.forEach((r) => {
+        if (!this.change_with_initial[tc.table_name]) {
+          this.change_with_initial[tc.table_name] = [];
+          this.changed_tables.push(tc.table_name);
+        }
+        this.change_with_initial[tc.table_name].push({
+          old_state: ris.records.find(
+            (oris) => oris.identifier === r.identifier
+          )?.state,
+          new_state: r?.state,
+          change: r,
+          table_name: tc.table_name,
+          identifier: r.identifier,
+        });
       });
     });
-    console.log(this.mergedChanges);
-  }
-
-  findOwnerAndAttachSelf(
-    obj,
-    tableChanges: Table,
-    record: Record,
-    newRole: string,
-    entityMD: Entity,
-    mergedChanges
-  ) {
-    if (record && entityMD.owner) {
-      let obj = {};
-      let ownerMd = this.metadata.find(
-        (m) => m.entity_name === entityMD.owner.name
-      );
-      let role = ownerMd.fields.find(
-        (f) => entityMD.owner.role === f.symetric_role
-      ).field_name;
-      obj[role] = record.state;
-
-      return this.findOwnerAndAttachSelf(
-        obj,
-        tableChanges,
-        null,
-        role,
-        ownerMd,
-        mergedChanges
-      );
-    } else if (record && !entityMD.owner) {
-      return this.findOwnerAndAttachSelf(
-        record.state,
-        tableChanges,
-        null,
-        null,
-        entityMD,
-        mergedChanges
-      );
-    } else if (!record && !entityMD.owner) {
-      console.log(obj)
-      let oldObj = mergedChanges.find(
-        (mc) =>
-          mc.entity_name === entityMD.entity_name &&
-          mc.identifier === obj[entityMD.identifier]
-      );
-      if (!oldObj) {
-        oldObj = {
-          entity_name: entityMD.entity_name,
-          object: obj,
-          identifier: obj[entityMD.identifier],
-          old_state: this.initial_state.find(
-            (is) => is.table_name === entityMD.table_name
-          ),
-        };
-        mergedChanges.push(oldObj);
-      } else {
-        oldObj.object[newRole] = obj[newRole];
-      }
-      return oldObj;
-    }
   }
 }

@@ -13,8 +13,11 @@ import { ViewRecordStateComponent } from './delta/view-record-state/view-record-
 import { PrintjsonPipe } from '../printjson.pipe';
 import { ViewFilterComponent } from './delta/view-filter/view-filter.component';
 import { CompareComponent } from './compare/compare.component';
-import { CompareOneChangeComponent } from './compare/compare-one-change/compare-one-change.component';
 import { CompareWithInitialStateComponent } from './compare/compare-with-initial-state/compare-with-initial-state.component';
+import { CompareOperationComponent } from './compare/compare-operation/compare-operation.component';
+import { CompareInsertOperationComponent } from './compare/compare-insert-operation/compare-insert-operation.component';
+import { CompareDeleteOperationComponent } from './compare/compare-delete-operation/compare-delete-operation.component';
+import { CompareUpdateOperationComponent } from './compare/compare-update-operation/compare-update-operation.component';
 
 @NgModule({
   declarations: [
@@ -28,8 +31,11 @@ import { CompareWithInitialStateComponent } from './compare/compare-with-initial
     ViewRecordStateComponent,
     ViewFilterComponent,
     CompareComponent,
-    CompareOneChangeComponent,
     CompareWithInitialStateComponent,
+    CompareOperationComponent,
+    CompareInsertOperationComponent,
+    CompareDeleteOperationComponent,
+    CompareUpdateOperationComponent,
   ],
   imports: [
     FormsModule,

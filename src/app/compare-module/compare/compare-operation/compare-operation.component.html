@@ -1,0 +1,17 @@
+<app-compare-update-operation
+  *ngIf="operation === 'UPDATE'"
+  [old]="this.change_per_record?.old_state"
+  [new]="this.change_per_record?.new_state"
+  [identifier]="this.change_per_record.identifier"
+></app-compare-update-operation>
+<app-compare-delete-operation
+  *ngIf="operation === 'DELETE'"
+  [old]="this.change_per_record?.old_state"
+  [identifier]="this.change_per_record.identifier"
+></app-compare-delete-operation>
+<app-compare-insert-operation
+  *ngIf="operation === 'INSERT'"
+  [new]="this.change_per_record?.new_state"
+  [identifier]="this.change_per_record.identifier"
+></app-compare-insert-operation>
+<hr class="mb-2" *ngIf="hr">

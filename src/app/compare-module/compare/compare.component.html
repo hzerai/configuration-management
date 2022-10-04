@@ -1,12 +1,6 @@
-<div *ngFor="let new_state of mergedChanges">
-  <!-- <app-compare-one-change
-    [metadata]="metadata"
-    [initial_state]="initial_state"
-    [change]="change"
-    [allChanges]="table_changes"
-    *ngIf="!change.dont_show"
-  ></app-compare-one-change> -->
+<div class="rounded shadow" *ngFor="let table of changed_tables">
   <app-compare-with-initial-state
-    [new_state]="new_state"
+    [change_per_table]="change_with_initial[table]"
+    [table]="table"
   ></app-compare-with-initial-state>
 </div>
