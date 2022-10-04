@@ -14,6 +14,7 @@ import { PrintjsonPipe } from '../printjson.pipe';
 import { ViewFilterComponent } from './delta/view-filter/view-filter.component';
 import { CompareComponent } from './compare/compare.component';
 import { CompareOneChangeComponent } from './compare/compare-one-change/compare-one-change.component';
+import { CompareWithInitialStateComponent } from './compare/compare-with-initial-state/compare-with-initial-state.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { CompareOneChangeComponent } from './compare/compare-one-change/compare-
     ViewFilterComponent,
     CompareComponent,
     CompareOneChangeComponent,
+    CompareWithInitialStateComponent,
   ],
   imports: [
     FormsModule,

@@ -63,16 +63,18 @@ export class Record {
 export class Entity {
   table_name: string;
   entity_name: string;
+  identifier : string;
   super_class: string;
   sub_classes: string[];
-  owner_class_name : string;
+  owner: { name: string; role: string; fk_table: string; fk_col: string };
   fields: Field[];
 }
 
 export class Field {
   field_name: string;
+  symetric_role: string;
   column_name: string;
   composition: boolean;
   aggregation: boolean;
-  class_name : string;
+  entity_name: string;
 }
