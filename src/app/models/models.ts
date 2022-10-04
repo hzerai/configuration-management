@@ -60,21 +60,21 @@ export class Record {
   state: any;
 }
 
-export class Entity {
-  table_name: string;
-  entity_name: string;
-  identifier : string;
-  super_class: string;
-  sub_classes: string[];
-  owner: { name: string; role: string; fk_table: string; fk_col: string };
-  fields: Field[];
-}
+// export class Entity {
+//   table_name: string;
+//   entity_name: string;
+//   identifier : string;
+//   super_class: string;
+//   sub_classes: string[];
+//   owner: { name: string; role: string; fk_table: string; fk_col: string };
+//   fields: Field[];
+// }
 
-export class Field {
-  field_name: string;
-  symetric_role: string;
-  column_name: string;
-  composition: boolean;
-  aggregation: boolean;
-  entity_name: string;
-}
+// export class Field {
+//   field_name: string;
+//   symetric_role: string;
+//   column_name: string;
+//   composition: boolean;
+//   aggregation: boolean;
+//   entity_name: string;
+// }
