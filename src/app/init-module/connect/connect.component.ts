@@ -9,14 +9,9 @@ import { Configuration, Connection } from 'src/app/models/models';
 export class ConnectComponent implements OnInit {
   errorMessage: string;
   connectionStatus: string;
-  connection: Connection;
-  disabled: boolean = false;
 
   @Input('current_configuration')
   current_configuration: Configuration;
-
-  @Input('con_step')
-  con_step: number;
 
   @Output('step')
   stepEvent = new EventEmitter<any>();
@@ -27,41 +22,50 @@ export class ConnectComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    if (this.con_step == 1) {
-      this.connection = this.current_configuration.source_connection;
-      if (this.connection.valid) {
-        this.disabled = true;
-      }
-    } else if (this.con_step == 2) {
-      this.connection = this.current_configuration.target_connection;
-      if (this.connection.valid) {
-        this.disabled = true;
-      }
+    if (!this.current_configuration.source_connection.valid) {
+      this.current_configuration.source_connection.scripts.commit = true;
+      this.current_configuration.source_connection.scripts.download = false;
+      this.current_configuration.source_connection.scripts.execute = true;
     }
   }
 
   validateInput(): boolean {
     const invalids = [];
-    if (!this.connection.hostname || '' == this.connection.hostname) {
+    if (
+      !this.current_configuration.source_connection.hostname ||
+      '' == this.current_configuration.source_connection.hostname
+    ) {
       invalids.push('hostname');
     }
-    if (!this.connection.port || this.connection.port < 0) {
+    if (
+      !this.current_configuration.source_connection.port ||
+      this.current_configuration.source_connection.port < 0
+    ) {
       invalids.push('port');
     }
-    if (!this.connection.database || '' == this.connection.database) {
+    if (
+      !this.current_configuration.source_connection.database ||
+      '' == this.current_configuration.source_connection.database
+    ) {
       invalids.push('database');
     }
-    if (!this.connection.user || '' == this.connection.user) {
+    if (
+      !this.current_configuration.source_connection.user ||
+      '' == this.current_configuration.source_connection.user
+    ) {
       invalids.push('username');
     }
-    if (!this.connection.databaseType || '' == this.connection.databaseType) {
+    if (
+      !this.current_configuration.source_connection.databaseType ||
+      '' == this.current_configuration.source_connection.databaseType
+    ) {
       invalids.push('databaseType');
     }
     if (invalids.length > 0) {
       this.errorMessage = 'Invalid ' + invalids.join(',');
       return false;
     }
-    this.connection.valid = true;
+    this.current_configuration.source_connection.valid = true;
     this.errorMessage = null;
     return true;
   }
@@ -76,9 +80,10 @@ export class ConnectComponent implements OnInit {
   }
 
   step() {
-    if (!this.connection.valid) {
+    if (!this.current_configuration.source_connection.valid) {
       return;
     }
+    this.current_configuration.source_connection.summary = `${this.current_configuration.source_connection.databaseType}://${this.current_configuration.source_connection.user}:********@${this.current_configuration.source_connection.hostname}:${this.current_configuration.source_connection.port}/${this.current_configuration.source_connection.database}`;
     this.stepEvent.emit(null);
   }
 

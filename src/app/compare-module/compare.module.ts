@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CompareRoutingModule } from './compare-routing.module';
 import { HomeComponent } from './home/home.component';
-import { WizardComponent } from './wizard/wizard.component';
 import { DeltaComponent } from './delta/delta.component';
 import { FormsModule } from '@angular/forms';
 import { ViewComponent } from './delta/view/view.component';
@@ -18,12 +17,14 @@ import { CompareOperationComponent } from './compare/compare-operation/compare-o
 import { CompareInsertOperationComponent } from './compare/compare-insert-operation/compare-insert-operation.component';
 import { CompareDeleteOperationComponent } from './compare/compare-delete-operation/compare-delete-operation.component';
 import { CompareUpdateOperationComponent } from './compare/compare-update-operation/compare-update-operation.component';
+import { SecondBaselineComponent } from './second-baseline/second-baseline.component';
+import { CompareWizardComponent } from './compare-wizard/compare-wizard.component';
 
 @NgModule({
   declarations: [
     PrintjsonPipe,
     HomeComponent,
-    WizardComponent,
+    CompareWizardComponent,
     DeltaComponent,
     ViewComponent,
     ViewOneChangeComponent,
@@ -36,6 +37,7 @@ import { CompareUpdateOperationComponent } from './compare/compare-update-operat
     CompareInsertOperationComponent,
     CompareDeleteOperationComponent,
     CompareUpdateOperationComponent,
+    SecondBaselineComponent,
   ],
   imports: [
     FormsModule,

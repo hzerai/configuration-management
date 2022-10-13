@@ -1,12 +1,14 @@
 export class Configuration {
   name: string;
   source_connection: Connection;
-  target_connection: Connection;
+  git: Git;
   tables: string[];
-  scripts: Script;
-  initial_state: InitialState;
+  tables_source: string;
+  all_tables: any[];
+  baseline: Baseline;
   created_at: Date;
   deltas: Delta[];
+  initialized : boolean = false;
 }
 
 export class Connection {
@@ -16,19 +18,40 @@ export class Connection {
   user: string;
   password: string;
   databaseType: string;
+  scripts: Script;
+  summary: string;
   valid: boolean;
 }
 
-export class InitialState {
+export class Git {
+  repository: string;
+  branch: string;
+  folder: { name: string; create: boolean };
+  triggers: { name: string; create: boolean };
+  baseline: { name: string; create: boolean };
+  delivery: { name: string; create: boolean };
+  tables: { name: string; create: boolean };
+  valid: boolean;
+}
+
+export class Baseline {
+  generate: boolean;
   generated: boolean;
-  skipped: boolean;
+  download: boolean;
   downloaded: boolean;
+  commit: boolean;
+  commited: boolean;
+  uploaded: boolean;
 }
 
 export class Script {
   generated: boolean;
+  execute: boolean;
   executed: boolean;
+  download: boolean;
   downloaded: boolean;
+  commit: boolean;
+  commited: boolean;
 }
 
 export class Delta {

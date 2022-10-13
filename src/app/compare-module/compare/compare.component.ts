@@ -1,13 +1,13 @@
 import { Component, Input, OnInit } from '@angular/core';
 import * as moment from 'moment';
-import { Configuration, InitialState, Table } from 'src/app/models/models';
+import { Configuration, Table } from 'src/app/models/models';
 
 const table_changes: Table[] = [
   {
     table_name: 'flow_flowin',
-    deletes: 0,
+    deletes: 1,
     inserts: 0,
-    updates: 1,
+    updates: 2,
     records: [
       {
         identifier: 'FLOW_1',
@@ -159,6 +159,10 @@ export class CompareComponent implements OnInit {
   table_changes = table_changes;
   change_with_initial: any[][any] = [];
   changed_tables: string[] = [];
+  change_with_initial_temp: any[][any] = [];
+
+  search: string;
+
   constructor() {}
 
   ngOnInit(): void {
@@ -181,6 +185,25 @@ export class CompareComponent implements OnInit {
           identifier: r.identifier,
         });
       });
+    });
+    this.filter();
+  }
+
+  filter() {
+    if (!this.search || this.search.length < 3) {
+      this.changed_tables.forEach((ct) => {
+        this.change_with_initial_temp[ct] = JSON.parse(
+          JSON.stringify(this.change_with_initial[ct])
+        );
+      });
+      return;
+    }
+    this.change_with_initial_temp = [];
+    this.changed_tables.forEach((ct) => {
+      var a = JSON.stringify(this.change_with_initial[ct]);
+      if (a.toLowerCase().includes(this.search.toLowerCase())) {
+        this.change_with_initial_temp[ct] = JSON.parse(a);
+      }
     });
   }
 }

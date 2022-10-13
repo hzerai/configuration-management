@@ -1,6 +1,15 @@
-<div class="rounded shadow" *ngFor="let table of changed_tables">
-  <app-compare-with-initial-state
-    [change_per_table]="change_with_initial[table]"
+<div class="input-group mb-1">
+  <input
+    [(ngModel)]="search"
+    (keyup)="filter()"
+    type="text"
+    class="form-control"
+    placeholder="search..."
+  />
+</div>
+<div class="border rounded shadow mb-3" *ngFor="let table of changed_tables">
+  <app-compare-with-initial-state *ngIf="change_with_initial_temp[table]"
+    [change_per_table]="change_with_initial_temp[table]"
     [table]="table"
   ></app-compare-with-initial-state>
 </div>

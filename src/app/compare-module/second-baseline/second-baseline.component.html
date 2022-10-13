@@ -1,0 +1,97 @@
+<div class="w-75 mx-auto mt-5 overflow-hidden">
+  <div style="height: 400px">
+    <p>
+      The <b>Baseline</b> is the initial state of the target environment. It's
+      represented by the state of configration tables dumped into json files.
+      These files must be present under the repository folder :
+      <b
+        ><i>
+          {{
+            this.current_configuration.git.repository +
+              this.current_configuration.git.baseline.name
+          }}</i
+        ></b
+      >
+    </p>
+    <p>
+      It must have an identical state with the source environment at this stage
+      of the configuration.
+    </p>
+    <p>
+      You can skip the generation of the baseline right now, but the target
+      environment configuration shoudn't mutate in the mean time
+      <i>(this can cause inconsistency)</i>.
+    </p>
+
+    <p>
+      If you've already generated your baseline, you can upload it
+      <a
+        style="text-decoration: underline; color: blue"
+        role="button"
+        (click)="this.current_configuration.baseline.uploaded = true"
+        >here</a
+      >. If not, please folow this documentation
+      <a style="text-decoration: underline; color: blue" role="button">link</a>
+      to start the generation process.
+    </p>
+    <p>
+      If your current environment is identical to the target environment you can
+      also generate the baseline right now using
+      <b>{{ "{insert app name here}" }}. </b>
+      <span
+        (click)="advanced = !advanced"
+        role="button"
+        class="badge rounded-pill bg-success text-white"
+        ><i>generate now</i></span
+      >
+    </p>
+
+    <div *ngIf="advanced" class="d-flex">
+      <span class="input-group-text" style="width: 32.5%"
+        >Generation options :
+      </span>
+
+      <div class="btn-group w-100" role="group">
+        <input
+          (change)="generateChanged()"
+          [(ngModel)]="this.current_configuration.baseline.generate"
+          type="checkbox"
+          class="btn-check"
+          id="execute"
+          autocomplete="off"
+        />
+        <label class="btn btn-outline-secondary" for="execute">Generate</label>
+        <input
+          (change)="
+            !this.current_configuration.baseline.commit
+              ? (this.current_configuration.baseline.download = true)
+              : ''
+          "
+          [disabled]="!this.current_configuration.baseline.generate"
+          [(ngModel)]="this.current_configuration.baseline.commit"
+          type="checkbox"
+          class="btn-check"
+          id="commit"
+          autocomplete="off"
+        />
+        <label class="btn btn-outline-secondary" for="commit">Commit</label>
+
+        <input
+          (change)="
+            !this.current_configuration.baseline.download
+              ? (this.current_configuration.baseline.commit = true)
+              : ''
+          "
+          [disabled]="!this.current_configuration.baseline.generate"
+          [(ngModel)]="this.current_configuration.baseline.download"
+          type="checkbox"
+          class="btn-check"
+          id="download"
+          autocomplete="off"
+        />
+        <label class="btn btn-outline-secondary" for="download">Download</label>
+      </div>
+    </div>
+  </div>
+
+</div>

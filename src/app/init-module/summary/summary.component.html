@@ -1,0 +1,146 @@
+<div class="w-75 mx-auto mt-5">
+  <div style="height: 400px; font-size: 13px">
+    <div
+      class="shadow rounded border px-5 pt-2 mt-3"
+      style="margin-inline: 7rem"
+    >
+      <ol>
+        <li id="GIT">
+          <p>
+            <b>GIT : </b> The repo
+            <b
+              ><i> {{ this.current_configuration.git.repository }}</i></b
+            >
+            will be initialized with these configuration folders :
+            <span>
+              <ul>
+                <li>{{ this.current_configuration.git.folder.name }}</li>
+                <li>{{ this.current_configuration.git.baseline.name }}</li>
+                <li>{{ this.current_configuration.git.triggers.name }}</li>
+                <li>{{ this.current_configuration.git.delivery.name }}</li>
+                <li>{{ this.current_configuration.git.tables.name }}</li>
+              </ul>
+            </span>
+          </p>
+        </li>
+        <li id="Tables">
+          <p>
+            <b>Configuration Tables : </b> The list of tables (<b
+              >containing
+              {{ this.current_configuration.tables?.length }} entry</b
+            >)
+            <b>{{
+              this.current_configuration.tables_source == "DB"
+                ? " was computed from the database and will be commited to " +
+                  this.current_configuration.git.tables.name +
+                  "."
+                : this.current_configuration.tables_source == "GIT"
+                ? " is loaded from Git (already commited)"
+                : " was imported from a file and will be commited to " +
+                  this.current_configuration.git.tables.name +
+                  "."
+            }}</b>
+          </p>
+        </li>
+        <li id="DATABASE">
+          <p>
+            <b>Database : </b> The source database that will be used is :
+            {{ this.current_configuration.source_connection.summary }}
+          </p>
+        </li>
+        <li id="SCRIPTS">
+          <p>
+            <b>Scripts : </b> The triggers script will be <b>generated</b>,
+            <b>
+              {{
+                this.current_configuration.source_connection.scripts.commit
+                  ? "commited under " +
+                    this.current_configuration.git.triggers.name +
+                    " ,"
+                  : ""
+              }}
+              {{
+                this.current_configuration.source_connection.scripts.download
+                  ? "downloaded, "
+                  : ""
+              }}
+            </b>
+            and
+            <b>
+              {{
+                this.current_configuration.source_connection.scripts.execute
+                  ? "executed"
+                  : "not executed"
+              }}
+            </b>
+          </p>
+        </li>
+        <li id="Baseline">
+          <p>
+            <b>Baseline : </b> The baseline state
+            <b>{{
+              this.current_configuration.baseline.generate
+                ? "will be generated"
+                : this.current_configuration.baseline.uploaded
+                ? "is uploaded and will be commited to git under " +
+                  this.current_configuration.git.baseline.name
+                : "will not be generated"
+            }}</b>
+            <b *ngIf="this.current_configuration.baseline.generate">
+              {{
+                this.current_configuration.baseline.commit
+                  ? (this.current_configuration.baseline.download
+                      ? ", "
+                      : "and ") +
+                    "commited to " +
+                    this.current_configuration.git.baseline.name
+                  : ""
+              }}
+
+              {{
+                this.current_configuration.baseline.download
+                  ? "and downloaded."
+                  : "."
+              }}
+            </b>
+          </p>
+        </li>
+      </ol>
+    </div>
+
+    <div
+      *ngIf="!this.current_configuration.initialized"
+      class="w-100 d-flex flex-column align-items-center"
+    >
+      <img
+        class="shadow p-2 rounded-pill my-2"
+        role="button"
+        (click)="start()"
+        src="assets\img\launch.jpg"
+        width="120px"
+      />
+
+      <p role="button mt-2">
+        <b
+          ><i><u>Launch with this settings</u></i></b
+        >
+      </p>
+    </div>
+  </div>
+  <div class="d-flex justify-content-between mt-4">
+    <button (click)="step_back()" class="btn btn-secondary" type="button">
+      Back
+    </button>
+    <div>
+      <!-- Button trigger modal -->
+      <button
+        type="button"
+        class="btn btn-success"
+        data-bs-toggle="modal"
+        data-bs-target="#save"
+      >
+        Save configuration
+      </button>
+    </div>
+  </div>
+</div>

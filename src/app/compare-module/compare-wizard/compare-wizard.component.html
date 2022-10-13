@@ -1,0 +1,93 @@
+<div class="text-center">
+  <p class="fs-4">
+    Current configuration : <b>{{ current_configuration.name }}</b>
+  </p>
+</div>
+<div
+  class="my-5 mx-auto d-flex align-items-center justify-content-center"
+  style="width: 50vw"
+>
+  <div style="position: relative">
+    <div
+      (click)="goto(1)"
+      role="button"
+      class="rounded-circle d-flex align-items-center justify-content-center fs-5 pb-1"
+      [ngStyle]="getStepsCss(1)"
+      style="position: relative"
+    >
+      1
+    </div>
+    <div style="position: absolute; bottom: -30px">Delta</div>
+  </div>
+  <div
+    class="rounded-pill flex-grow-1 mx-2"
+    style="height: 10px; background-color: #e7eeec"
+  ></div>
+  <div
+    *ngIf="!this.current_configuration.baseline.generated"
+    style="position: relative"
+  >
+    <div
+      (click)="goto(2)"
+      role="button"
+      class="rounded-circle d-flex align-items-center justify-content-center fs-5 pb-1"
+      [ngStyle]="getStepsCss(2)"
+      style="position: relative"
+    >
+      2
+    </div>
+    <div style="position: absolute; bottom: -30px; left: -20%">Baseline</div>
+  </div>
+  <div
+    *ngIf="!this.current_configuration.baseline.generated"
+    class="rounded-pill flex-grow-1 mx-2"
+    style="height: 10px; background-color: #e7eeec"
+  ></div>
+  <div style="position: relative">
+    <div
+      (click)="goto(this.current_configuration.baseline.generated ? 2 : 3)"
+      role="button"
+      class="rounded-circle d-flex align-items-center justify-content-center fs-5 pb-1"
+      [ngStyle]="
+        getStepsCss(this.current_configuration.baseline.generated ? 2 : 3)
+      "
+      style="position: relative"
+    >
+      {{ this.current_configuration.baseline.generated ? "2" : "3" }}
+    </div>
+    <div style="position: absolute; bottom: -30px; left: -30%">Compare</div>
+  </div>
+  <div
+    class="rounded-pill flex-grow-1 mx-2"
+    style="height: 10px; background-color: #e7eeec"
+  ></div>
+  <div style="position: relative">
+    <div
+      (click)="goto(this.current_configuration.baseline.generated ? 3 : 4)"
+      role="button"
+      class="rounded-circle d-flex align-items-center justify-content-center fs-5 pb-1"
+      [ngStyle]="
+        getStepsCss(this.current_configuration.baseline.generated ? 3 : 4)
+      "
+      style="position: relative"
+    >
+      {{ this.current_configuration.baseline.generated ? "3" : "4" }}
+    </div>
+    <div style="position: absolute; bottom: -30px; left: -20%">commit</div>
+  </div>
+</div>
+
+<app-delta
+  [current_configuration]="current_configuration"
+  *ngIf="currentStep == 1"
+></app-delta>
+<app-second-baseline
+  *ngIf="currentStep == (this.current_configuration.baseline.generated ? 999 : 2)"
+  (step)="step($event)"
+  (step_back)="step_back($event)"
+  [current_configuration]="this.current_configuration"
+></app-second-baseline>
+<app-compare
+  [current_configuration]="current_configuration"
+  *ngIf="currentStep == (this.current_configuration.baseline.generated ? 2 : 3)"
+></app-compare>

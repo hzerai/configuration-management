@@ -1,6 +1,18 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Configuration } from 'src/app/models/models';
 
+const tables_mock = [
+  'com_employee',
+  'com_person',
+  'config_presentation',
+  'config_widgets',
+  'config_resources',
+  'sla_config',
+  'lifecycle_configs',
+  'mappings_conf',
+  'traces_config',
+];
+
 @Component({
   selector: 'app-tables',
   templateUrl: './tables.component.html',
@@ -12,10 +24,14 @@ export class TablesComponent implements OnInit {
   all_tables_temps_filtered: any[];
   selected_tables: any[] = [];
   selected_tables_filtered: any[] = [];
-  tables_ready: boolean = false;
+  tables_loading: boolean = false;
 
   allTablesSearch: string = null;
   selectedTablesSearch: string = null;
+
+  tables_source: string;
+
+  file: any;
 
   @Input('current_configuration')
   current_configuration: Configuration;
@@ -29,17 +45,19 @@ export class TablesComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    const tables = [
-      'com_employee',
-      'com_person',
-      'config_presentation',
-      'config_widgets',
-      'config_resources',
-      'sla_config',
-      'lifecycle_configs',
-      'mappings_conf',
-      'traces_config',
-    ];
+    if (
+      this.current_configuration.tables &&
+      this.current_configuration.tables.length > 0
+    ) {
+      this.prepareTables(
+        this.current_configuration.all_tables
+          ? this.current_configuration.all_tables.map((t) => t.table)
+          : tables_mock
+      );
+    }
+  }
+
+  prepareTables(tables) {
     this.all_tables = tables.map((t) => {
       return { table: t, selected: false };
     });
@@ -48,6 +66,7 @@ export class TablesComponent implements OnInit {
       this.current_configuration.tables &&
       this.current_configuration.tables.length > 0
     ) {
+      this.tables_source = this.current_configuration.tables_source;
       this.current_configuration.tables.forEach((t) =>
         this.selected_tables.unshift({ table: t, selected: false })
       );
@@ -57,8 +76,7 @@ export class TablesComponent implements OnInit {
       );
     }
     this.all_tables_temps_filtered = [...this.all_tables_temps];
-    this.tables_ready = true;
-    // get tables list from service
+    this.tables_loading = false;
   }
 
   allTableFilter() {
@@ -123,6 +141,8 @@ export class TablesComponent implements OnInit {
     if (this.selected_tables.length == 0) {
       return;
     }
+    this.current_configuration.tables_source = this.tables_source;
+    this.current_configuration.all_tables = this.all_tables;
     this.current_configuration.tables = this.selected_tables.map(
       (t) => t.table
     );
@@ -130,9 +150,49 @@ export class TablesComponent implements OnInit {
   }
 
   step_back() {
+    this.current_configuration.tables_source = this.tables_source;
+    this.current_configuration.all_tables = this.all_tables;
     this.current_configuration.tables = this.selected_tables.map(
       (t) => t.table
     );
     this.step_back_event.emit(null);
+  }
+
+  loadFromGit() {
+    this.tables_loading = true;
+    setTimeout(() => {
+      this.tables_source = 'GIT';
+      this.prepareTables(tables_mock);
+    }, 1500);
+  }
+
+  loadFromDB() {
+    this.tables_loading = true;
+    setTimeout(() => {
+      this.tables_source = 'DB';
+      this.prepareTables(tables_mock);
+    }, 1500);
+  }
+
+  loadFromFile(event) {
+    var file;
+    if (event.target.files && event.target.files[0]) {
+      file = event.target.files[0];
+    }
+    this.tables_loading = true;
+    var reader = new FileReader();
+    reader.readAsBinaryString(file);
+    reader.onload = (e) => {
+      const fileContent = e.target.result;
+      const tabs = fileContent
+        .toString()
+        .split('\n')
+        .map((t) => t.trim())
+        .filter((t) => !t.includes(' ') && !(t === ''));
+      setTimeout(() => {
+        this.tables_source = 'FILE';
+        this.prepareTables(tabs);
+      }, 1500);
+    };
   }
 }

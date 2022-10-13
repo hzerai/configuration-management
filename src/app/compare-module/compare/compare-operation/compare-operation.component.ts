@@ -17,6 +17,5 @@ export class CompareOperationComponent implements OnInit {
 
   ngOnInit(): void {
     this.operation = this.change_per_record.change.operation;
-    console.log(this.operation)
   }
 }

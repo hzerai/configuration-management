@@ -1,68 +1,139 @@
-<div class="w-50 mx-auto mt-5">
-  <div style="height: 310px">
-    <div class="input-group mb-1">
-      <span class="input-group-text w-25">Hostname</span>
-      <input
-        [disabled]="disabled"
-        [(ngModel)]="this.connection.hostname"
-        type="text"
-        class="form-control"
-      />
-    </div>
-    <div class="input-group mb-1">
-      <span class="input-group-text w-25">Port</span>
-      <input
-        [disabled]="disabled"
-        [(ngModel)]="this.connection.port"
-        type="number"
-        class="form-control"
-      />
-    </div>
-    <div class="input-group mb-1">
-      <span class="input-group-text w-25">Type</span>
-      <select
-        [disabled]="disabled"
-        [(ngModel)]="this.connection.databaseType"
-        class="form-select"
-        aria-label="Default select example"
-      >
-        <option selected>Database vendor</option>
-        <option value="Oracle">Oracle</option>
-        <option value="Postgre SQL">Postgre SQL</option>
-        <option value="Microsoft Server">Microsoft Server</option>
-      </select>
-    </div>
-    <div class="input-group mb-1">
-      <span class="input-group-text w-25">Database</span>
-      <input
-        [disabled]="disabled"
-        [(ngModel)]="this.connection.database"
-        type="text"
-        class="form-control"
-      />
-    </div>
-    <div class="input-group mb-1">
-      <span class="input-group-text w-25">User</span>
-      <input
-        [disabled]="disabled"
-        autocomplete="off"
-        [(ngModel)]="this.connection.user"
-        type="text"
-        class="form-control"
-      />
-    </div>
-    <div class="input-group">
-      <span class="input-group-text w-25">Password</span>
-      <input
-        autocomplete="off"
-        [disabled]="disabled"
-        [(ngModel)]="this.connection.password"
-        type="password"
-        class="form-control"
-      />
+<div class="w-75 mx-auto mt-5">
+  <div style="height: 400px">
+    <div
+      class="rounded px-2 py-2 mt-3"
+      style="margin-inline: 7rem; z-index: 11"
+    >
+      <div class="input-group mb-1">
+        <span class="input-group-text w-25">Hostname</span>
+        <input
+          [disabled]="this.current_configuration.source_connection.valid"
+          [(ngModel)]="this.current_configuration.source_connection.hostname"
+          type="text"
+          class="form-control"
+        />
+      </div>
+      <div class="input-group mb-1">
+        <span class="input-group-text w-25">Port</span>
+        <input
+          [disabled]="this.current_configuration.source_connection.valid"
+          [(ngModel)]="this.current_configuration.source_connection.port"
+          type="number"
+          class="form-control"
+        />
+      </div>
+      <div class="input-group mb-1">
+        <span class="input-group-text w-25">Type</span>
+        <select
+          [disabled]="this.current_configuration.source_connection.valid"
+          [(ngModel)]="
+            this.current_configuration.source_connection.databaseType
+          "
+          class="form-select"
+          aria-label="Default select example"
+        >
+          <option selected>Database vendor</option>
+          <option value="Oracle">Oracle</option>
+          <option value="Postgre SQL">Postgre SQL</option>
+          <option value="Microsoft Server">Microsoft Server</option>
+        </select>
+      </div>
+      <div class="input-group mb-1">
+        <span class="input-group-text w-25">Database</span>
+        <input
+          [disabled]="this.current_configuration.source_connection.valid"
+          [(ngModel)]="this.current_configuration.source_connection.database"
+          type="text"
+          class="form-control"
+        />
+      </div>
+      <div class="input-group mb-1">
+        <span class="input-group-text w-25">User</span>
+        <input
+          [disabled]="this.current_configuration.source_connection.valid"
+          autocomplete="off"
+          [(ngModel)]="this.current_configuration.source_connection.user"
+          type="text"
+          class="form-control"
+        />
+      </div>
+      <div class="input-group">
+        <span class="input-group-text w-25">Password</span>
+        <input
+          autocomplete="off"
+          [disabled]="this.current_configuration.source_connection.valid"
+          [(ngModel)]="this.current_configuration.source_connection.password"
+          type="password"
+          class="form-control"
+        />
+      </div>
+      <div class="d-flex">
+        <span class="input-group-text" style="width: 32.5%"
+          >Triggers's scripts</span
+        >
+
+        <div class="btn-group w-100" role="group">
+          <input
+            [(ngModel)]="
+              this.current_configuration.source_connection.scripts.commit
+            "
+            type="checkbox"
+            class="btn-check"
+            id="commit"
+            autocomplete="off"
+          />
+          <label class="btn btn-outline-secondary" for="commit">Commit</label>
+
+          <input
+            [(ngModel)]="
+              this.current_configuration.source_connection.scripts.download
+            "
+            type="checkbox"
+            class="btn-check"
+            id="download"
+            autocomplete="off"
+          />
+          <label class="btn btn-outline-secondary" for="download"
+            >Download</label
+          >
+
+          <input
+            [(ngModel)]="
+              this.current_configuration.source_connection.scripts.execute
+            "
+            type="checkbox"
+            class="btn-check"
+            id="execute"
+            autocomplete="off"
+          />
+          <label class="btn btn-outline-secondary" for="execute">Execute</label>
+        </div>
+      </div>
+      <div *ngIf="connectionStatus" class="mt-2">
+        <div
+          *ngIf="connectionStatus == 'SUCCESS'"
+          class="alert alert-success py-1"
+          role="alert"
+        >
+          Connection successful !!
+        </div>
+        <div
+          *ngIf="connectionStatus == 'FAIL'"
+          class="alert alert-danger py-1"
+          role="alert"
+        >
+          Connection unsuccessful..
+        </div>
+        <div
+          *ngIf="connectionStatus == 'INVALID'"
+          class="alert alert-danger py-1"
+          role="alert"
+        >
+          {{ this.errorMessage }}
+        </div>
+      </div>
     </div>
   </div>
-
   <div
     class="d-grid gap-2 d-md-flex justify-content-md-end mt-4"
     style="position: relative"
@@ -76,15 +147,18 @@
     >
 
     <button
-      *ngIf="disabled"
-      (click)="this.connection.valid = false; disabled = false"
+      *ngIf="this.current_configuration.source_connection.valid"
+      (click)="
+        this.current_configuration.source_connection.valid = false;
+        disabled = false
+      "
       class="btn btn-info me-md-2"
       type="button"
     >
       Edit connection
     </button>
     <button
-      *ngIf="!disabled"
+      *ngIf="!this.current_configuration.source_connection.valid"
       (click)="validateConnection()"
       class="btn btn-success me-md-2"
       type="button"
@@ -92,35 +166,12 @@
       Test connection
     </button>
     <button
-      [disabled]="!this.connection.valid"
+      [disabled]="!this.current_configuration.source_connection.valid"
       (click)="step()"
       class="btn btn-primary"
       type="button"
     >
       Next
     </button>
-  </div>
-  <div *ngIf="connectionStatus" class="mt-2">
-    <div
-      *ngIf="connectionStatus == 'SUCCESS'"
-      class="alert alert-success py-1"
-      role="alert"
-    >
-      Connection successful !!
-    </div>
-    <div
-      *ngIf="connectionStatus == 'FAIL'"
-      class="alert alert-danger py-1"
-      role="alert"
-    >
-      Connection unsuccessful..
-    </div>
-    <div
-      *ngIf="connectionStatus == 'INVALID'"
-      class="alert alert-danger py-1"
-      role="alert"
-    >
-      {{ this.errorMessage }}
-    </div>
   </div>
 </div>

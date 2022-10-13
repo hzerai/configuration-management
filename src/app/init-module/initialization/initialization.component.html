@@ -1,0 +1,54 @@
+<div
+  [ngStyle]="{ display: started ? '' : 'none' }"
+  class="text-center"
+  style="position: relative"
+>
+  <h3>Initialization process</h3>
+  <div class="row">
+    <img
+      *ngIf="!executed && !finished && !executing"
+      class="col-1"
+      style="margin-top: 6.4rem"
+      role="button"
+      (click)="execute()"
+      src="assets\img\play.jpg"
+      width="30px"
+      height="60px"
+    />
+
+    <div
+      id="flow"
+      class="col-{{
+        !executed && !finished && !executing ? '11' : '12'
+      }} mermaid"
+    ></div>
+  </div>
+
+  <div
+    *ngIf="finished"
+    style="position: absolute; z-index: -1; top: 300px; left: -400px"
+  >
+    <img src="assets\img\done.png" width="20%" />
+  </div>
+
+  <div *ngIf="finished" class="w-100 text-end mt-3">
+    <button
+      *ngIf="hasErrors"
+      (click)="retryFailedTasks()"
+      role="button"
+      class="btn btn-outline-danger ms-auto"
+    >
+      Retry failed tasks
+    </button>
+    <!-- Button trigger modal -->
+    <button
+      type="button"
+      data-bs-toggle="modal"
+      data-bs-target="#save"
+      role="button"
+      class="mx-2 btn btn-success"
+    >
+      Save and quit
+    </button>
+  </div>
+</div>

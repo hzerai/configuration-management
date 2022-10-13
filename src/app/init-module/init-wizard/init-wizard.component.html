@@ -1,9 +1,9 @@
-<div>
+<div *ngIf="!starting && !started">
   <div class="text-center">
-    <p class="fs-1">Triggers generator</p>
+    <h3>Configuration setup</h3>
   </div>
   <div
-    class="my-5 mx-auto d-flex align-items-center justify-content-center"
+    class="mt-2 mx-auto d-flex align-items-center justify-content-center"
     style="width: 50vw"
   >
     <div style="position: relative">
@@ -16,9 +16,7 @@
       >
         1
       </div>
-      <div style="position: absolute; bottom: -30px; left: -100%; width: 200px">
-        Source database
-      </div>
+      <div style="position: absolute; bottom: -30px; left: 20%">Git</div>
     </div>
     <div
       class="rounded-pill flex-grow-1 mx-2"
@@ -34,9 +32,7 @@
       >
         2
       </div>
-      <div style="position: absolute; bottom: -30px; left: -90%; width: 200px">
-        Target database
-      </div>
+      <div style="position: absolute; bottom: -30px; left: -30%">Database</div>
     </div>
     <div
       class="rounded-pill flex-grow-1 mx-2"
@@ -52,9 +48,7 @@
       >
         3
       </div>
-      <div style="position: absolute; bottom: -30px; left: -130%; width: 200px">
-        Configuration tables
-      </div>
+      <div style="position: absolute; bottom: -30px">Tables</div>
     </div>
     <div
       class="rounded-pill flex-grow-1 mx-2"
@@ -70,9 +64,7 @@
       >
         4
       </div>
-      <div style="position: absolute; bottom: -30px; left: -40%; width: 200px">
-        Initial state
-      </div>
+      <div style="position: absolute; bottom: -30px; left: -10%">Baseline</div>
     </div>
     <div
       class="rounded-pill flex-grow-1 mx-2"
@@ -88,24 +80,20 @@
       >
         5
       </div>
-      <div style="position: absolute; bottom: -30px; left: -60%; width: 200px">
-        Audit scripts
-      </div>
+      <div style="position: absolute; bottom: -30px; left: -30%">Summary</div>
     </div>
   </div>
 
-  <app-connect
+  <app-git
     *ngIf="currentStep == 1"
-    [con_step]="1"
     [current_configuration]="this.current_configuration"
     (step)="step($event)"
-  ></app-connect>
+  ></app-git>
   <app-connect
     *ngIf="currentStep == 2"
-    [con_step]="2"
     [current_configuration]="this.current_configuration"
-    (step_back)="step_back($event)"
     (step)="step($event)"
+    (step_back)="step_back($event)"
   ></app-connect>
   <app-tables
     *ngIf="currentStep == 3"
@@ -113,16 +101,72 @@
     (step_back)="step_back($event)"
     [current_configuration]="this.current_configuration"
   ></app-tables>
-  <app-head
+  <app-baseline
     *ngIf="currentStep == 4"
     (step)="step($event)"
     (step_back)="step_back($event)"
     [current_configuration]="this.current_configuration"
-  ></app-head>
-  <app-scripts
+  ></app-baseline>
+  <app-summary
     *ngIf="currentStep == 5"
     (step_back)="step_back($event)"
-    (save)="save($event)"
+    (starter)="start($event)"
     [current_configuration]="this.current_configuration"
-  ></app-scripts>
+  ></app-summary>
+</div>
+<div *ngIf="starting && !started" class="text-center">
+  <img src="assets\img\rocket.gif" />
+</div>
+<app-initialization
+  [current_configuration]="this.current_configuration"
+></app-initialization>
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="save"
+  tabindex="-1"
+  aria-labelledby="saveLabl"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="saveLabl">Save configuration</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="input-group mb-1">
+          <span class="input-group-text">Name : </span>
+          <input
+            [(ngModel)]="this.current_configuration.name"
+            type="text"
+            class="form-control"
+          />
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-{{ false ? '' : 'outline-' }}secondary"
+          data-bs-dismiss="modal"
+        >
+          Close
+        </button>
+        <button
+          (click)="save()"
+          [disabled]="!this.current_configuration.name || saved"
+          type="button"
+          class="btn btn-primary"
+        >
+          Save changes
+        </button>
+      </div>
+    </div>
+  </div>
 </div>

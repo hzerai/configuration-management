@@ -3,12 +3,12 @@ import { ActivatedRoute } from '@angular/router';
 import { Configuration } from 'src/app/models/models';
 
 @Component({
-  selector: 'app-wizard',
-  templateUrl: './wizard.component.html',
-  styleUrls: ['./wizard.component.css'],
+  selector: 'app-compare-wizard',
+  templateUrl: './compare-wizard.component.html',
+  styleUrls: ['./compare-wizard.component.css'],
 })
-export class WizardComponent implements OnInit {
-  currentStep: number = 3;
+export class CompareWizardComponent implements OnInit {
+  currentStep: number = 1;
   current_configuration: Configuration;
   constructor(private activatedRouter: ActivatedRoute) {}
 
