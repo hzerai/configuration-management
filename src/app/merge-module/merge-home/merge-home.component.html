@@ -26,32 +26,57 @@
   class="d-flex align-items-center"
   style="font-size: 16px; font-weight: 470"
 >
-  <div role="button" class="border-bottom border-3 border-primary pb-1">
+  <div
+    role="button"
+    (click)="showing = 'OPEN'"
+    class="pb-1"
+    [ngClass]="{ 'border-bottom border-3 border-primary ': showing === 'OPEN' }"
+  >
     Open<span
       class="badge text-secondary ms-1 pb-2"
       style="font-size: 10px; background-color: rgb(242, 242, 242)"
-      >1</span
+      >{{ open }}</span
     >
   </div>
-  <div role="button" class="ms-4 pb-1">
+  <div
+    role="button"
+    (click)="showing = 'MERGED'"
+    class="ms-4 pb-1"
+    [ngClass]="{
+      'border-bottom border-3 border-primary ': showing === 'MERGED'
+    }"
+  >
     Merged<span
       class="badge text-secondary ms-1 pb-2"
       style="font-size: 10px; background-color: rgb(242, 242, 242)"
-      >0</span
+      >{{ merged }}</span
     >
   </div>
-  <div role="button" class="ms-4 pb-1">
+  <div
+    role="button"
+    (click)="showing = 'CLOSED'"
+    class="ms-4 pb-1"
+    [ngClass]="{
+      'border-bottom border-3 border-primary ': showing === 'CLOSED'
+    }"
+  >
     Closed<span
       class="badge text-secondary ms-1 pb-2"
       style="font-size: 10px; background-color: rgb(242, 242, 242)"
-      >0</span
+    >
+      {{ closed }}</span
     >
   </div>
-  <div role="button" class="ms-4 pb-1">
+  <div
+    role="button"
+    (click)="showing = 'ALL'"
+    class="ms-4 pb-1"
+    [ngClass]="{ 'border-bottom border-3 border-primary ': showing === 'ALL' }"
+  >
     All<span
       class="badge text-secondary ms-1 pb-2"
       style="font-size: 10px; background-color: rgb(242, 242, 242)"
-      >1</span
+      >{{ open + merged + closed }}</span
     >
   </div>
 </div>
@@ -87,7 +112,14 @@
 
 <div class="mt-2">
   <div *ngFor="let commit of commits">
-    <div class="w-100 d-flex justify-content-between">
+    <div
+      *ngIf="
+        commit.status === showing ||
+        showing == 'ALL' ||
+        (showing == 'OPEN' && !commit.status)
+      "
+      class="w-100 d-flex justify-content-between"
+    >
       <div class="d-flex flex-column ms-2">
         <div
           style="font-size: 18px; font-weight: 500"
@@ -121,6 +153,13 @@
         </div>
       </div>
     </div>
-    <hr class="mb-1 mt-2" />
+    <hr
+      *ngIf="
+        commit.status === showing ||
+        showing == 'ALL' ||
+        (showing == 'OPEN' && !commit.status)
+      "
+      class="mb-1 mt-2"
+    />
   </div>
 </div>

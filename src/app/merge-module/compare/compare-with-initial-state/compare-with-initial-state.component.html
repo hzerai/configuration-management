@@ -1,0 +1,12 @@
+<div class="w-100 d-flex py-3">
+  <div class="text-center fw-bold fs-5 ps-2 pe-4">
+    <div class="sticky-top">{{ table }}</div>
+  </div>
+  <div class="flex-grow-1 px-2 mt-1">
+    <app-compare-operation
+      *ngFor="let change_per_record of change_per_table; let i = index"
+      [change_per_record]="change_per_record"
+      [hr]="i != change_per_table.length - 1"
+    ></app-compare-operation>
+  </div>
+</div>

@@ -260,28 +260,32 @@ export class CompareComponent implements OnInit {
     //   'configuration_management_commits',
     //   JSON.stringify(commits)
     // );
-
+    this.notifierService.notify('info', 'Pushing to the cloud!', 'COMMIT');
     this.pushing = true;
-    var commit = {
-      commit_id: 'DELTA_1',
-      commit_message: this.commit_message,
-      commit_author: this.commit_author,
-      commited_at: this.commit_date,
-      configuration_name: 'SampleProjectConfiguration1',
-      changes: this.changed_tables.map((t) => {
-        return { table: t, lines: this.change_with_initial[t] };
-      }),
-    };
-    console.log(JSON.stringify(commit));
     var cm_commits_str = window.localStorage.getItem('cm_commits');
     var cm_commits = [];
     if (cm_commits_str) {
       cm_commits = JSON.parse(cm_commits_str);
     }
-    cm_commits = cm_commits.filter((c) => commit.commit_id != c.commit_id);
+    var commit_id =
+      this.current_configuration.name + '#' + (cm_commits.length + 1);
+    cm_commits = cm_commits.filter((c) => commit_id != c.commit_id);
+    var commit = {
+      commit_id: commit_id,
+      commit_message: this.commit_message,
+      commit_author: this.commit_author,
+      commited_at: this.commit_date,
+      configuration_name: this.current_configuration.name,
+      changes: this.changed_tables.map((t) => {
+        return { table: t, lines: this.change_with_initial[t] };
+      }),
+    };
+    console.log(JSON.stringify(commit));
+
     cm_commits.push(commit);
     window.localStorage.setItem('cm_commits', JSON.stringify(cm_commits));
     setTimeout(() => {
+      this.notifierService.hide('COMMIT');
       this.notifierService.notify(
         'success',
         'Your commit was pushed successfully!'

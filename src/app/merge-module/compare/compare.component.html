@@ -62,7 +62,7 @@
         </div>
       </div>
       <button
-        (click)="step_back()"
+        (click)="back()"
         style="z-index: 99"
         class="btn btn-secondary mt-2 px-5 fw-bold"
         type="button"
@@ -70,7 +70,8 @@
         Back
       </button>
     </div>
-    <div class="col-8 mx-auto d-flex flex-column hide-scroll-bar">
+    <div class="col-2"></div>
+    <div class="col-10 mx-auto d-flex flex-column hide-scroll-bar">
       <div class="input-group mb-1">
         <input
           [(ngModel)]="search"
@@ -91,58 +92,6 @@
         ></app-compare-with-initial-state>
       </div>
     </div>
-    <div
-      class="col-2 d-flex flex-column align-items-center position-fixed"
-      style="height: 500px; right: 50px"
-    >
-      <div
 
-        style="height: 400px; overflow: auto; width: 100%"
-      >
-        <div  class="shadow-lg rounded border p-2" *ngIf="!pushed">
-          <div class=" d-flex flex-column">
-            <span
-              >Changes : <b>{{ changed_tables.length }}</b></span
-            >
-            <label for="commit-message">Commit message :</label>
-          </div>
-
-          <textarea
-            [(ngModel)]="commit_message"
-            style="min-height: 80%; min-width: 90%"
-            class="mx-2 rounded border-secondary"
-            name="commit-message"
-            id="commit-message"
-          ></textarea>
-        </div>
-        <div *ngIf="pushed" class=" p-2 d-flex flex-column shadow-lg rounded border" style="font-size: 12px;">
-          <span
-            >Changes : <b>{{ changed_tables.length }}</b></span
-          >
-          <span>Message : {{ this.commit_message }}</span>
-          <span>Author : {{ this.commit_author }}</span>
-          <span>date : {{ this.commit_date | date: "short" }}</span>
-        </div>
-      </div>
-      <button
-        [disabled]="!commit_message || pushing"
-        style="z-index: 99"
-        (click)="commit()"
-        class="btn btn-primary mt-2 px-3 fw-bold"
-        type="button"
-      >
-        <div class="d-flex align-items-center">
-          <div *ngIf="!pushed">Commit & Push</div>
-          <div *ngIf="pushed">Close</div>
-          <div
-            *ngIf="pushing"
-            class="spinner-border ms-2"
-            style="width: 25px; height: 25px"
-            role="status"
-            aria-hidden="true"
-          ></div>
-        </div>
-      </button>
-    </div>
   </div>
 </div>

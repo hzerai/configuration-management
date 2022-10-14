@@ -26,7 +26,6 @@ import { ConfigComponent } from './config/config.component';
     ConfigComponent,
     CompareWizardComponent,
     ChangesComponent,
-
     ViewOneChangeComponent,
     ViewChangeRecordsComponent,
     ViewRecordStateComponent,
