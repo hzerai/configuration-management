@@ -1,10 +1,13 @@
-<div class="text-center">
-  <p class="fs-4">
-    Current configuration : <b>{{ current_configuration.name }}</b>
-  </p>
+<div>
+  <div class="text-center">
+    <h5 *ngIf="current_configuration">
+      Current configuration : <b>{{ current_configuration?.name }}</b>
+    </h5>
+    <h5 *ngIf="!current_configuration">Compare</h5>
+  </div>
 </div>
 <div
-  class="my-5 mx-auto d-flex align-items-center justify-content-center"
+  class="mt-2 mx-auto d-flex align-items-center justify-content-center"
   style="width: 50vw"
 >
   <div style="position: relative">
@@ -17,16 +20,15 @@
     >
       1
     </div>
-    <div style="position: absolute; bottom: -30px">Delta</div>
+    <div style="position: absolute; bottom: -30px; left: -25px">
+      Configuration
+    </div>
   </div>
   <div
     class="rounded-pill flex-grow-1 mx-2"
     style="height: 10px; background-color: #e7eeec"
   ></div>
-  <div
-    *ngIf="!this.current_configuration.baseline.generated"
-    style="position: relative"
-  >
+  <div style="position: relative">
     <div
       (click)="goto(2)"
       role="button"
@@ -36,26 +38,7 @@
     >
       2
     </div>
-    <div style="position: absolute; bottom: -30px; left: -20%">Baseline</div>
-  </div>
-  <div
-    *ngIf="!this.current_configuration.baseline.generated"
-    class="rounded-pill flex-grow-1 mx-2"
-    style="height: 10px; background-color: #e7eeec"
-  ></div>
-  <div style="position: relative">
-    <div
-      (click)="goto(this.current_configuration.baseline.generated ? 2 : 3)"
-      role="button"
-      class="rounded-circle d-flex align-items-center justify-content-center fs-5 pb-1"
-      [ngStyle]="
-        getStepsCss(this.current_configuration.baseline.generated ? 2 : 3)
-      "
-      style="position: relative"
-    >
-      {{ this.current_configuration.baseline.generated ? "2" : "3" }}
-    </div>
-    <div style="position: absolute; bottom: -30px; left: -30%">Compare</div>
+    <div style="position: absolute; bottom: -30px; left: 5px">Delta</div>
   </div>
   <div
     class="rounded-pill flex-grow-1 mx-2"
@@ -63,31 +46,150 @@
   ></div>
   <div style="position: relative">
     <div
-      (click)="goto(this.current_configuration.baseline.generated ? 3 : 4)"
+      (click)="goto(3)"
+      role="button"
+      class="rounded-circle d-flex align-items-center justify-content-center fs-5 pb-1"
+      [ngStyle]="getStepsCss(3)"
+      style="position: relative"
+    >
+      3
+    </div>
+    <div style="position: absolute; bottom: -30px; left: -5px">Changes</div>
+  </div>
+  <div
+    class="rounded-pill flex-grow-1 mx-2"
+    style="height: 10px; background-color: #e7eeec"
+  ></div>
+  <div
+    *ngIf="
+      this.current_configuration &&
+      !this.current_configuration?.baseline.generated
+    "
+    style="position: relative"
+  >
+    <div
+      (click)="goto(4)"
+      role="button"
+      class="rounded-circle d-flex align-items-center justify-content-center fs-5 pb-1"
+      [ngStyle]="getStepsCss(4)"
+      style="position: relative"
+    >
+      4
+    </div>
+    <div style="position: absolute; bottom: -30px; left: -10%">Baseline</div>
+  </div>
+  <div
+    *ngIf="
+      this.current_configuration &&
+      !this.current_configuration?.baseline.generated
+    "
+    class="rounded-pill flex-grow-1 mx-2"
+    style="height: 10px; background-color: #e7eeec"
+  ></div>
+  <div style="position: relative">
+    <div
+      (click)="
+        goto(
+          !this.current_configuration ||
+            this.current_configuration?.baseline.generated
+            ? 4
+            : 5
+        )
+      "
       role="button"
       class="rounded-circle d-flex align-items-center justify-content-center fs-5 pb-1"
       [ngStyle]="
-        getStepsCss(this.current_configuration.baseline.generated ? 3 : 4)
+        getStepsCss(
+          !this.current_configuration ||
+            this.current_configuration?.baseline.generated
+            ? 4
+            : 5
+        )
       "
       style="position: relative"
     >
-      {{ this.current_configuration.baseline.generated ? "3" : "4" }}
+      {{
+        !this.current_configuration ||
+        this.current_configuration?.baseline.generated
+          ? "4"
+          : "5"
+      }}
     </div>
-    <div style="position: absolute; bottom: -30px; left: -20%">commit</div>
+    <div style="position: absolute; bottom: -30px; left: -10%">Commit</div>
   </div>
+  <!-- <div
+    class="rounded-pill flex-grow-1 mx-2"
+    style="height: 10px; background-color: #e7eeec"
+  ></div>
+  <div style="position: relative">
+    <div
+      (click)="
+        goto(
+          !this.current_configuration ||
+            this.current_configuration?.baseline.generated
+            ? 5
+            : 6
+        )
+      "
+      role="button"
+      class="rounded-circle d-flex align-items-center justify-content-center fs-5 pb-1"
+      [ngStyle]="
+        getStepsCss(
+          !this.current_configuration ||
+            this.current_configuration?.baseline.generated
+            ? 5
+            : 6
+        )
+      "
+      style="position: relative"
+    >
+      {{
+        !this.current_configuration ||
+        this.current_configuration?.baseline.generated
+          ? "5"
+          : "6"
+      }}
+    </div>
+    <div style="position: absolute; bottom: -30px; left: 10%">Push</div>
+  </div> -->
 </div>
-
+<app-config (step)="step($event)" *ngIf="currentStep == 1"></app-config>
 <app-delta
+  [delta]="delta"
+  (step)="step($event)"
+  (step_back)="step_back($event)"
   [current_configuration]="current_configuration"
-  *ngIf="currentStep == 1"
+  *ngIf="currentStep == 2"
 ></app-delta>
+<app-changes
+  [delta]="delta"
+  (step)="step($event)"
+  (step_back)="step_back($event)"
+  [current_configuration]="current_configuration"
+  *ngIf="currentStep == 3"
+></app-changes>
 <app-second-baseline
-  *ngIf="currentStep == (this.current_configuration.baseline.generated ? 999 : 2)"
+  *ngIf="
+    currentStep ==
+    (!this.current_configuration ||
+    this.current_configuration?.baseline.generated
+      ? 999
+      : 4)
+  "
   (step)="step($event)"
   (step_back)="step_back($event)"
   [current_configuration]="this.current_configuration"
 ></app-second-baseline>
 <app-compare
+(step)="step($event)"
+  (step_back)="step_back($event)"
+  [delta]="delta"
   [current_configuration]="current_configuration"
-  *ngIf="currentStep == (this.current_configuration.baseline.generated ? 2 : 3)"
+  *ngIf="
+    currentStep ==
+    (!this.current_configuration ||
+    this.current_configuration?.baseline.generated
+      ? 4
+      : 5)
+  "
 ></app-compare>

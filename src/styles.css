@@ -320,3 +320,23 @@ pre {
 .key {
   color: #fff;
 }
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c3c0c0;
+  border-radius: 10px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  border: 0;
+  background: rgb(13, 110, 253);
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}

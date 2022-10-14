@@ -96,7 +96,7 @@ export class InitWizardComponent implements OnInit {
   getStepsCss(htmlStep) {
     return htmlStep == this.currentStep
       ? {
-          'background-color': 'royalblue',
+          'background-color': 'rgb(13,110,253)',
           color: 'white',
           height: '40px',
           width: '40px',

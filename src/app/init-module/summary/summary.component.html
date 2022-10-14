@@ -1,7 +1,7 @@
 <div class="w-75 mx-auto mt-5">
   <div style="height: 400px; font-size: 13px">
     <div
-      class="shadow rounded border px-5 pt-2 mt-3"
+      class="shadow rounded border px-5 pt-3 mt-3"
       style="margin-inline: 7rem"
     >
       <ol>
@@ -107,39 +107,34 @@
         </li>
       </ol>
     </div>
-
-    <div
-      *ngIf="!this.current_configuration.initialized"
-      class="w-100 d-flex flex-column align-items-center"
-    >
-      <img
-        class="shadow p-2 rounded-pill my-2"
-        role="button"
-        (click)="start()"
-        src="assets\img\launch.jpg"
-        width="120px"
-      />
-
-      <p role="button mt-2">
-        <b
-          ><i><u>Launch with this settings</u></i></b
-        >
-      </p>
-    </div>
   </div>
-  <div class="d-flex justify-content-between mt-4">
-    <button (click)="step_back()" class="btn btn-secondary" type="button">
-      Back
-    </button>
-    <div>
-      <!-- Button trigger modal -->
+  <div class="w-100 d-flex justify-content-center mt-4">
+    <div class="btn-group">
+      <button
+        (click)="step_back()"
+        class="btn btn-secondary mx-1 px-5 fw-bold"
+        type="button"
+      >
+        Back
+      </button>
+
       <button
         type="button"
         class="btn btn-success"
         data-bs-toggle="modal"
         data-bs-target="#save"
+        class="btn btn-success mx-1 px-5 fw-bold"
       >
-        Save configuration
+        Save
+      </button>
+      <button
+        role="button"
+        (click)="start()"
+        *ngIf="!this.current_configuration.initialized"
+        class="btn btn-primary mx-1 ps-5 fw-bold"
+      >
+        Start
+        <img class="text-white mx-3 " role="button" src="assets\img\launch.webp" height="25px" />
       </button>
     </div>
   </div>

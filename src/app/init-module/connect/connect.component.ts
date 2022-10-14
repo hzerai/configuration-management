@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { NotifierService } from 'angular-notifier';
 import { Configuration, Connection } from 'src/app/models/models';
 
 @Component({
@@ -7,8 +8,7 @@ import { Configuration, Connection } from 'src/app/models/models';
   styleUrls: ['./connect.component.css'],
 })
 export class ConnectComponent implements OnInit {
-  errorMessage: string;
-  connectionStatus: string;
+  advanced: boolean = false;
 
   @Input('current_configuration')
   current_configuration: Configuration;
@@ -19,7 +19,7 @@ export class ConnectComponent implements OnInit {
   @Output('step_back')
   step_back_event = new EventEmitter<any>();
 
-  constructor() {}
+  constructor(private notifierService: NotifierService) {}
 
   ngOnInit(): void {
     if (!this.current_configuration.source_connection.valid) {
@@ -62,21 +62,40 @@ export class ConnectComponent implements OnInit {
       invalids.push('databaseType');
     }
     if (invalids.length > 0) {
-      this.errorMessage = 'Invalid ' + invalids.join(',');
+      this.current_configuration.source_connection.valid = false;
+      this.notifierService.notify('error', 'Invalid ' + invalids.join(', '));
       return false;
     }
     this.current_configuration.source_connection.valid = true;
-    this.errorMessage = null;
     return true;
   }
 
   validateConnection(): boolean {
     if (this.validateInput()) {
-      this.connectionStatus = 'SUCCESS';
+      this.notifierService.notify('success', ' Connection successful');
       return true;
     }
-    this.connectionStatus = 'INVALID';
     return false;
+  }
+
+  defaultPort() {
+    if (
+      this.current_configuration.source_connection.databaseType === 'PostgreSQL'
+    ) {
+      this.current_configuration.source_connection.port = 5432;
+    } else if (
+      this.current_configuration.source_connection.databaseType === 'Oracle'
+    ) {
+      this.current_configuration.source_connection.port = 1521;
+    } else if (
+      this.current_configuration.source_connection.databaseType === 'SQL Server'
+    ) {
+      this.current_configuration.source_connection.port = 1433;
+    } else if (
+      this.current_configuration.source_connection.databaseType === 'MySQL'
+    ) {
+      this.current_configuration.source_connection.port = 3306;
+    }
   }
 
   step() {

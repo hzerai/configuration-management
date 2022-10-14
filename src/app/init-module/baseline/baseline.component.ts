@@ -20,7 +20,9 @@ export class BaseLineComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.advanced =  this.current_configuration.baseline.generate;
+  }
 
   step() {
     this.current_configuration.baseline.generated =

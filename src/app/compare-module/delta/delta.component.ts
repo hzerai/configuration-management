@@ -1,6 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Cursor } from 'src/app/Cursor';
 import { Configuration, Delta } from 'src/app/models/models';
-import { fake_tables_changes } from './fakedata';
+import { table_changes } from '../changes/fakedata';
 
 @Component({
   selector: 'app-delta',
@@ -8,33 +9,39 @@ import { fake_tables_changes } from './fakedata';
   styleUrls: ['./delta.component.css'],
 })
 export class DeltaComponent implements OnInit {
-  delta: Delta = {
-    start_date: null,
-    end_date: null,
-    issues: null,
-    modules: null,
-    user: null,
-    tables: null,
-    changes: null,
-  };
+  @Input('delta')
+  delta: Delta;
+
+  @Output('step')
+  stepEvent = new EventEmitter<any>();
+
+  @Output('step_back')
+  step_back_event = new EventEmitter<any>();
 
   generatingDelta: boolean = false;
-  generatedDelta: boolean = false;
+
+  advanced: boolean = false;
 
   @Input('current_configuration')
   current_configuration: Configuration;
-
   constructor() {}
 
   ngOnInit(): void {}
 
   generateDelta() {
     this.generatingDelta = true;
-
+    Cursor.startLoading(1000)
     setTimeout(() => {
-      this.generatedDelta = true;
-      this.generatingDelta = false;
-      this.delta.changes = fake_tables_changes;
+      this.delta.changes = table_changes;
+      this.step();
     }, 1000);
+  }
+
+  step() {
+    this.stepEvent.emit(null);
+  }
+
+  step_back() {
+    this.step_back_event.emit(null);
   }
 }

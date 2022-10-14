@@ -14,6 +14,11 @@ const routes: Routes = [
       import('./compare-module/compare.module').then((m) => m.CompareModule),
   },
   {
+    path: 'merge',
+    loadChildren: () =>
+      import('./merge-module/merge.module').then((m) => m.MergeModule),
+  },
+  {
     path: '**',
     component: LandingPageComponent,
   },

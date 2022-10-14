@@ -1,20 +1,20 @@
-import { formatDate } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Cursor } from 'src/app/Cursor';
 import { Configuration, Delta } from 'src/app/models/models';
 
 @Component({
-  selector: 'app-delta-view',
-  templateUrl: './view.component.html',
-  styleUrls: ['./view.component.css'],
+  selector: 'app-changes',
+  templateUrl: './changes.component.html',
+  styleUrls: ['./changes.component.css'],
 })
-export class ViewComponent implements OnInit {
+export class ChangesComponent implements OnInit {
   @Input('delta')
-  delta: any;
+  delta: Delta;
 
   @Input('current_configuration')
   current_configuration: Configuration;
 
-  saved: boolean = false;
+  // saved: boolean = false;
 
   total_inserts: number = 0;
   total_deletes: number = 0;
@@ -25,6 +25,13 @@ export class ViewComponent implements OnInit {
   table_names: string[] = [];
   table_names_filtered: string[] = [];
   selectedTable: string;
+  commiting : boolean = false;
+
+  @Output('step')
+  stepEvent = new EventEmitter<any>();
+
+  @Output('step_back')
+  step_back_event = new EventEmitter<any>();
 
   constructor() {}
 
@@ -36,6 +43,25 @@ export class ViewComponent implements OnInit {
       this.total_deletes += t.inserts;
     });
     this.table_names_filtered = [...this.table_names];
+
+    // DATA AUGMENTATION
+    // this.delta.changes.push(...this.delta.changes);
+    // this.delta.changes.push(...this.delta.changes);
+    // this.delta.changes.push(...this.delta.changes);
+    // this.delta.changes.push(...this.delta.changes);
+    // this.delta.changes.push(...this.delta.changes);
+    // this.table_names_filtered.push(...this.table_names);
+    // this.table_names_filtered.push(...this.table_names);
+    // this.table_names_filtered.push(...this.table_names);
+    // this.table_names_filtered.push(...this.table_names);
+    // this.table_names_filtered.push(...this.table_names);
+    // this.table_names_filtered.push(...this.table_names);
+    // this.table_names_filtered.push(...this.table_names);
+    // this.table_names_filtered.push(...this.table_names);
+    // this.table_names_filtered.push(...this.table_names);
+
+    // this.table_names_filtered.push(...this.table_names);
+
     this.total_changes =
       this.total_inserts + this.total_deletes + this.total_updates;
 
@@ -82,17 +108,18 @@ export class ViewComponent implements OnInit {
         this.changes_summary.substring(pos + 5);
     }
     this.changes_summary =
-      'Showing <b>' +
+      'Showing  <b>' +
       this.total_changes +
       ' changed records </b> with ' +
       this.changes_summary;
+    document.getElementById('changes_summary').innerHTML = this.changes_summary;
   }
 
-  saveDelta() {
-    if (!this.delta.name || this.delta.name.length == 0)
-      this.current_configuration.deltas.push(this.delta);
-    this.saved = true;
-  }
+  // saveDelta() {
+  //   if (!this.delta.name || this.delta.name.length == 0)
+  //     this.current_configuration.deltas.push(this.delta);
+  //   this.saved = true;
+  // }
 
   filterTablNames() {
     if (this.selectedTable && this.selectedTable.length > 0) {
@@ -108,15 +135,27 @@ export class ViewComponent implements OnInit {
     document.getElementById(t).scrollIntoView(false);
   }
 
-  download() {
-    var a = document.createElement('a');
-    const blob = new Blob([JSON.stringify(this.delta)], { type: 'json' });
-    a.href = URL.createObjectURL(blob);
-    a.download =
-      this.current_configuration.name +
-      '-delta-' +
-      formatDate(new Date(), 'YYYY-MM-dd_HH:mm:ss', 'en') +
-      '.json';
-    a.click();
+  // download() {
+  //   var a = document.createElement('a');
+  //   const blob = new Blob([JSON.stringify(this.delta)], { type: 'json' });
+  //   a.href = URL.createObjectURL(blob);
+  //   a.download =
+  //     this.current_configuration.name +
+  //     '-delta-' +
+  //     formatDate(new Date(), 'YYYY-MM-dd_HH:mm:ss', 'en') +
+  //     '.json';
+  //   a.click();
+  // }
+  step() {
+    this.commiting = true;
+    Cursor.startLoading(1500);
+    setTimeout(() => {
+      this.commiting = false;
+      this.stepEvent.emit(null);
+    }, 1000);
+  }
+
+  step_back() {
+    this.step_back_event.emit(null);
   }
 }

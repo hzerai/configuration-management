@@ -1,8 +1,8 @@
 <div class="w-75 mx-auto mt-5">
-  <div style="height: 400px; ">
+  <div style="height: 400px">
     <div
-      class="shadow rounded border px-5 pt-2 mt-3"
-      style="margin-inline: 7rem; z-index: 11"
+      class="shadow rounded border px-5 pt-3 mt-3"
+      style="margin-inline: 7rem; z-index: 11; font-size: 14px"
     >
       <p>
         The <b>Baseline</b> is the initial state of the target environment. It's
@@ -53,68 +53,72 @@
       </p>
 
       <div *ngIf="advanced" class="d-flex mb-4">
-        <span class="input-group-text" style="width: 32.5%"
-          >Generation options :
-        </span>
-
-        <div class="btn-group w-100" role="group">
-          <input
-            (change)="generateChanged()"
-            [(ngModel)]="this.current_configuration.baseline.generate"
-            type="checkbox"
-            class="btn-check"
-            id="execute"
-            autocomplete="off"
-          />
-          <label class="btn btn-outline-secondary" for="execute"
-            >Generate</label
-          >
-          <input
-            (change)="
-              !this.current_configuration.baseline.commit
-                ? (this.current_configuration.baseline.download = true)
-                : ''
-            "
-            [disabled]="!this.current_configuration.baseline.generate"
-            [(ngModel)]="this.current_configuration.baseline.commit"
-            type="checkbox"
-            class="btn-check"
-            id="commit"
-            autocomplete="off"
-          />
-          <label class="btn btn-outline-secondary" for="commit">Commit</label>
-
-          <input
-            (change)="
-              !this.current_configuration.baseline.download
-                ? (this.current_configuration.baseline.commit = true)
-                : ''
-            "
-            [disabled]="!this.current_configuration.baseline.generate"
-            [(ngModel)]="this.current_configuration.baseline.download"
-            type="checkbox"
-            class="btn-check"
-            id="download"
-            autocomplete="off"
-          />
-          <label class="btn btn-outline-secondary" for="download"
-            >Download</label
-          >
+        <small ><b>Generation options :</b></small>
+        <div class="ms-3">
+          <div class="form-check form-switch" role="group">
+            <input
+              (change)="generateChanged()"
+              [(ngModel)]="this.current_configuration.baseline.generate"
+              type="checkbox"
+              class="form-check-input"
+              id="generate"
+              autocomplete="off"
+            />
+            <label class="form-check-label" for="generate">Generate</label>
+          </div>
+          <div class="form-check form-switch" role="group">
+            <input
+              (change)="
+                !this.current_configuration.baseline.commit
+                  ? (this.current_configuration.baseline.download = true)
+                  : ''
+              "
+              [disabled]="!this.current_configuration.baseline.generate"
+              [(ngModel)]="this.current_configuration.baseline.commit"
+              type="checkbox"
+              class="form-check-input"
+              id="commit"
+              autocomplete="off"
+            />
+            <label class="form-check-label" for="commit">Commit</label>
+          </div>
+          <div class="form-check form-switch" role="group">
+            <input
+              (change)="
+                !this.current_configuration.baseline.download
+                  ? (this.current_configuration.baseline.commit = true)
+                  : ''
+              "
+              [disabled]="!this.current_configuration.baseline.generate"
+              [(ngModel)]="this.current_configuration.baseline.download"
+              type="checkbox"
+              class="form-check-input"
+              id="download"
+              autocomplete="off"
+            />
+            <label class="form-check-label" for="download">Download</label>
+          </div>
         </div>
       </div>
     </div>
   </div>
-  <div class="d-grid gap-2 d-md-flex justify-content-between mt-4">
-    <button (click)="step_back()" class="btn btn-secondary" type="button">
-      Back
-    </button>
-    <button
-      [disabled]="false"
-      (click)="step()"
-      class="btn btn-primary"
-      type="button"
-    >
-      Next
-    </button>
+  <div class="w-100 d-flex justify-content-center mt-4">
+    <div class="btn-group">
+      <button
+        (click)="step_back()"
+        class="btn btn-secondary mx-1 px-5 fw-bold"
+        type="button"
+      >
+        Back
+      </button>
+
+      <button
+        (click)="step()"
+        class="btn btn-primary mx-1 px-5 fw-bold"
+        type="button"
+      >
+        Next
+      </button>
+    </div>
   </div>
 </div>

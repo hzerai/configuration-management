@@ -1,0 +1,126 @@
+<div class="d-flex justify-content-between">
+  <h2>Merge requests</h2>
+  <button style="font-size: 15px" class="btn btn-primary py-0">
+    <div class="d-flex">
+      <span>Select project to create merge request</span>
+      <div style="border-left: 1px solid white; height: 100%" class="ms-4 ps-3">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          fill="currentColor"
+          class="bi bi-chevron-down"
+          viewBox="0 0 16 16"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"
+          />
+        </svg>
+      </div>
+    </div>
+  </button>
+</div>
+<hr class="mb-2" />
+<div
+  class="d-flex align-items-center"
+  style="font-size: 16px; font-weight: 470"
+>
+  <div role="button" class="border-bottom border-3 border-primary pb-1">
+    Open<span
+      class="badge text-secondary ms-1 pb-2"
+      style="font-size: 10px; background-color: rgb(242, 242, 242)"
+      >1</span
+    >
+  </div>
+  <div role="button" class="ms-4 pb-1">
+    Merged<span
+      class="badge text-secondary ms-1 pb-2"
+      style="font-size: 10px; background-color: rgb(242, 242, 242)"
+      >0</span
+    >
+  </div>
+  <div role="button" class="ms-4 pb-1">
+    Closed<span
+      class="badge text-secondary ms-1 pb-2"
+      style="font-size: 10px; background-color: rgb(242, 242, 242)"
+      >0</span
+    >
+  </div>
+  <div role="button" class="ms-4 pb-1">
+    All<span
+      class="badge text-secondary ms-1 pb-2"
+      style="font-size: 10px; background-color: rgb(242, 242, 242)"
+      >1</span
+    >
+  </div>
+</div>
+<div class="d-flex border-top border-bottom w-100 p-3 bg-light">
+  <div class="d-flex rounded-start border p-2 bg-white">
+    <div class="d-flex">
+      <span class="text-secondary">Recent searches </span>
+      <div class="ms-1">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          fill="currentColor"
+          class="bi bi-chevron-down"
+          viewBox="0 0 16 16"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"
+          />
+        </svg>
+      </div>
+    </div>
+  </div>
+  <div class="flex-grow-1 rounded-end border p-2 bg-white">
+    <input
+      placeholder="search ..."
+      class="from-control border-0 w-100"
+      type="text"
+    />
+  </div>
+</div>
+
+<div class="mt-2">
+  <div *ngFor="let commit of commits">
+    <div class="w-100 d-flex justify-content-between">
+      <div class="d-flex flex-column ms-2">
+        <div
+          style="font-size: 18px; font-weight: 500"
+          role="button"
+          [routerLink]="['commit']"
+          [queryParams]="{ id: commit.commit_id }"
+        >
+          {{ commit.commit_message }}
+        </div>
+        <div style="font-size: 16px">{{ commit.configuration_name }}</div>
+      </div>
+      <div
+        class="d-flex flex-column justify-content-between text-secondary me-2"
+        style="font-size: 15px"
+      >
+        <div class="ms-auto">
+          <small
+            >commited
+            <span style="font-weight: 500">{{
+              fromNowDate(commit.commited_at)
+            }}</span></small
+          >
+        </div>
+        <div class="ms-auto">
+          <small
+            >by
+            <span style="font-weight: 500">{{
+              commit.commit_author
+            }}</span></small
+          >
+        </div>
+      </div>
+    </div>
+    <hr class="mb-1 mt-2" />
+  </div>
+</div>

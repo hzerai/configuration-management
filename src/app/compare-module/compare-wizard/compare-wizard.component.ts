@@ -8,6 +8,15 @@ import { Configuration } from 'src/app/models/models';
   styleUrls: ['./compare-wizard.component.css'],
 })
 export class CompareWizardComponent implements OnInit {
+  delta = {
+    start_date: null,
+    end_date: null,
+    issues: null,
+    modules: null,
+    user: null,
+    tables: null,
+    changes: null,
+  };
   currentStep: number = 1;
   current_configuration: Configuration;
   constructor(private activatedRouter: ActivatedRoute) {}
@@ -34,7 +43,7 @@ export class CompareWizardComponent implements OnInit {
   getStepsCss(htmlStep) {
     return htmlStep == this.currentStep
       ? {
-          'background-color': 'royalblue',
+          'background-color': 'rgb(13,110,253)',
           color: 'white',
           height: '40px',
           width: '40px',
@@ -48,6 +57,9 @@ export class CompareWizardComponent implements OnInit {
   }
 
   step(step) {
+    if (this.currentStep == 1) {
+      this.current_configuration = step;
+    }
     this.currentStep++;
   }
 
@@ -56,6 +68,6 @@ export class CompareWizardComponent implements OnInit {
   }
 
   goto(step) {
-    this.currentStep = step;
+    // this.currentStep = step;
   }
 }

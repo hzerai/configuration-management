@@ -131,32 +131,32 @@ export class InitializationComponent {
     this.flowChart = [
       'flowchart LR',
       `subgraph GIT ["${this.current_configuration.git.repository} Initialization"]`,
-      'direction TB',
-      `creation>fa:fa-spinner Folders creation] -.-> |${
-        this.current_configuration.git.folder.create
-          ? 'fa:fa-spinner'
-          : 'fa:fa-ban'
-      }| folder["${this.current_configuration.git.folder.name}"]`,
-      `creation -.-> |${
-        this.current_configuration.git.triggers.create
-          ? 'fa:fa-spinner'
-          : 'fa:fa-ban'
-      }| triggers["${this.current_configuration.git.triggers.name}"]`,
-      `creation -.-> |${
-        this.current_configuration.git.baseline.create
-          ? 'fa:fa-spinner'
-          : 'fa:fa-ban'
-      }| baseline["${this.current_configuration.git.baseline.name}"]`,
-      `creation -.-> |${
-        this.current_configuration.git.tables.create
-          ? 'fa:fa-spinner'
-          : 'fa:fa-ban'
-      }| tables["${this.current_configuration.git.tables.name}"]`,
-      `creation -.-> |${
-        this.current_configuration.git.delivery.create
-          ? 'fa:fa-spinner'
-          : 'fa:fa-ban'
-      }| delivery["${this.current_configuration.git.delivery.name}"]`,
+      // 'direction TB',
+      // `creation>fa:fa-spinner Folders creation] -.-> |${
+      //   this.current_configuration.git.folder.create
+      //     ? 'fa:fa-spinner'
+      //     : 'fa:fa-ban'
+      // }| folder["${this.current_configuration.git.folder.name}"]`,
+      // `creation -.-> |${
+      //   this.current_configuration.git.triggers.create
+      //     ? 'fa:fa-spinner'
+      //     : 'fa:fa-ban'
+      // }| triggers["${this.current_configuration.git.triggers.name}"]`,
+      // `creation -.-> |${
+      //   this.current_configuration.git.baseline.create
+      //     ? 'fa:fa-spinner'
+      //     : 'fa:fa-ban'
+      // }| baseline["${this.current_configuration.git.baseline.name}"]`,
+      // `creation -.-> |${
+      //   this.current_configuration.git.tables.create
+      //     ? 'fa:fa-spinner'
+      //     : 'fa:fa-ban'
+      // }| tables["${this.current_configuration.git.tables.name}"]`,
+      // `creation -.-> |${
+      //   this.current_configuration.git.delivery.create
+      //     ? 'fa:fa-spinner'
+      //     : 'fa:fa-ban'
+      // }| delivery["${this.current_configuration.git.delivery.name}"]`,
       'end',
       `subgraph TRIGGER ["Triggers script"]`,
       'direction TB',
@@ -191,15 +191,16 @@ export class InitializationComponent {
 
       'end',
       'START((Start)) ==> GIT',
-      'GIT ==>|fa:fa-spinner| TRIGGER',
+      // `GIT ==>|fa:fa-${
+      //   this.current_configuration.tables_source !== 'GIT' ? 'spinner' : 'ban'
+      // }| TABLES[Commit configuration's tables]`,
+      'GIT ===>|fa:fa-spinner| TRIGGER',
       'GIT ==>|fa:fa-spinner| BASELINE',
-      `GIT ==>|fa:fa-${
-        this.current_configuration.tables_source !== 'GIT' ? 'spinner' : 'ban'
-      }| TABLES[Commit configuration's tables]`,
-      `TABLES ==>|fa:fa-${
-        this.current_configuration.tables_source !== 'GIT' ? 'spinner' : 'ban'
-      }| END((End))`,
-      'BASELINE ==>|fa:fa-spinner| END((End))',
+
+      // `TABLES ==>|fa:fa-${
+      //   this.current_configuration.tables_source !== 'GIT' ? 'spinner' : 'ban'
+      // }| END((End))`,
+      'BASELINE ===>|fa:fa-spinner| END((End))',
       'TRIGGER ==>|fa:fa-spinner| END((End))',
       'class START fw-bold',
       'class END fw-bold',
@@ -235,8 +236,8 @@ export class InitializationComponent {
       this.flowChart = this.flowChart.map((l) => {
         if (l.startsWith('creation')) {
           return l.replace('spinner', 'check').replace('spinner', 'check');
-        } else if (l === 'GIT ==>|fa:fa-spinner| TRIGGER') {
-          return 'GIT ==>|fa:fa-check| TRIGGER';
+        } else if (l === 'GIT ===>|fa:fa-spinner| TRIGGER') {
+          return 'GIT ===>|fa:fa-check| TRIGGER';
         } else if (l === 'GIT ==>|fa:fa-spinner| BASELINE') {
           return 'GIT ==>|fa:fa-check| BASELINE';
         } else if (l === 'TABLES ==>|fa:fa-spinner| END((End))') {
@@ -250,34 +251,35 @@ export class InitializationComponent {
         }
       });
       console.log(this.flowChart);
-      this.flowChart.push('style TABLES fill:#3bd44b');
-      this.flowChart.push('style creation fill:#3bd44b');
-      this.flowChart.push(
-        `style folder fill:#${
-          this.current_configuration.git.folder.create ? '3bd44b' : 'd8e619'
-        }`
-      );
-      this.flowChart.push(
-        `style triggers fill:#${
-          this.current_configuration.git.triggers.create ? '3bd44b' : 'd8e619'
-        }`
-      );
+      // this.flowChart.push('style TABLES fill:#3bd44b');
+      this.flowChart.push('style GIT fill:#3bd44b');
+      // this.flowChart.push('style creation fill:#3bd44b');
+      // this.flowChart.push(
+      //   `style folder fill:#${
+      //     this.current_configuration.git.folder.create ? '3bd44b' : 'd8e619'
+      //   }`
+      // );
+      // this.flowChart.push(
+      //   `style triggers fill:#${
+      //     this.current_configuration.git.triggers.create ? '3bd44b' : 'd8e619'
+      //   }`
+      // );
 
-      this.flowChart.push(
-        `style tables fill:#${
-          this.current_configuration.git.tables.create ? '3bd44b' : 'd8e619'
-        }`
-      );
-      this.flowChart.push(
-        `style baseline fill:#${
-          this.current_configuration.git.baseline.create ? '3bd44b' : 'd8e619'
-        }`
-      );
-      this.flowChart.push(
-        `style delivery fill:#${
-          this.current_configuration.git.delivery.create ? '3bd44b' : 'c4d113'
-        }`
-      );
+      // this.flowChart.push(
+      //   `style tables fill:#${
+      //     this.current_configuration.git.tables.create ? '3bd44b' : 'd8e619'
+      //   }`
+      // );
+      // this.flowChart.push(
+      //   `style baseline fill:#${
+      //     this.current_configuration.git.baseline.create ? '3bd44b' : 'd8e619'
+      //   }`
+      // );
+      // this.flowChart.push(
+      //   `style delivery fill:#${
+      //     this.current_configuration.git.delivery.create ? '3bd44b' : 'c4d113'
+      //   }`
+      // );
       var flow = document.getElementById('flow');
       flow.removeAttribute('data-processed');
       flow.innerHTML = this.flowChart.join('\n');
@@ -396,8 +398,8 @@ export class InitializationComponent {
               '|fa:fa-spinner| baselineDownload',
               '|fa:fa-check| baselineDownload'
             );
-        } else if (l === 'BASELINE ==>|fa:fa-spinner| END((End))') {
-          return 'BASELINE ==>|fa:fa-check| END((End))';
+        } else if (l === 'BASELINE ===>|fa:fa-spinner| END((End))') {
+          return 'BASELINE ===>|fa:fa-check| END((End))';
         } else {
           return l;
         }
@@ -422,6 +424,7 @@ export class InitializationComponent {
       flow.innerHTML = this.flowChart.join('\n');
       mermaid.init(undefined, flow);
     }, 7000);
+
     setTimeout(() => {
       this.finished = true;
       this.current_configuration.initialized = true;

@@ -1,34 +1,36 @@
 <div
   [ngStyle]="{ display: started ? '' : 'none' }"
-  class="text-center"
-  style="position: relative"
+  class="text-center mx-auto mt-5"
 >
-  <h3>Initialization process</h3>
   <div class="row">
-    <img
-      *ngIf="!executed && !finished && !executing"
-      class="col-1"
-      style="margin-top: 6.4rem"
-      role="button"
-      (click)="execute()"
-      src="assets\img\play.jpg"
-      width="30px"
-      height="60px"
-    />
+    <div class="col-1">
+      <div
+        [ngStyle]="{ 'margin-top': executing && !finished ? '8rem' : '9.6rem' }"
+      >
+        <img
+          *ngIf="!executed && !finished && !executing"
+          role="button"
+          (click)="execute()"
+          src="assets\img\play.jpg"
+          width="80px"
+          height="70px"
+        />
+        <img
+          *ngIf="finished"
+          src="assets\img\done.png"
+          width="120px"
+          height="70px"
+        />
+        <img
+          *ngIf="executing && !finished"
+          src="assets\img\running.gif"
+          width="120px"
+          height="100px"
+        />
+      </div>
+    </div>
 
-    <div
-      id="flow"
-      class="col-{{
-        !executed && !finished && !executing ? '11' : '12'
-      }} mermaid"
-    ></div>
-  </div>
-
-  <div
-    *ngIf="finished"
-    style="position: absolute; z-index: -1; top: 300px; left: -400px"
-  >
-    <img src="assets\img\done.png" width="20%" />
+    <div id="flow" class="col-11 mermaid"></div>
   </div>
 
   <div *ngIf="finished" class="w-100 text-end mt-3">

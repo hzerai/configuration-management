@@ -5,7 +5,9 @@
       style="margin-inline: 7rem; z-index: 11"
     >
       <div class="input-group mb-1">
-        <span class="input-group-text w-25">Hostname</span>
+        <span class="input-group-text w-25 bg-primary text-white"
+          >Hostname</span
+        >
         <input
           [disabled]="this.current_configuration.source_connection.valid"
           [(ngModel)]="this.current_configuration.source_connection.hostname"
@@ -14,17 +16,9 @@
         />
       </div>
       <div class="input-group mb-1">
-        <span class="input-group-text w-25">Port</span>
-        <input
-          [disabled]="this.current_configuration.source_connection.valid"
-          [(ngModel)]="this.current_configuration.source_connection.port"
-          type="number"
-          class="form-control"
-        />
-      </div>
-      <div class="input-group mb-1">
-        <span class="input-group-text w-25">Type</span>
+        <span class="input-group-text w-25 bg-primary text-white">Type</span>
         <select
+          (change)="defaultPort()"
           [disabled]="this.current_configuration.source_connection.valid"
           [(ngModel)]="
             this.current_configuration.source_connection.databaseType
@@ -34,12 +28,25 @@
         >
           <option selected>Database vendor</option>
           <option value="Oracle">Oracle</option>
-          <option value="Postgre SQL">Postgre SQL</option>
-          <option value="Microsoft Server">Microsoft Server</option>
+          <option value="PostgreSQL">PostgreSQL</option>
+          <option value="SQL Server">SQL Server</option>
+          <option value="MySQL">MySQL</option>
         </select>
       </div>
       <div class="input-group mb-1">
-        <span class="input-group-text w-25">Database</span>
+        <span class="input-group-text w-25 bg-primary text-white">Port</span>
+        <input
+          [disabled]="this.current_configuration.source_connection.valid"
+          [(ngModel)]="this.current_configuration.source_connection.port"
+          type="number"
+          class="form-control"
+        />
+      </div>
+
+      <div class="input-group mb-1">
+        <span class="input-group-text w-25 bg-primary text-white"
+          >Database</span
+        >
         <input
           [disabled]="this.current_configuration.source_connection.valid"
           [(ngModel)]="this.current_configuration.source_connection.database"
@@ -48,7 +55,7 @@
         />
       </div>
       <div class="input-group mb-1">
-        <span class="input-group-text w-25">User</span>
+        <span class="input-group-text w-25 bg-primary text-white">User</span>
         <input
           [disabled]="this.current_configuration.source_connection.valid"
           autocomplete="off"
@@ -58,7 +65,9 @@
         />
       </div>
       <div class="input-group">
-        <span class="input-group-text w-25">Password</span>
+        <span class="input-group-text w-25 bg-primary text-white"
+          >Password</span
+        >
         <input
           autocomplete="off"
           [disabled]="this.current_configuration.source_connection.valid"
@@ -67,111 +76,153 @@
           class="form-control"
         />
       </div>
-      <div class="d-flex">
-        <span class="input-group-text" style="width: 32.5%"
-          >Triggers's scripts</span
-        >
-
-        <div class="btn-group w-100" role="group">
-          <input
-            [(ngModel)]="
-              this.current_configuration.source_connection.scripts.commit
-            "
-            type="checkbox"
-            class="btn-check"
-            id="commit"
-            autocomplete="off"
-          />
-          <label class="btn btn-outline-secondary" for="commit">Commit</label>
-
-          <input
-            [(ngModel)]="
-              this.current_configuration.source_connection.scripts.download
-            "
-            type="checkbox"
-            class="btn-check"
-            id="download"
-            autocomplete="off"
-          />
-          <label class="btn btn-outline-secondary" for="download"
-            >Download</label
-          >
-
-          <input
-            [(ngModel)]="
-              this.current_configuration.source_connection.scripts.execute
-            "
-            type="checkbox"
-            class="btn-check"
-            id="execute"
-            autocomplete="off"
-          />
-          <label class="btn btn-outline-secondary" for="execute">Execute</label>
+      <div class="d-flex align-items-start ms-2 my-1">
+        <small class="mt-1"><b>Triggers script options</b></small>
+        <div id="expand-no-expand" class="ms-2 mb-1 fw-bold">
+          <div *ngIf="advanced" (click)="advanced = !advanced" role="button">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="12"
+              height="12"
+              fill="currentColor"
+              class="bi bi-chevron-down"
+              viewBox="0 0 16 16"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"
+              />
+            </svg>
+          </div>
+          <div *ngIf="!advanced" (click)="advanced = !advanced" role="button">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="12"
+              height="12"
+              fill="currentColor"
+              class="bi bi-chevron-right"
+              viewBox="0 0 16 16"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"
+              />
+            </svg>
+          </div>
+        </div>
+        <div class="ms-2 mt-1" *ngIf="advanced">
+          <div>
+            <div class="form-check form-switch" role="group">
+              <input
+                [(ngModel)]="
+                  this.current_configuration.source_connection.scripts.commit
+                "
+                type="checkbox"
+                class="form-check-input"
+                id="commit"
+                autocomplete="off"
+              />
+              <label class="form-check-label" for="commit">Commit</label>
+            </div>
+            <div class="form-check form-switch" role="group">
+              <input
+                [(ngModel)]="
+                  this.current_configuration.source_connection.scripts.download
+                "
+                type="checkbox"
+                class="form-check-input"
+                id="download"
+                autocomplete="off"
+              />
+              <label class="form-check-label" for="download">Download</label>
+            </div>
+            <div class="form-check form-switch" role="group">
+              <input
+                [(ngModel)]="
+                  this.current_configuration.source_connection.scripts.execute
+                "
+                type="checkbox"
+                class="form-check-input"
+                id="execute"
+                autocomplete="off"
+              />
+              <label class="form-check-label" for="execute">Execute</label>
+            </div>
+          </div>
         </div>
       </div>
-      <div *ngIf="connectionStatus" class="mt-2">
+      <div *ngIf="advanced">
+        <svg xmlns="http://www.w3.org/2000/svg" style="display: none">
+          <symbol id="info-fill" fill="currentColor" viewBox="0 0 16 16">
+            <path
+              d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"
+            />
+          </symbol>
+        </svg>
         <div
-          *ngIf="connectionStatus == 'SUCCESS'"
-          class="alert alert-success py-1"
+          class="alert alert-primary d-flex align-items-center py-2"
           role="alert"
         >
-          Connection successful !!
-        </div>
-        <div
-          *ngIf="connectionStatus == 'FAIL'"
-          class="alert alert-danger py-1"
-          role="alert"
-        >
-          Connection unsuccessful..
-        </div>
-        <div
-          *ngIf="connectionStatus == 'INVALID'"
-          class="alert alert-danger py-1"
-          role="alert"
-        >
-          {{ this.errorMessage }}
+          <svg
+            class="bi flex-shrink-0 me-2"
+            width="24"
+            height="24"
+            role="img"
+            aria-label="Info:"
+          >
+            <use xlink:href="#info-fill" />
+          </svg>
+          <div style="font-size: 13px">
+            The triggers script will create the needed trigger for each
+            configuration table plus the track_changes table
+          </div>
+          <button
+            type="button"
+            class="ms-auto btn-close"
+            data-bs-dismiss="alert"
+            aria-label="Close"
+          ></button>
         </div>
       </div>
     </div>
   </div>
-  <div
-    class="d-grid gap-2 d-md-flex justify-content-md-end mt-4"
-    style="position: relative"
-  >
-    <a
-      (click)="step_back()"
-      class="btn btn-secondary"
-      style="left: 0px; position: absolute"
-      type="button"
-      >Back</a
-    >
-
-    <button
-      *ngIf="this.current_configuration.source_connection.valid"
-      (click)="
-        this.current_configuration.source_connection.valid = false;
-        disabled = false
-      "
-      class="btn btn-info me-md-2"
-      type="button"
-    >
-      Edit connection
-    </button>
-    <button
-      *ngIf="!this.current_configuration.source_connection.valid"
-      (click)="validateConnection()"
-      class="btn btn-success me-md-2"
-      type="button"
-    >
-      Test connection
-    </button>
-    <button
-      [disabled]="!this.current_configuration.source_connection.valid"
-      (click)="step()"
-      class="btn btn-primary"
-      type="button"
-    >
-      Next
-    </button>
+  <div class="w-100 d-flex justify-content-center mt-4">
+    <div class="btn-group">
+      <button
+        (click)="step_back()"
+        class="btn btn-secondary mx-1 px-5 fw-bold"
+        type="button"
+      >
+        Back
+      </button>
+      <button
+        *ngIf="this.current_configuration.source_connection.valid"
+        (click)="
+          this.message = null;
+          this.current_configuration.source_connection.valid = false;
+          disabled = false
+        "
+        class="btn btn-info mx-1"
+        type="button"
+      >
+        Edit connection
+      </button>
+      <button
+        *ngIf="!this.current_configuration.source_connection.valid"
+        (click)="validateConnection()"
+        class="btn btn-success mx-1"
+        type="button"
+      >
+        Test connection
+      </button>
+      <button
+        [disabled]="!this.current_configuration.source_connection.valid"
+        (click)="step()"
+        class="btn btn-primary mx-1 px-5 fw-bold"
+        type="button"
+      >
+        Next
+      </button>
+    </div>
   </div>
 </div>

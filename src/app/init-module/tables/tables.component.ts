@@ -33,6 +33,10 @@ export class TablesComponent implements OnInit {
 
   file: any;
 
+  loaded: boolean = false;
+
+  apiLink: string;
+
   @Input('current_configuration')
   current_configuration: Configuration;
 
@@ -104,15 +108,12 @@ export class TablesComponent implements OnInit {
     }, 1);
   }
 
-  addSelected() {
-    this.all_tables_temps
-      .filter((t) => t.selected)
-      .forEach((t) => {
-        this.selected_tables.unshift(t);
-        t.selected = false;
-      });
+  add(table) {
+    table.selected = true;
+    this.selected_tables.unshift(table);
+
     this.all_tables_temps = this.all_tables_temps.filter(
-      (t) => !this.selected_tables.find((r) => r.table == t.table)
+      (t) => t.table != table.table
     );
 
     this.selected_tables_filtered = [...this.selected_tables];
@@ -120,15 +121,12 @@ export class TablesComponent implements OnInit {
     this.allTableFilter();
     this.selectedTableFilter();
   }
-  removeSelected() {
-    this.selected_tables
-      .filter((t) => t.selected)
-      .forEach((t) => {
-        this.all_tables_temps.unshift(t);
-        t.selected = false;
-      });
+  remove(table) {
+    table.selected = false;
+    this.all_tables_temps.unshift(table);
+
     this.selected_tables = this.selected_tables.filter(
-      (t) => !this.all_tables_temps.find((r) => r.table == t.table)
+      (t) => t.table != table.table
     );
 
     this.all_tables_temps_filtered = [...this.all_tables_temps];
@@ -161,17 +159,36 @@ export class TablesComponent implements OnInit {
   loadFromGit() {
     this.tables_loading = true;
     setTimeout(() => {
-      this.tables_source = 'GIT';
       this.prepareTables(tables_mock);
+      this.all_tables_temps.forEach((t) => this.add(t));
+    }, 1500);
+  }
+
+  loadFromAPI() {
+    this.tables_loading = true;
+    setTimeout(() => {
+      this.prepareTables(tables_mock);
+      this.all_tables_temps.forEach((t) => this.add(t));
     }, 1500);
   }
 
   loadFromDB() {
     this.tables_loading = true;
     setTimeout(() => {
-      this.tables_source = 'DB';
       this.prepareTables(tables_mock);
     }, 1500);
+  }
+
+  resetTables() {
+    this.loaded = false;
+    this.all_tables = null;
+    this.all_tables_temps = null;
+    this.all_tables_temps_filtered = null;
+    this.selected_tables = [] = [];
+    this.selected_tables_filtered = [] = [];
+    this.tables_loading = false;
+    this.allTablesSearch = null;
+    this.selectedTablesSearch = null;
   }
 
   loadFromFile(event) {

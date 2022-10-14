@@ -1,0 +1,154 @@
+<div class="mx-auto mt-5">
+  <div style="height: 430px">
+    <div class="row">
+      <div class="col-2"></div>
+      <div id="show-delta-summary" class="col-8 d-flex">
+        <small id="changes_summary"></small>
+      </div>
+    </div>
+    <div
+      id="show-delta-details"
+      class="row mt-3 position-relative"
+      style="font-size: 14px"
+    >
+      <div
+        class="col-2 d-flex flex-column align-items-center position-fixed"
+        style="height: 500px; left: 50px"
+      >
+        <div
+          class="border shadow-lg rounded"
+          style="height: 400px; overflow: auto; width: 100%"
+        >
+          <!-- <section
+            *ngIf="
+              delta.start_date ||
+              delta.end_date ||
+              delta.issues ||
+              delta.modules ||
+              delta.tables ||
+              delta.user
+            "
+            id="delta-criteria"
+            class="d-flex flex-column align-items-start mb-3"
+          >
+            <span class="fs-4">Delta criteria</span>
+            <span *ngIf="delta.start_date"
+              ><b>from date : </b> {{ delta.start_date }}</span
+            >
+            <span *ngIf="delta.end_date"
+              ><b>to date : </b> {{ delta.end_date }}</span
+            >
+            <span *ngIf="delta.issues"
+              ><b>selected issues : </b> {{ delta.issues }}</span
+            >
+            <span *ngIf="delta.modules"
+              ><b>selected modules : </b> {{ delta.modules }}</span
+            >
+            <span *ngIf="delta.tables"
+              ><b>selected tables : </b> {{ delta.tables }}</span
+            >
+            <span *ngIf="delta.user"
+              ><b>configurator : </b> {{ delta.user }}</span
+            >
+          </section> -->
+          <div
+            class="input-group rounded position-fixed"
+            style="position: relative; width: 228px"
+          >
+            <input
+              style="font-size: 14px"
+              id="Filter"
+              class="form-control ps-5 rounded-top border-0 border-bottom"
+              name="Filter changed tables"
+              placeholder="Filter changed tables"
+              [(ngModel)]="selectedTable"
+              (keyup)="filterTablNames()"
+            />
+            <svg
+              style="position: absolute; left: 10px; top: 25%; color: gray"
+              xmlns="http://www.w3.org/2000/svg"
+              width="18"
+              height="18"
+              fill="currentColor"
+              class="bi bi-search"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"
+              />
+            </svg>
+          </div>
+          <div
+            class="d-flex flex-column mt-5 ps-2"
+            style="color: rgb(102, 100, 100)"
+          >
+            <div
+              role="button"
+              class="hoverable-row d-flex align-items-center font-monospace mt-1"
+              *ngFor="let t of table_names_filtered"
+              (click)="scroll('scroll-' + t)"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="18"
+                height="18"
+                fill="currentColor"
+                class="bi bi-table"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm15 2h-4v3h4V4zm0 4h-4v3h4V8zm0 4h-4v3h3a1 1 0 0 0 1-1v-2zm-5 3v-3H6v3h4zm-5 0v-3H1v2a1 1 0 0 0 1 1h3zm-4-4h4V8H1v3zm0-4h4V4H1v3zm5-3v3h4V4H6zm4 4H6v3h4V8z"
+                />
+              </svg>
+              <p class="mb-1 ms-2">{{ t }}</p>
+            </div>
+          </div>
+        </div>
+        <button
+          (click)="step_back()"
+          style="z-index: 99"
+          class="btn btn-secondary mt-2 px-5 fw-bold"
+          type="button"
+        >
+          Back
+        </button>
+      </div>
+      <div class="col-8 mx-auto d-flex flex-column hide-scroll-bar">
+        <app-view-one-change
+          class="mb-4"
+          *ngFor="let table of delta.changes"
+          [table]="table"
+          id="scroll-{{ table.table_name }}"
+        ></app-view-one-change>
+      </div>
+      <div
+        class="col-2 d-flex flex-column align-items-center position-fixed"
+        style="height: 500px; right: 50px"
+      >
+        <app-view-filter
+          class="shadow-lg"
+          style="height: 400px; overflow: auto; width: 100%"
+          [delta]="delta"
+        ></app-view-filter>
+        <button
+          [disabled]="commiting"
+          style="z-index: 99"
+          (click)="step()"
+          class="btn btn-primary mt-2 px-3 fw-bold"
+          type="button"
+        >
+          <div class="d-flex align-items-center">
+            <div>Commit changes</div>
+            <div
+              *ngIf="commiting"
+              class="spinner-border ms-2"
+              style="width: 25px; height: 25px"
+              role="status"
+              aria-hidden="true"
+            ></div>
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

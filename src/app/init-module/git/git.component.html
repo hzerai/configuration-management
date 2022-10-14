@@ -5,7 +5,9 @@
       style="margin-inline: 7rem; z-index: 11"
     >
       <div class="input-group mb-1">
-        <span class="input-group-text" style="width: 35%">Repository</span>
+        <span class="input-group-text bg-primary text-white" style="width: 35%"
+          >Repository</span
+        >
         <input
           (change)="refreshBranches()"
           [disabled]="this.current_configuration.git.valid"
@@ -15,7 +17,9 @@
         />
       </div>
       <div class="input-group mb-1">
-        <span class="input-group-text" style="width: 35%">Branch</span>
+        <span class="input-group-text bg-primary text-white" style="width: 35%"
+          >Branch</span
+        >
         <select
           [disabled]="
             !this.current_configuration.git.repository ||
@@ -25,14 +29,11 @@
           class="form-select"
           aria-label="select branch"
         >
-          <option disabled value="select a branch">
-            {{
-              !this.current_configuration.git.repository
-                ? "Select your repository first..."
-                : "Select branch"
-            }}
-          </option>
-          <option *ngFor="let branch of branches" value="{{ branch }}">
+          <option
+            *ngFor="let branch of branches"
+            value="{{ branch }}"
+            [disabled]="branch === 'Select a branch'"
+          >
             {{ branch }}
           </option>
         </select>
@@ -75,7 +76,9 @@
       </div>
       <div *ngIf="advanced">
         <div class="input-group mb-1">
-          <span class="input-group-text" style="width: 35%"
+          <span
+            class="input-group-text bg-primary text-white"
+            style="width: 35%"
             >Configuration's folder</span
           >
           <input
@@ -87,7 +90,9 @@
           />
         </div>
         <div class="input-group mb-1">
-          <span class="input-group-text" style="width: 35%"
+          <span
+            class="input-group-text bg-primary text-white"
+            style="width: 35%"
             >Configuration's tables file</span
           >
           <input
@@ -98,7 +103,9 @@
           />
         </div>
         <div class="input-group mb-1">
-          <span class="input-group-text" style="width: 35%"
+          <span
+            class="input-group-text bg-primary text-white"
+            style="width: 35%"
             >SQL Triggers folder</span
           >
           <input
@@ -109,7 +116,9 @@
           />
         </div>
         <div class="input-group mb-1">
-          <span class="input-group-text" style="width: 35%"
+          <span
+            class="input-group-text bg-primary text-white"
+            style="width: 35%"
             >JSON Baseline folder</span
           >
           <input
@@ -120,7 +129,9 @@
           />
         </div>
         <div class="input-group mb-1">
-          <span class="input-group-text" style="width: 35%"
+          <span
+            class="input-group-text bg-primary text-white"
+            style="width: 35%"
             >Delivery folder</span
           >
           <input
@@ -131,50 +142,44 @@
           />
         </div>
       </div>
-      <div *ngIf="message">
-        <div class="mt-2">
-          <div class="alert alert-success py-1" role="alert">
-            {{ this.message }}
-          </div>
-        </div>
-      </div>
     </div>
   </div>
-  <div
-    class="d-grid gap-2 d-md-flex justify-content-md-end mt-4"
-    style="position: relative"
-  >
-    <a
-      href="/"
-      class="btn btn-secondary"
-      style="left: 0px; position: absolute"
-      type="button"
-      >Back</a
-    >
 
-    <button
-      *ngIf="this.current_configuration.git.valid"
-      (click)="this.current_configuration.git.valid = false"
-      class="btn btn-info me-md-2"
-      type="button"
-    >
-      Edit git configuration
-    </button>
-    <button
-      *ngIf="!this.current_configuration.git.valid"
-      (click)="validateGitConnection()"
-      class="btn btn-success me-md-2"
-      type="button"
-    >
-      Test git connectivity
-    </button>
-    <button
-      [disabled]="!this.current_configuration.git.valid"
-      (click)="step()"
-      class="btn btn-primary"
-      type="button"
-    >
-      Next
-    </button>
+  <div class="w-100 d-flex justify-content-center mt-4">
+    <div class="btn-group">
+      <button
+        (click)="back()"
+        class="btn btn-secondary mx-1 px-5 fw-bold"
+        type="button"
+      >
+        Discard
+      </button>
+      <button
+        *ngIf="this.current_configuration.git.valid"
+        (click)="
+          this.message = null; this.current_configuration.git.valid = false
+        "
+        class="btn btn-info mx-1"
+        type="button"
+      >
+        Edit GIT Configuration
+      </button>
+      <button
+        *ngIf="!this.current_configuration.git.valid"
+        (click)="validateGitConnection()"
+        class="btn btn-success mx-1"
+        type="button"
+      >
+        Test GIT Connectivity
+      </button>
+      <button
+        [disabled]="!this.current_configuration.git.valid"
+        (click)="step()"
+        class="btn btn-primary mx-1 px-5 fw-bold"
+        type="button"
+      >
+        Next
+      </button>
+    </div>
   </div>
 </div>

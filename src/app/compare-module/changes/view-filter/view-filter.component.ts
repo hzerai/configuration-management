@@ -41,6 +41,14 @@ export class ViewFilterComponent implements OnInit {
     this.issues = this.issues.filter(onlyUnique);
     this.modules = this.modules.filter(onlyUnique);
     this.users = this.users.filter(onlyUnique);
+    // this.users.push(...this.users)
+    // this.users.push(...this.users)
+    // this.users.push(...this.users)
+    // this.modules.push(...this.modules)
+    // this.modules.push(...this.modules)
+    // this.issues.push(...this.issues)
+    // this.issues.push(...this.issues)
+
   }
 
   filter(filter) {

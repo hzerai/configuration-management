@@ -1,13 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Configuration } from 'src/app/models/models';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css'],
+  selector: 'app-config',
+  templateUrl: './config.component.html',
+  styleUrls: ['./config.component.css'],
 })
-export class HomeComponent implements OnInit {
+export class ConfigComponent implements OnInit {
   configs: Configuration[] = [];
+
+  @Output('step')
+  stepEvent = new EventEmitter<any>();
+
   constructor() {}
 
   ngOnInit(): void {
@@ -21,5 +25,9 @@ export class HomeComponent implements OnInit {
     if (confirm('Are you sure to delete this configuration [' + name + '] ?')) {
       this.configs = this.configs.filter((c) => c.name !== name);
     }
+  }
+
+  step(config) {
+    this.stepEvent.emit(config);
   }
 }

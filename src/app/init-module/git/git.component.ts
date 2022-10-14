@@ -1,4 +1,6 @@
+import { Location } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { NotifierService } from 'angular-notifier';
 import { Configuration } from 'src/app/models/models';
 
 @Component({
@@ -7,7 +9,6 @@ import { Configuration } from 'src/app/models/models';
   styleUrls: ['./git.component.css'],
 })
 export class GitComponent implements OnInit {
-  message;
   branches: string[];
 
   advanced: boolean = false;
@@ -24,16 +25,18 @@ export class GitComponent implements OnInit {
   @Output('step_back')
   step_back_event = new EventEmitter<any>();
 
-  constructor() {}
+  constructor(
+    private location: Location,
+    private notifierService: NotifierService
+  ) {}
 
   ngOnInit(): void {
-    if (!this.current_configuration.git.folder.name) {
+    if (!this.current_configuration.git.valid) {
       this.current_configuration.git.folder.name = '/config';
       this.refreshAttributes();
-      this.current_configuration.git.branch = 'select a branch';
-    }else{
-      this.branches = [this.current_configuration.git.branch]
+      this.current_configuration.git.branch = 'Select a branch';
     }
+    this.branches = [this.current_configuration.git.branch];
   }
 
   validateInput(): boolean {
@@ -43,9 +46,32 @@ export class GitComponent implements OnInit {
   }
 
   validateGitConnection(): boolean {
-    this.current_configuration.git.valid = true;
-    this.message = 'connection to git was successful';
-    return false;
+    if (
+      this.current_configuration.git.repository &&
+      this.current_configuration.git.branch != 'Select a branch'
+    ) {
+      this.current_configuration.git.valid = true;
+      this.notifierService.notify(
+        'success',
+        `connection to ${this.current_configuration.git.repository} was successful`
+      );
+      return true;
+    } else if (!this.current_configuration.git.repository) {
+      this.current_configuration.git.valid = false;
+      this.notifierService.notify('error', 'Missing repository name');
+      return false;
+    } else if (this.current_configuration.git.branch == 'Select a branch') {
+      this.current_configuration.git.valid = false;
+      this.notifierService.notify('error', 'Missing branch name');
+      return false;
+    } else {
+      this.current_configuration.git.valid = false;
+      this.notifierService.notify(
+        'error',
+        'Connection to git was unsuccessful'
+      );
+      return false;
+    }
   }
 
   step() {
@@ -57,7 +83,7 @@ export class GitComponent implements OnInit {
   }
 
   refreshBranches() {
-    this.branches = ['dev', '13.2.0-RC', '13.2.0.0'];
+    this.branches = ['Select a branch', 'dev', '13.2.0-RC', '13.2.0.0'];
   }
 
   refreshAttributes() {
@@ -76,5 +102,9 @@ export class GitComponent implements OnInit {
       this.current_configuration.git.folder.name + '/tables.txt';
     this.current_configuration.git.delivery.name =
       this.current_configuration.git.folder.name + '/delivery_scripts';
+  }
+
+  back() {
+    this.location.back();
   }
 }
