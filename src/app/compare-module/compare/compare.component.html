@@ -1,11 +1,32 @@
-<div class="mx-auto mt-5">
+<div class="w-100 mt-5">
   <div style="height: 430px" class="row mt-3 position-relative">
+    <div class="col-10 d-flex flex-column hide-scroll-bar">
+      <div class="input-group mb-1">
+        <input
+          [(ngModel)]="search"
+          (keyup)="filter()"
+          type="text"
+          class="form-control"
+          placeholder="search data..."
+        />
+      </div>
+      <div
+        class="border rounded shadow mb-3"
+        *ngFor="let table of changed_tables"
+      >
+        <app-compare-with-initial-state
+          *ngIf="change_with_initial_temp[table]"
+          [change_per_table]="change_with_initial_temp[table]"
+          [table]="table"
+        ></app-compare-with-initial-state>
+      </div>
+    </div>
     <div
       class="col-2 d-flex flex-column align-items-center position-fixed"
-      style="height: 500px; left: 50px"
+      style="height: 700px; right: 50px; top : 100px"
     >
       <div
-        class="border shadow-lg rounded"
+        class="border shadow rounded"
         style="height: 400px; overflow: auto; width: 100%"
       >
         <div
@@ -61,46 +82,10 @@
           </div>
         </div>
       </div>
-      <button
-        (click)="step_back()"
-        style="z-index: 99"
-        class="btn btn-secondary mt-2 px-5 fw-bold"
-        type="button"
-      >
-        Back
-      </button>
-    </div>
-    <div class="col-8 mx-auto d-flex flex-column hide-scroll-bar">
-      <div class="input-group mb-1">
-        <input
-          [(ngModel)]="search"
-          (keyup)="filter()"
-          type="text"
-          class="form-control"
-          placeholder="search data..."
-        />
-      </div>
-      <div
-        class="border rounded shadow mb-3"
-        *ngFor="let table of changed_tables"
-      >
-        <app-compare-with-initial-state
-          *ngIf="change_with_initial_temp[table]"
-          [change_per_table]="change_with_initial_temp[table]"
-          [table]="table"
-        ></app-compare-with-initial-state>
-      </div>
-    </div>
-    <div
-      class="col-2 d-flex flex-column align-items-center position-fixed"
-      style="height: 500px; right: 50px"
-    >
-      <div
 
-        style="height: 400px; overflow: auto; width: 100%"
-      >
-        <div  class="shadow-lg rounded border p-2" *ngIf="!pushed">
-          <div class=" d-flex flex-column">
+      <div style="height: 150px; overflow: auto; width: 100%">
+        <div class="shadow rounded border p-2 mt-3" *ngIf="!pushed">
+          <div class="d-flex flex-column">
             <span
               >Changes : <b>{{ changed_tables.length }}</b></span
             >
@@ -115,7 +100,11 @@
             id="commit-message"
           ></textarea>
         </div>
-        <div *ngIf="pushed" class=" p-2 d-flex flex-column shadow-lg rounded border" style="font-size: 12px;">
+        <div
+          *ngIf="pushed"
+          class="p-2 d-flex flex-column shadow-lg rounded border"
+          style="font-size: 12px"
+        >
           <span
             >Changes : <b>{{ changed_tables.length }}</b></span
           >
@@ -124,25 +113,35 @@
           <span>date : {{ this.commit_date | date: "short" }}</span>
         </div>
       </div>
-      <button
-        [disabled]="!commit_message || pushing"
-        style="z-index: 99"
-        (click)="commit()"
-        class="btn btn-primary mt-2 px-3 fw-bold"
-        type="button"
-      >
-        <div class="d-flex align-items-center">
-          <div *ngIf="!pushed">Commit & Push</div>
-          <div *ngIf="pushed">Close</div>
-          <div
-            *ngIf="pushing"
-            class="spinner-border ms-2"
-            style="width: 25px; height: 25px"
-            role="status"
-            aria-hidden="true"
-          ></div>
-        </div>
-      </button>
+      <div class="btn-group mt-2">
+        <button
+          (click)="step_back()"
+          style="z-index: 99"
+          class="btn btn-secondary px-5 fw-bold"
+          type="button"
+        >
+          Back
+        </button>
+        <button
+          [disabled]="!commit_message || pushing"
+          style="z-index: 99"
+          (click)="commit()"
+          class="btn btn-primary ms-1 px-3 fw-bold"
+          type="button"
+        >
+          <div class="d-flex align-items-center">
+            <div *ngIf="!pushed">Commit</div>
+            <div *ngIf="pushed">Close</div>
+            <div
+              *ngIf="pushing"
+              class="spinner-border ms-2"
+              style="width: 25px; height: 25px"
+              role="status"
+              aria-hidden="true"
+            ></div>
+          </div>
+        </button>
+      </div>
     </div>
   </div>
 </div>
