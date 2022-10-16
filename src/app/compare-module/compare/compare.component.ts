@@ -280,9 +280,7 @@ export class CompareComponent implements OnInit {
         return { table: t, lines: this.change_with_initial[t] };
       }),
     };
-    console.log(JSON.stringify(commit));
-
-    cm_commits.push(commit);
+    cm_commits.unshift(commit);
     window.localStorage.setItem('cm_commits', JSON.stringify(cm_commits));
     setTimeout(() => {
       this.notifierService.hide('COMMIT');
