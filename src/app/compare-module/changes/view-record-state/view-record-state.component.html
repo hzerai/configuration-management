@@ -14,15 +14,25 @@
     </thead>
     <tbody>
       <tr *ngFor="let key of allKeys; let i = index">
-        <th  scope="row">
+        <th scope="row">
           {{ i }}
         </th>
         <td class="{{ record.operation === 'INSERT' ? '' : 'active' }}">
-          {{ key }}
+          <div
+            class="hide-scroll-bar"
+            style="max-width: 480px; overflow: scroll"
+          >
+            {{ key }}
+          </div>
         </td>
 
         <td class="{{ record.operation === 'INSERT' ? '' : 'active' }}">
-          {{ record.state[key] }}
+          <div
+            class="hide-scroll-bar"
+            style="max-width: 480px; overflow: scroll"
+          >
+            {{ record.state[key] }}
+          </div>
         </td>
       </tr>
     </tbody>

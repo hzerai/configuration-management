@@ -153,7 +153,7 @@ export class CommitComponent implements OnInit {
       cm_commits = JSON.parse(cm_commits_str);
     }
     cm_commits = cm_commits.filter((c) => this.commit.commit_id != c.commit_id);
-    cm_commits.push(this.commit);
+    cm_commits.unshift(this.commit);
     window.localStorage.setItem('cm_commits', JSON.stringify(cm_commits));
   }
 }

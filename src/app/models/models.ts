@@ -75,9 +75,9 @@ export class Table {
 export class Record {
   identifier: string;
   operation: string;
-  issues: string[];
-  modules: string[];
-  date: Date;
+  issues: string;
+  modules: string;
+  date: any;
   user: string;
   query: string;
   state: any;

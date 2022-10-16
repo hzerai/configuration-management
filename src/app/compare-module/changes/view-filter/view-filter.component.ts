@@ -28,11 +28,16 @@ export class ViewFilterComponent implements OnInit {
     this.delta.changes.forEach((t) => {
       this.tables.push(t.table_name);
       t.records.forEach((r) => {
-        this.modules.push(...r.modules);
-        this.issues.push(...r.issues);
+        this.modules.push(
+          r.modules.includes(',') ? r.modules.split(',') : r.modules
+        );
+        this.issues.push(
+          r.issues.includes(',') ? r.issues.split(',') : r.issues
+        );
         this.users.push(r.user);
       });
     });
+
     function onlyUnique(value, index, self) {
       return self.indexOf(value) === index;
     }
@@ -48,7 +53,6 @@ export class ViewFilterComponent implements OnInit {
     // this.modules.push(...this.modules)
     // this.issues.push(...this.issues)
     // this.issues.push(...this.issues)
-
   }
 
   filter(filter) {
@@ -74,7 +78,9 @@ export class ViewFilterComponent implements OnInit {
     if (this.filters['issue'] && this.filters['issue'].length > 0) {
       changes.forEach((t) => {
         let records = t.records.filter((r) =>
-          r.issues.find((i) => this.filters['issue'].find((fi) => fi === i))
+          r.issues
+            .split(',')
+            .find((i) => this.filters['issue'].find((fi) => fi === i))
         );
         t.records = records;
       });
@@ -82,7 +88,9 @@ export class ViewFilterComponent implements OnInit {
     if (this.filters['module'] && this.filters['module'].length > 0) {
       changes.forEach((t) => {
         let records = t.records.filter((r) =>
-          r.modules.find((i) => this.filters['module'].find((fi) => fi === i))
+          r.modules
+            .split(',')
+            .find((i) => this.filters['module'].find((fi) => fi === i))
         );
         t.records = records;
       });

@@ -53,7 +53,7 @@
     </div>
     <div style="width: 13px; height: 13px" class="border mt-1 bg-warning"></div>
     <div class="w-100 d-flex justify-content-between fw-bold ms-1">
-      <div>{{ identifier }}</div>
+      <div class="text-truncate" style="max-width: 800px">{{ identifier }}</div>
       <div>
         <span
           style="width: 150px"
@@ -67,80 +67,69 @@
       </div>
     </div>
   </div>
-  <table
-    *ngIf="expand !== 'A'"
-    class="table table-bordered border-dark table-hover caption-top"
-  >
-    <caption>
-      {{
-        expand == "B" ? "Showing modified keys only" : "Showing all keys"
-      }}
-    </caption>
-    <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">Column</th>
-        <th scope="col">Old value</th>
-        <th scope="col">New Value</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let key of allKeys; let i = index">
-        <th
-          class="table-light"
-          *ngIf="(dirtyKeys.includes(key) && expand == 'B') || expand == 'C'"
-          scope="row"
-        >
-          {{ i }}
-        </th>
-        <td
-          class=" {{ dirtyKeys.includes(key) ? 'active' : 'text-secondary' }}"
-          *ngIf="(dirtyKeys.includes(key) && expand == 'B') || expand == 'C'"
-        >
-          {{ key }}
-        </td>
-        <td
-          *ngIf="(dirtyKeys.includes(key) && expand == 'B') || expand == 'C'"
-          class=" {{ dirtyKeys.includes(key) ? 'active' : 'text-secondary' }}"
-        >
-          {{ old[key] }}
-        </td>
-        <td
-          *ngIf="(dirtyKeys.includes(key) && expand == 'B') || expand == 'C'"
-          class=" {{ dirtyKeys.includes(key) ? 'active' : 'text-secondary' }}"
-        >
-          {{ new[key] }}
-        </td>
-      </tr>
-    </tbody>
-  </table>
 
-  <!-- <div *ngFor="let key of allKeys">
-    <div
-      *ngIf="(dirtyKeys.includes(key) && expand == 'B') || expand == 'C'"
-      class="row rounded-bottom"
+  <div>
+    <table
+      *ngIf="expand !== 'A'"
+      class="table table-bordered border-dark table-hover caption-top"
     >
-      <div
-        class="col-2 border {{
-          dirtyKeys.includes(key) ? 'bg-warning' : 'bg-secondary'
-        }}"
-      >
-        {{ key }}
-      </div>
-      <div
-        class="col-5 border {{
-          dirtyKeys.includes(key) ? 'bg-warning' : 'bg-secondary'
-        }}"
-      >
-        {{ old[key] }}
-      </div>
-      <div
-        class="col-5 border {{
-          dirtyKeys.includes(key) ? 'bg-warning' : 'bg-secondary'
-        }}"
-      >
-        {{ new[key] }}
-      </div>
-    </div>
-  </div> -->
+      <caption>
+        {{
+          expand == "B" ? "Showing modified keys only" : "Showing all keys"
+        }}
+      </caption>
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Column</th>
+          <th scope="col">Old value</th>
+          <th scope="col">New Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let key of allKeys; let i = index">
+          <th
+            class="table-light"
+            *ngIf="(dirtyKeys.includes(key) && expand == 'B') || expand == 'C'"
+            scope="row"
+          >
+            {{ i }}
+          </th>
+          <td
+            class="{{ dirtyKeys.includes(key) ? 'active' : 'text-secondary' }}"
+            *ngIf="(dirtyKeys.includes(key) && expand == 'B') || expand == 'C'"
+          >
+            <div
+              class="hide-scroll-bar"
+              style="max-width: 200px; overflow: scroll"
+            >
+              {{ key }}
+            </div>
+          </td>
+          <td
+            *ngIf="(dirtyKeys.includes(key) && expand == 'B') || expand == 'C'"
+            class="{{ dirtyKeys.includes(key) ? 'active' : 'text-secondary' }}"
+          >
+            <div
+              class="hide-scroll-bar"
+              style="max-width: 280px; overflow: scroll"
+            >
+              {{ old[key] }}
+            </div>
+          </td>
+          <td
+            *ngIf="(dirtyKeys.includes(key) && expand == 'B') || expand == 'C'"
+            class="{{ dirtyKeys.includes(key) ? 'active' : 'text-secondary' }}"
+          >
+            <div
+              class="hide-scroll-bar"
+              style="max-width: 280px; overflow: scroll"
+            >
+              {{ new[key] }}
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>

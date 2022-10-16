@@ -1,6 +1,6 @@
 <div class="w-100 mt-5">
   <div style="height: 430px" class="row mt-3 ms-3 pe-5 me-3 position-relative">
-    <div class="col-10  d-flex flex-column hide-scroll-bar">
+    <div class="col-10 d-flex flex-column hide-scroll-bar">
       <div class="input-group mb-1">
         <input
           [(ngModel)]="search"
@@ -15,6 +15,7 @@
         *ngFor="let table of changed_tables"
       >
         <app-compare-with-initial-state
+          id="scroll-compare-{{ table }}"
           *ngIf="change_with_initial_temp[table]"
           [change_per_table]="change_with_initial_temp[table]"
           [table]="table"
@@ -23,7 +24,7 @@
     </div>
     <div
       class="col-2 d-flex flex-column align-items-center position-fixed"
-      style="height: 700px; right: 50px; top : 100px"
+      style="height: 700px; right: 50px; top: 100px"
     >
       <div
         class="border shadow rounded"
@@ -31,7 +32,7 @@
       >
         <div
           class="input-group rounded position-fixed"
-          style="position: relative; width: 228px"
+          style="position: relative; width: 228px; z-index: 2"
         >
           <input
             style="font-size: 14px"
@@ -78,17 +79,21 @@
                 d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm15 2h-4v3h4V4zm0 4h-4v3h4V8zm0 4h-4v3h3a1 1 0 0 0 1-1v-2zm-5 3v-3H6v3h4zm-5 0v-3H1v2a1 1 0 0 0 1 1h3zm-4-4h4V8H1v3zm0-4h4V4H1v3zm5-3v3h4V4H6zm4 4H6v3h4V8z"
               />
             </svg>
-            <p class="mb-1 ms-2">{{ t }}</p>
+            <p class="mb-1 ms-2 text-truncate" style="max-width: 150px">
+              {{ t }}
+            </p>
           </div>
         </div>
       </div>
 
       <div style="height: 150px; overflow: auto; width: 100%">
         <div class="shadow rounded border p-2 mt-3" *ngIf="!pushed">
-          <label class="ms-3" for="commit-message fw-bold"><small>Commit message :</small></label>
+          <label class="ms-3" for="commit-message fw-bold"
+            ><small>Commit message :</small></label
+          >
           <textarea
             [(ngModel)]="commit_message"
-            style=" font-size: 11px;"
+            style="font-size: 11px"
             class="form-control mx-auto p-1 rounded border-secondary"
             name="commit-message"
             id="commit-message"

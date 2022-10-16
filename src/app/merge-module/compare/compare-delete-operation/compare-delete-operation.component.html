@@ -38,7 +38,7 @@
       </div>
     </div>
     <div class="w-100 d-flex justify-content-between fw-bold ms-1">
-      <div>{{ identifier }}</div>
+      <div class="text-truncate" style="max-width: 800px">{{ identifier }}</div>
       <div>
         <span
           style="width: 150px"
@@ -48,28 +48,42 @@
       </div>
     </div>
   </div>
+  <div>
+    <table
+      *ngIf="expanded"
+      class="table table-danger table-hover table-striped table-bordered border-dark"
+    >
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Column</th>
+          <th scope="col">Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let key of allKeys; let i = index">
+          <th scope="row" class="table-light">
+            {{ i }}
+          </th>
+          <td>
+            <div
+              class="hide-scroll-bar"
+              style="max-width: 310px; overflow: scroll"
+            >
+              {{ key }}
+            </div>
+          </td>
 
-  <table *ngIf="expanded" class="table table-danger table-hover table-striped table-bordered border-dark">
-    <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">Column</th>
-        <th scope="col">Value</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let key of allKeys; let i = index">
-        <th class="table-light" scope="row">
-          {{ i }}
-        </th>
-        <td>
-          {{ key }}
-        </td>
-
-        <td>
-          {{ old[key] }}
-        </td>
-      </tr>
-    </tbody>
-  </table>
+          <td>
+            <div
+              class="hide-scroll-bar"
+              style="max-width: 480px; overflow: scroll"
+            >
+              {{ old[key] }}
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>

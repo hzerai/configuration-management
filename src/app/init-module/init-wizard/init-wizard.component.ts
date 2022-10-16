@@ -154,7 +154,7 @@ export class InitWizardComponent implements OnInit {
     }
 
     db = db.filter((c) => c.name != this.current_configuration.name);
-    db.push(this.current_configuration);
+    db.unshift(this.current_configuration);
     window.localStorage.setItem(
       'configuration_management_db',
       JSON.stringify(db)
