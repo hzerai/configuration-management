@@ -5,17 +5,17 @@
       style="height: 500px; width: 18.5%"
     >
       <div
-        class="bg2 rounded"
+        class="border shadow rounded"
         style="height: 400px; overflow: auto; width: 100%"
       >
         <div
           class="input-group rounded position-fixed"
-          style="position: relative; width: 257px"
+          style="position: relative; width: 228px"
         >
           <input
             style="font-size: 14px"
             id="Filter"
-            class="p-2 bg2 ps-5 border-0 rounded-top w-100"
+            class="form-control ps-5 rounded-top border-0 border-bottom"
             name="Filter changed tables"
             placeholder="Filter changed tables"
             [(ngModel)]="selectedTable"
@@ -37,6 +37,7 @@
         </div>
         <div
           class="d-flex flex-column mt-5 ps-2"
+          style="color: rgb(102, 100, 100)"
         >
           <div
             role="button"
@@ -63,7 +64,7 @@
       <button
         (click)="back()"
         style="z-index: 99"
-        class="btn btn-outline-light mt-2 px-5 fw-bold"
+        class="btn btn-secondary mt-2 px-5 fw-bold"
         type="button"
       >
         Back
@@ -76,11 +77,14 @@
           [(ngModel)]="search"
           (keyup)="filter()"
           type="text"
-          class="bg2 p-2 rounded border-0 w-100"
+          class="form-control"
           placeholder="search data..."
         />
       </div>
-      <div class="bg2 rounded mb-3" *ngFor="let table of changed_tables">
+      <div
+        class="border rounded shadow mb-3"
+        *ngFor="let table of changed_tables"
+      >
         <app-compare-with-initial-state
           *ngIf="change_with_initial_temp[table]"
           [change_per_table]="change_with_initial_temp[table]"

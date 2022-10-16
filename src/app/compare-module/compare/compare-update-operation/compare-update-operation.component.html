@@ -57,7 +57,7 @@
       <div>
         <span
           style="width: 150px"
-          class="badge rounded-pill bg-warning text-black"
+          class="badge rounded-pill bg-warning text-secondary"
           >{{
             dirtyKeys.length +
               " field" +
@@ -69,7 +69,7 @@
   </div>
   <table
     *ngIf="expand !== 'A'"
-    class="table table-dark table-bordered border-light table-hover caption-top"
+    class="table table-bordered border-dark table-hover caption-top"
   >
     <caption>
       {{
@@ -87,27 +87,27 @@
     <tbody>
       <tr *ngFor="let key of allKeys; let i = index">
         <th
+          class="table-light"
           *ngIf="(dirtyKeys.includes(key) && expand == 'B') || expand == 'C'"
           scope="row"
-          class=" {{ dirtyKeys.includes(key) ? 'active' : '' }}"
         >
           {{ i }}
         </th>
         <td
-          class=" {{ dirtyKeys.includes(key) ? 'active' : '' }}"
+          class=" {{ dirtyKeys.includes(key) ? 'active' : 'text-secondary' }}"
           *ngIf="(dirtyKeys.includes(key) && expand == 'B') || expand == 'C'"
         >
           {{ key }}
         </td>
         <td
           *ngIf="(dirtyKeys.includes(key) && expand == 'B') || expand == 'C'"
-          class=" {{ dirtyKeys.includes(key) ? 'active' : '' }}"
+          class=" {{ dirtyKeys.includes(key) ? 'active' : 'text-secondary' }}"
         >
           {{ old[key] }}
         </td>
         <td
           *ngIf="(dirtyKeys.includes(key) && expand == 'B') || expand == 'C'"
-          class=" {{ dirtyKeys.includes(key) ? 'active' : '' }}"
+          class=" {{ dirtyKeys.includes(key) ? 'active' : 'text-secondary' }}"
         >
           {{ new[key] }}
         </td>

@@ -49,8 +49,8 @@ export class CompareWizardComponent implements OnInit {
           width: '40px',
         }
       : {
-          'background-color': 'white',
-          color: 'black',
+          'background-color': '#e7eeec',
+          color: 'rgba(0, 0, 0, 0.482)',
           height: '40px',
           width: '40px',
         };

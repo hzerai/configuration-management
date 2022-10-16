@@ -115,10 +115,10 @@ export class InitializationComponent {
   started: boolean = false;
   finished: boolean = false;
   executed: boolean = false;
-  executing: boolean = false;
+  executing : boolean = false;
   hasErrors: boolean = true;
   constructor() {
-    mermaid.initialize({ theme: 'neutral' });
+    mermaid.initialize({});
   }
 
   init(): void {
@@ -130,7 +130,7 @@ export class InitializationComponent {
     // this.current_configuration = current_mock; // USE MOCK
     this.flowChart = [
       'flowchart LR',
-      'subgraph GIT ["GIT Initialization"]',
+      `subgraph GIT ["${this.current_configuration.git.repository} Initialization"]`,
       // 'direction TB',
       // `creation>fa:fa-spinner Folders creation] -.-> |${
       //   this.current_configuration.git.folder.create
@@ -194,14 +194,14 @@ export class InitializationComponent {
       // `GIT ==>|fa:fa-${
       //   this.current_configuration.tables_source !== 'GIT' ? 'spinner' : 'ban'
       // }| TABLES[Commit configuration's tables]`,
-      'GIT ===> TRIGGER',
-      'GIT ==> BASELINE',
+      'GIT ===>|fa:fa-spinner| TRIGGER',
+      'GIT ==>|fa:fa-spinner| BASELINE',
 
       // `TABLES ==>|fa:fa-${
       //   this.current_configuration.tables_source !== 'GIT' ? 'spinner' : 'ban'
       // }| END((End))`,
-      'BASELINE ===> END((End))',
-      'TRIGGER ==> END((End))',
+      'BASELINE ===>|fa:fa-spinner| END((End))',
+      'TRIGGER ==>|fa:fa-spinner| END((End))',
       'class START fw-bold',
       'class END fw-bold',
     ];
@@ -236,16 +236,16 @@ export class InitializationComponent {
       this.flowChart = this.flowChart.map((l) => {
         if (l.startsWith('creation')) {
           return l.replace('spinner', 'check').replace('spinner', 'check');
-        // } else if (l === 'GIT ===>|fa:fa-spinner| TRIGGER') {
-        //   return 'GIT ===>|fa:fa-check| TRIGGER';
-        // } else if (l === 'GIT ==>|fa:fa-spinner| BASELINE') {
-        //   return 'GIT ==>|fa:fa-check| BASELINE';
-        // } else if (l === 'TABLES ==>|fa:fa-spinner| END((End))') {
-        //   return 'TABLES ==>|fa:fa-check| END((End))';
-        // } else if (
-        //   l === 'GIT ==>|fa:fa-spinner| TABLES[Configuration tables]'
-        // ) {
-        //   return 'GIT ==>|fa:fa-check| TABLES[Configuration tables]';
+        } else if (l === 'GIT ===>|fa:fa-spinner| TRIGGER') {
+          return 'GIT ===>|fa:fa-check| TRIGGER';
+        } else if (l === 'GIT ==>|fa:fa-spinner| BASELINE') {
+          return 'GIT ==>|fa:fa-check| BASELINE';
+        } else if (l === 'TABLES ==>|fa:fa-spinner| END((End))') {
+          return 'TABLES ==>|fa:fa-check| END((End))';
+        } else if (
+          l === 'GIT ==>|fa:fa-spinner| TABLES[Configuration tables]'
+        ) {
+          return 'GIT ==>|fa:fa-check| TABLES[Configuration tables]';
         } else {
           return l;
         }
@@ -314,8 +314,8 @@ export class InitializationComponent {
               '|fa:fa-spinner| downloadScripts',
               '|fa:fa-check| downloadScripts'
             );
-        // } else if (l === 'TRIGGER ==>|fa:fa-spinner| END((End))') {
-        //   return 'TRIGGER ==>|fa:fa-check| END((End))';
+        } else if (l === 'TRIGGER ==>|fa:fa-spinner| END((End))') {
+          return 'TRIGGER ==>|fa:fa-check| END((End))';
         } else {
           return l;
         }
@@ -398,8 +398,8 @@ export class InitializationComponent {
               '|fa:fa-spinner| baselineDownload',
               '|fa:fa-check| baselineDownload'
             );
-        // } else if (l === 'BASELINE ===>|fa:fa-spinner| END((End))') {
-        //   return 'BASELINE ===>|fa:fa-check| END((End))';
+        } else if (l === 'BASELINE ===>|fa:fa-spinner| END((End))') {
+          return 'BASELINE ===>|fa:fa-check| END((End))';
         } else {
           return l;
         }

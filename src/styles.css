@@ -340,13 +340,3 @@ pre {
 ::-webkit-scrollbar-track {
   background: transparent;
 }
-
-.bg1 {
-  color: white;
-  background-color: #292c34 !important;
-}
-
-.bg2 {
-  color: white;
-  background-color: rgb(16,21,35);
-}

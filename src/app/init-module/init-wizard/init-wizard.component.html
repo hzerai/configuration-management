@@ -1,4 +1,4 @@
-<div class="text-white">
+<div >
   <div class="text-center">
     <h3>Configuration setup</h3>
   </div>
@@ -117,22 +117,22 @@
   [current_configuration]="this.current_configuration"
 ></app-initialization>
 </div>
-<div *ngIf="starting && !started" class="text-center m-5" style="z-index: 999;">
+<div *ngIf="starting && !started" class="text-center" style="z-index: 999;">
   <img src="assets\img\rocket.gif" />
 </div>
 
 
 <!-- Modal -->
 <div
-  class="modal  fade"
+  class="modal fade"
   id="save"
   tabindex="-1"
   aria-labelledby="saveLabl"
   aria-hidden="true"
 >
-  <div class="modal-dialog ">
-    <div class="modal-content bg2">
-      <div class="modal-header  border-0">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
         <h5 class="modal-title" id="saveLabl">Save configuration</h5>
         <button
           type="button"
@@ -141,20 +141,20 @@
           aria-label="Close"
         ></button>
       </div>
-      <div class="modal-body border-0 py-1">
-        <div class="input-group  mb-1">
-          <span class="input-group-text bg1">Name : </span>
+      <div class="modal-body">
+        <div class="input-group mb-1">
+          <span class="input-group-text">Name : </span>
           <input
             [(ngModel)]="this.current_configuration.name"
             type="text"
-            class="form-control bg1"
+            class="form-control"
           />
         </div>
       </div>
-      <div class="modal-footer  border-0">
+      <div class="modal-footer">
         <button
           type="button"
-          class="btn btn-{{ false ? '' : 'outline-' }}light"
+          class="btn btn-{{ false ? '' : 'outline-' }}secondary"
           data-bs-dismiss="modal"
         >
           Close

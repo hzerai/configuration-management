@@ -5,17 +5,19 @@
       style="margin-inline: 7rem; z-index: 11"
     >
       <div class="input-group mb-1">
-        <span class="input-group-text bg2" style="width: 35%">Repository</span>
+        <span class="input-group-text bg-primary text-white" style="width: 35%"
+          >Repository</span
+        >
         <input
           (change)="refreshBranches()"
           [disabled]="this.current_configuration.git.valid"
           [(ngModel)]="this.current_configuration.git.repository"
           type="text"
-          class="bg2 p-2 rounded border flex-grow-1"
+          class="form-control"
         />
       </div>
       <div class="input-group mb-1">
-        <span class="input-group-text bg2 text-white" style="width: 35%"
+        <span class="input-group-text bg-primary text-white" style="width: 35%"
           >Branch</span
         >
         <select
@@ -24,7 +26,7 @@
             this.current_configuration.git.valid
           "
           [(ngModel)]="this.current_configuration.git.branch"
-          class="bg2 p-2 rounded border flex-grow-1"
+          class="form-select"
           aria-label="select branch"
         >
           <option
@@ -74,59 +76,69 @@
       </div>
       <div *ngIf="advanced">
         <div class="input-group mb-1">
-          <span class="input-group-text bg2 text-white" style="width: 35%"
+          <span
+            class="input-group-text bg-primary text-white"
+            style="width: 35%"
             >Configuration's folder</span
           >
           <input
             [disabled]="this.current_configuration.git.valid"
             [(ngModel)]="this.current_configuration.git.folder.name"
             type="text"
-            class="bg2 p-2 rounded border flex-grow-1"
+            class="form-control"
             (change)="refreshAttributes()"
           />
         </div>
         <div class="input-group mb-1">
-          <span class="input-group-text bg2 text-white" style="width: 35%"
+          <span
+            class="input-group-text bg-primary text-white"
+            style="width: 35%"
             >Configuration's tables file</span
           >
           <input
             [disabled]="true"
             [(ngModel)]="this.current_configuration.git.tables.name"
             type="text"
-            class="bg2 p-2 rounded border flex-grow-1"
+            class="form-control"
           />
         </div>
         <div class="input-group mb-1">
-          <span class="input-group-text bg2 text-white" style="width: 35%"
+          <span
+            class="input-group-text bg-primary text-white"
+            style="width: 35%"
             >SQL Triggers folder</span
           >
           <input
             [disabled]="true"
             [(ngModel)]="this.current_configuration.git.triggers.name"
             type="text"
-            class="bg2 p-2 rounded border flex-grow-1"
+            class="form-control"
           />
         </div>
         <div class="input-group mb-1">
-          <span class="input-group-text bg2 text-white" style="width: 35%"
+          <span
+            class="input-group-text bg-primary text-white"
+            style="width: 35%"
             >JSON Baseline folder</span
           >
           <input
             [disabled]="true"
             [(ngModel)]="this.current_configuration.git.baseline.name"
             type="text"
-            class="bg2 p-2 rounded border flex-grow-1"
+            class="form-control"
           />
         </div>
         <div class="input-group mb-1">
-          <span class="input-group-text bg2 text-white" style="width: 35%"
+          <span
+            class="input-group-text bg-primary text-white"
+            style="width: 35%"
             >Delivery folder</span
           >
           <input
             [disabled]="true"
             [(ngModel)]="this.current_configuration.git.delivery.name"
             type="text"
-            class="bg2 p-2 rounded border flex-grow-1"
+            class="form-control"
           />
         </div>
       </div>
@@ -137,7 +149,7 @@
     <div class="btn-group">
       <button
         (click)="back()"
-        class="btn btn-light mx-1 px-5 fw-bold"
+        class="btn btn-secondary mx-1 px-5 fw-bold"
         type="button"
       >
         Discard

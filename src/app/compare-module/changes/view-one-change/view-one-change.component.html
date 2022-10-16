@@ -1,7 +1,7 @@
-<div class="">
+<div class="shadow">
   <section
     id="table-header"
-    class="d-flex align-items-center rounded-top bg2 ps-2 py-1 sticky-top"
+    class="d-flex align-items-center border rounded-top bg-light ps-2 py-1 sticky-top"
   >
     <div id="expand-no-expand">
       <div *ngIf="expanded" (click)="expanded = !expanded" role="button">
@@ -57,7 +57,7 @@
     </div>
   </section>
   <section
-    class="rounded-bottom"
+    class="border border-top-0 rounded-bottom"
     *ngIf="expanded"
     id="table-body"
   >

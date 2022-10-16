@@ -1,7 +1,7 @@
 <div>
-  <table class="table bg2 mb-0">
+  <table class="table mb-0">
     <thead>
-      <tr style="font-size: 14px">
+      <tr style="font-size: 12px">
         <th style="width: 10px" scope="col">#</th>
         <th scope="col">Operation</th>
         <th scope="col">Identifier</th>
@@ -12,16 +12,15 @@
       </tr>
     </thead>
     <tbody *ngFor="let record of records">
-      <tr class="fw-bold"
-        style="font-size: 12px; color: white;"
-        [ngStyle]="{
-          'background-color':
-            record.operation === 'INSERT'
-              ? '#4aa85d'
-              : record.operation === 'UPDATE'
-              ? '#c4b34f'
-              : '#bf0d0d'
-        }"
+      <tr
+        style="font-size: 12px"
+        class="table-{{
+          record.operation === 'INSERT'
+            ? 'success'
+            : record.operation === 'UPDATE'
+            ? 'warning'
+            : 'danger'
+        }}"
       >
         <td scope="row" style="width: 10px">
           <div *ngIf="record.operation !== 'DELETE'" id="expand-no-expand">

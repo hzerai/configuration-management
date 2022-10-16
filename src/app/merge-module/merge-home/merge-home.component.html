@@ -31,10 +31,10 @@
       role="button"
       (click)="showing = 'OPEN'"
       class="pb-1"
-      [ngClass]="{ 'border-bottom border-3 border-white ': showing === 'OPEN' }"
+      [ngClass]="{ 'border-bottom border-3 border-primary ': showing === 'OPEN' }"
     >
       Open<span
-        class="badge text-black ms-1 pb-2"
+        class="badge text-secondary ms-1 pb-2"
         style="font-size: 10px; background-color: rgb(242, 242, 242)"
         >{{ open }}</span
       >
@@ -44,11 +44,11 @@
       (click)="showing = 'MERGED'"
       class="ms-4 pb-1"
       [ngClass]="{
-        'border-bottom border-3 border-white ': showing === 'MERGED'
+        'border-bottom border-3 border-primary ': showing === 'MERGED'
       }"
     >
       Merged<span
-        class="badge text-black ms-1 pb-2"
+        class="badge text-secondary ms-1 pb-2"
         style="font-size: 10px; background-color: rgb(242, 242, 242)"
         >{{ merged }}</span
       >
@@ -58,11 +58,11 @@
       (click)="showing = 'CLOSED'"
       class="ms-4 pb-1"
       [ngClass]="{
-        'border-bottom border-3 border-white ': showing === 'CLOSED'
+        'border-bottom border-3 border-primary ': showing === 'CLOSED'
       }"
     >
       Closed<span
-        class="badge text-black ms-1 pb-2"
+        class="badge text-secondary ms-1 pb-2"
         style="font-size: 10px; background-color: rgb(242, 242, 242)"
       >
         {{ closed }}</span
@@ -72,20 +72,20 @@
       role="button"
       (click)="showing = 'ALL'"
       class="ms-4 pb-1"
-      [ngClass]="{ 'border-bottom border-3 border-white ': showing === 'ALL' }"
+      [ngClass]="{ 'border-bottom border-3 border-primary ': showing === 'ALL' }"
     >
       All<span
-        class="badge text-black ms-1 pb-2"
+        class="badge text-secondary ms-1 pb-2"
         style="font-size: 10px; background-color: rgb(242, 242, 242)"
         >{{ open + merged + closed }}</span
       >
     </div>
   </div>
-  <div class="d-flex border-top border-bottom w-100 p-3 ">
-    <div class="d-flex rounded-start border p-2 ">
+  <div class="d-flex border-top border-bottom w-100 p-3 bg-light">
+    <div class="d-flex rounded-start border p-2 bg-white">
       <div class="d-flex">
-        <span class="text-light mt-2">Recent searches </span>
-        <div class="ms-1 mt-2">
+        <span class="text-secondary">Recent searches </span>
+        <div class="ms-1">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="16"
@@ -102,10 +102,10 @@
         </div>
       </div>
     </div>
-    <div class="flex-grow-1 rounded-end border p-2 bg1">
+    <div class="flex-grow-1 rounded-end border p-2 bg-white">
       <input
         placeholder="search ..."
-        class="bg1 p-2 border-0 w-100"
+        class="from-control border-0 w-100"
         type="text"
       />
     </div>
@@ -133,7 +133,7 @@
           <div style="font-size: 16px">{{ commit.configuration_name }}</div>
         </div>
         <div
-          class="d-flex flex-column justify-content-between text-light me-2"
+          class="d-flex flex-column justify-content-between text-secondary me-2"
           style="font-size: 15px"
         >
           <div class="ms-auto">
