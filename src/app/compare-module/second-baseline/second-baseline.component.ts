@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Configuration } from 'src/app/models/models';
 
 @Component({
@@ -11,7 +11,36 @@ export class SecondBaselineComponent implements OnInit {
   current_configuration: Configuration;
 
   advanced: boolean = false;
+
+  @Output('step')
+  stepEvent = new EventEmitter<any>();
+
+  @Output('step_back')
+  step_back_event = new EventEmitter<any>();
+
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.advanced = this.current_configuration.baseline.generate;
+  }
+
+  step() {
+    this.stepEvent.emit(null);
+  }
+
+  step_back() {
+    this.current_configuration.baseline.generated =
+      this.current_configuration.baseline.generate;
+    this.step_back_event.emit();
+  }
+
+  generateChanged() {
+    this.current_configuration.baseline.download =
+      this.current_configuration.baseline.commit =
+        this.current_configuration.baseline.generate;
+  }
+
+  generate() {
+    this.current_configuration.baseline.generate = true;
+  }
 }
