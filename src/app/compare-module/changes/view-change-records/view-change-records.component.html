@@ -23,7 +23,7 @@
         }}"
       >
         <td scope="row" style="width: 10px">
-          <div id="expand-no-expand">
+          <div *ngIf="record.operation !== 'DELETE'" id="expand-no-expand">
             <div
               *ngIf="record.expanded"
               (click)="record.expanded = !record.expanded"
@@ -72,7 +72,7 @@
         <td>{{ record.issues }}</td>
       </tr>
       <tr *ngIf="record.expanded">
-        <td colspan="7">
+        <td colspan="7 m-0 p-0">
           <app-view-record-state [record]="record"></app-view-record-state>
         </td>
       </tr>

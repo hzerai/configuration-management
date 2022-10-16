@@ -10,6 +10,7 @@ import { CompareOperationComponent } from './compare/compare-operation/compare-o
 import { CompareInsertOperationComponent } from './compare/compare-insert-operation/compare-insert-operation.component';
 import { CompareDeleteOperationComponent } from './compare/compare-delete-operation/compare-delete-operation.component';
 import { CompareUpdateOperationComponent } from './compare/compare-update-operation/compare-update-operation.component';
+import { QuillModule } from 'ngx-quill'
 
 @NgModule({
   declarations: [
@@ -22,6 +23,6 @@ import { CompareUpdateOperationComponent } from './compare/compare-update-operat
     CompareDeleteOperationComponent,
     CompareUpdateOperationComponent,
   ],
-  imports: [CommonModule, MergeRoutingModule, FormsModule],
+  imports: [CommonModule, MergeRoutingModule, FormsModule, QuillModule.forRoot()],
 })
 export class MergeModule {}

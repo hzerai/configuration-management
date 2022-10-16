@@ -1,6 +1,6 @@
 <div class="w-100 mt-5">
-  <div style="height: 430px" class="row mt-3 position-relative">
-    <div class="col-10 d-flex flex-column hide-scroll-bar">
+  <div style="height: 430px" class="row mt-3 ms-3 pe-5 me-3 position-relative">
+    <div class="col-10  d-flex flex-column hide-scroll-bar">
       <div class="input-group mb-1">
         <input
           [(ngModel)]="search"
@@ -85,17 +85,11 @@
 
       <div style="height: 150px; overflow: auto; width: 100%">
         <div class="shadow rounded border p-2 mt-3" *ngIf="!pushed">
-          <div class="d-flex flex-column">
-            <span
-              >Changes : <b>{{ changed_tables.length }}</b></span
-            >
-            <label for="commit-message">Commit message :</label>
-          </div>
-
+          <label class="ms-3" for="commit-message fw-bold"><small>Commit message :</small></label>
           <textarea
             [(ngModel)]="commit_message"
-            style="min-height: 80%; min-width: 90%"
-            class="mx-2 rounded border-secondary"
+            style=" font-size: 11px;"
+            class="form-control mx-auto p-1 rounded border-secondary"
             name="commit-message"
             id="commit-message"
           ></textarea>

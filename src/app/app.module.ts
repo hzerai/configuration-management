@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { NotifierModule } from 'angular-notifier';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [AppComponent, LandingPageComponent],
@@ -18,6 +19,7 @@ import { NotifierModule } from 'angular-notifier';
         },
       },
     }),
+    NgbModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

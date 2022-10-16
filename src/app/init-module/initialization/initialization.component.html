@@ -1,39 +1,35 @@
 <div
   [ngStyle]="{ display: started ? '' : 'none' }"
-  class="text-center mx-auto mt-5"
+  class="text-center mx-5 px-5 mt-5"
 >
-  <div class="row">
-    <div class="col-1">
-      <div
-        [ngStyle]="{ 'margin-top': executing && !finished ? '8rem' : '9.6rem' }"
-      >
-        <img
-          *ngIf="!executed && !finished && !executing"
-          role="button"
-          (click)="execute()"
-          src="assets\img\play.jpg"
-          width="80px"
-          height="70px"
-        />
-        <img
-          *ngIf="finished"
-          src="assets\img\done.png"
-          width="120px"
-          height="70px"
-        />
-        <img
-          *ngIf="executing && !finished"
-          src="assets\img\running.gif"
-          width="120px"
-          height="100px"
-        />
-      </div>
+  <div class="row mx-5 px-5">
+    <div class="col-1 my-auto pb-3">
+      <img
+        *ngIf="!executed && !finished && !executing"
+        role="button"
+        (click)="execute()"
+        src="assets\img\play.jpg"
+        width="80px"
+        height="70px"
+      />
+      <img class="mt-1"
+        *ngIf="finished"
+        src="assets\img\done.png"
+        width="120px"
+        height="70px"
+      />
+      <img
+        *ngIf="executing && !finished"
+        src="assets\img\running.gif"
+        width="120px"
+        height="100px"
+      />
     </div>
 
     <div id="flow" class="col-11 mermaid"></div>
   </div>
 
-  <div *ngIf="finished" class="w-100 text-end mt-3">
+  <div *ngIf="finished" class="w-100 text-center mt-3">
     <button
       *ngIf="hasErrors"
       (click)="retryFailedTasks()"

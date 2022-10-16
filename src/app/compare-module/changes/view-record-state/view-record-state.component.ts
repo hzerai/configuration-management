@@ -7,7 +7,12 @@ import { Component, Input, OnInit } from '@angular/core';
 export class ViewRecordStateComponent implements OnInit {
   @Input('record')
   record: any;
+  allKeys: string[];
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if(this.record.state){
+      this.allKeys = Object.keys(this.record.state);
+    }
+  }
 }

@@ -14,6 +14,10 @@ export class CommitComponent implements OnInit {
   merged: boolean = false;
   merging: boolean = false;
   loading: boolean = true;
+  pipeline: any;
+  nb_lines = 0;
+  showing: 'OVERVIEW' | 'CHANGES' = 'OVERVIEW';
+
   constructor(
     private activatedRouter: ActivatedRoute,
     private router: Router,
@@ -23,19 +27,58 @@ export class CommitComponent implements OnInit {
   ngOnInit(): void {
     const commit_id = this.activatedRouter.snapshot.queryParams['id'];
     var cm_commits_str = window.localStorage.getItem('cm_commits');
+    var cm_commits = JSON.parse(cm_commits_str);
     if (cm_commits_str) {
-      this.commit = JSON.parse(cm_commits_str).find(
-        (c) => c.commit_id == commit_id
-      );
+      this.commit = cm_commits.find((c) => c.commit_id == commit_id);
       var changes = [];
       this.commit.changed_tables = [];
       this.commit.changes.forEach((c) => {
         changes[c.table] = c.lines;
+        this.nb_lines += c.lines.length;
         this.commit.changed_tables.push(c.table);
       });
       this.commit.change_with_initial = changes;
       this.merged =
         this.commit.status == 'MERGED' || this.commit.status == 'CLOSED';
+      this.pipeline = this.commit.pipeline
+        ? this.commit.pipeline
+        : {
+            current_stage: 1,
+            status: 'pending',
+            id: '#' + cm_commits.length,
+            stages: [
+              {
+                stage: 1,
+                title: 'generate update script',
+                style: 'secondary',
+                status: 'pending',
+              },
+              {
+                stage: 2,
+                title: 'commit update script',
+                style: 'secondary',
+                status: 'pending',
+              },
+              {
+                stage: 3,
+                title: 'update baseline',
+                style: 'secondary',
+                status: 'pending',
+              },
+              {
+                stage: 4,
+                title: 'commit baseline',
+                style: 'secondary',
+                status: 'pending',
+              },
+              {
+                stage: 5,
+                title: 'update database',
+                style: 'secondary',
+                status: 'pending',
+              },
+            ],
+          };
       this.loading = false;
     }
   }
@@ -49,16 +92,12 @@ export class CommitComponent implements OnInit {
       this.router.navigate(['']);
       return;
     }
-    this.merging = true;
-
-    this.notifierService.notify(
-      'info',
-      `Merging ${this.commit.commit_id} now!`,
-      'MERGING'
-    );
-    this.commit.status = 'MERGED';
-    this.saveCommit();
-    setTimeout(() => {
+    this.pipeline.status = 'running';
+    this.execute_pipeline(0, () => {
+      this.commit.status = 'MERGED';
+      this.pipeline.status = 'passed with warnings';
+      this.commit.pipeline = this.pipeline;
+      this.saveCommit();
       this.notifierService.hide('MERGING');
       this.notifierService.notify(
         'success',
@@ -66,7 +105,38 @@ export class CommitComponent implements OnInit {
       );
       this.merging = false;
       this.merged = true;
-    }, 2000);
+    });
+
+    this.merging = true;
+
+    this.notifierService.notify(
+      'info',
+      `Merging ${this.commit.commit_id} now!`,
+      'MERGING'
+    );
+  }
+
+  execute_pipeline(index, callback) {
+    if (index >= this.pipeline.stages.length) {
+      callback();
+      return;
+    }
+    var stage = this.pipeline.stages[index];
+    ++index;
+    stage.style = 'primary';
+    stage.status = 'running';
+    setTimeout(() => {
+      this.pipeline.current_stage++;
+      if (index == this.pipeline.stages.length) {
+        stage.style = 'warning';
+        stage.status = 'warning';
+      } else {
+        stage.style = 'success';
+        stage.status = 'done';
+      }
+
+      this.execute_pipeline(index, callback);
+    }, index * 1500);
   }
 
   close() {

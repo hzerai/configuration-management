@@ -1,98 +1,308 @@
-<h3>{{ this.commit.commit_message }}</h3>
-<div class="d-flex align-items-center justify-content-between">
-  <div class="d-flex align-items-center">
+<div class="mx-3">
+  <h3>{{ this.commit.commit_message }}</h3>
+  <div class="d-flex align-items-center justify-content-between my-2">
+    <div class="d-flex align-items-center">
+      <div
+        class="d-flex align-items-center rounded-pill text-secondary px-2 py-1"
+        [ngStyle]="{
+          'background-color':
+            this.commit.status == 'CLOSED'
+              ? '#fdd4cd'
+              : this.commit.status == 'MERGED'
+              ? '#cbe2f9'
+              : '#c3e6cd',
+          color:
+            this.commit.status == 'CLOSED'
+              ? '#ae1800'
+              : this.commit.status == 'MERGED'
+              ? '#0b5cad'
+              : '#24663b'
+        }"
+        style="font-size: 12px"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          fill="currentColor"
+          class="bi bi-git"
+          viewBox="0 0 16 16"
+        >
+          <path
+            d="M15.698 7.287 8.712.302a1.03 1.03 0 0 0-1.457 0l-1.45 1.45 1.84 1.84a1.223 1.223 0 0 1 1.55 1.56l1.773 1.774a1.224 1.224 0 0 1 1.267 2.025 1.226 1.226 0 0 1-2.002-1.334L8.58 5.963v4.353a1.226 1.226 0 1 1-1.008-.036V5.887a1.226 1.226 0 0 1-.666-1.608L5.093 2.465l-4.79 4.79a1.03 1.03 0 0 0 0 1.457l6.986 6.986a1.03 1.03 0 0 0 1.457 0l6.953-6.953a1.031 1.031 0 0 0 0-1.457"
+          />
+        </svg>
+        <div class="ms-1">
+          {{
+            this.commit.status == "MERGED"
+              ? "Merged"
+              : this.commit.status == "CLOSED"
+              ? "Closed"
+              : "Open"
+          }}
+        </div>
+      </div>
+      <div class="mb-1" style="color: rgba(0, 0, 0, 0.747)">
+        <span class="fw-bold ms-3" style="color: rgba(0, 0, 0, 0.827)">
+          {{ this.commit.commit_author }}</span
+        >
+        requested to merge
+        <span class="fw-bold" style="color: rgba(0, 0, 0, 0.827)">{{
+          this.commit.commit_id
+        }}</span>
+        into baseline
+        <span class="fw-bold" style="color: rgba(0, 0, 0, 0.827)">{{
+          fromNowDate(this.commit.commited_at)
+        }}</span>
+      </div>
+    </div>
+  </div>
+  <div
+    class="d-flex border-bottom align-items-center"
+    style="font-size: 16px; font-weight: 470"
+  >
     <div
-      class="d-flex align-items-center rounded-pill text-secondary px-2 py-1"
-      [ngStyle]="{
-        'background-color':
-          this.commit.status == 'CLOSED'
-            ? '#fdd4cd'
-            : this.commit.status == 'MERGED'
-            ? '#cbe2f9'
-            : '#c3e6cd',
-        color:
-          this.commit.status == 'CLOSED'
-            ? '#ae1800'
-            : this.commit.status == 'MERGED'
-            ? '#0b5cad'
-            : '#24663b'
+      role="button"
+      (click)="showing = 'OVERVIEW'"
+      class="pb-1"
+      [ngClass]="{
+        'border-bottom border-3 border-primary ': showing === 'OVERVIEW'
       }"
-      style="font-size: 12px"
     >
+      Overview
+    </div>
+
+    <div
+      role="button"
+      (click)="showing = 'CHANGES'"
+      class="ms-4 pb-1"
+      [ngClass]="{
+        'border-bottom border-3 border-primary ': showing === 'CHANGES'
+      }"
+    >
+      Changes
+    </div>
+  </div>
+  <div *ngIf="showing === 'OVERVIEW'">
+    <div class="rounded border w-100 mt-3 py-4 ps-3 d-flex align-items-center">
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        width="16"
-        height="16"
+        width="22"
+        height="22"
         fill="currentColor"
-        class="bi bi-git"
+        class="bi bi-check2 rounded-pill border border-2 border-success p-1 bg-light text-success"
+        viewBox="0 0 16 16"
+        style="font-size: 30px"
+      >
+        <path
+          d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"
+        />
+      </svg>
+      <b class="ms-2">Pipeline</b> <a class="ms-1">{{ this.pipeline.id }}</a>
+      <b class="ms-1">{{ this.pipeline.status }} for</b>
+      <a class="ms-1">{{ commit.commit_id }}</a>
+      <b class="ms-1">{{ fromNowDate(commit.commited_at) }}</b>
+    </div>
+    <div class="mx-5 w-100 border-start" style="height: 20px"></div>
+    <div class="rounded border w-100 py-4 ps-3 d-flex align-items-center">
+      <svg
+        *ngIf="!this.commit.status || this.commit.status == 'OPEN'"
+        xmlns="http://www.w3.org/2000/svg"
+        width="22"
+        height="22"
+        fill="currentColor"
+        class="bi bi-check2 rounded-pill border border-2 border-success p-1 bg-light text-success"
         viewBox="0 0 16 16"
       >
         <path
-          d="M15.698 7.287 8.712.302a1.03 1.03 0 0 0-1.457 0l-1.45 1.45 1.84 1.84a1.223 1.223 0 0 1 1.55 1.56l1.773 1.774a1.224 1.224 0 0 1 1.267 2.025 1.226 1.226 0 0 1-2.002-1.334L8.58 5.963v4.353a1.226 1.226 0 1 1-1.008-.036V5.887a1.226 1.226 0 0 1-.666-1.608L5.093 2.465l-4.79 4.79a1.03 1.03 0 0 0 0 1.457l6.986 6.986a1.03 1.03 0 0 0 1.457 0l6.953-6.953a1.031 1.031 0 0 0 0-1.457"
+          d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"
         />
       </svg>
-      <div class="ms-1">
-        {{
-          this.commit.status == "MERGED"
-            ? "Merged"
-            : this.commit.status == "CLOSED"
-            ? "Closed"
-            : "Open"
-        }}
-      </div>
-    </div>
-    <div class="mb-1" style="color: rgba(0, 0, 0, 0.747)">
-      <span class="fw-bold ms-3" style="color: rgba(0, 0, 0, 0.827)">
-        {{ this.commit.commit_author }}</span
+
+      <button
+        [disabled]="merging || merged || !(!commit.status || commit.status == 'OPEN')"
+        (click)="merge()"
+        class="btn btn-{{
+          this.commit.status == 'CLOSED'
+            ? 'outline-danger'
+            : this.commit.status == 'MERGED'
+            ? 'outline-primary'
+            : 'primary'
+        }} mx-3 py-1"
+        type="button"
       >
-      requested to merge
-      <span class="fw-bold" style="color: rgba(0, 0, 0, 0.827)">{{
-        this.commit.commit_id
-      }}</span>
-      into baseline
-      <span class="fw-bold" style="color: rgba(0, 0, 0, 0.827)">{{
-        fromNowDate(this.commit.commited_at)
-      }}</span>
-    </div>
-  </div>
-  <div class="btn-group">
-    <button
-      *ngIf="
-        !(this.commit.status == 'CLOSED' || this.commit.status == 'MERGED')
-      "
-      [disabled]="merging"
-      (click)="close()"
-      class="btn btn-danger px-4 mb-2 fw-bold"
-      type="button"
-    >
-      Close
-    </button>
-    <button
-      *ngIf="
-        !(this.commit.status == 'CLOSED' || this.commit.status == 'MERGED')
-      "
-      [disabled]="merging"
-      (click)="merge()"
-      class="btn btn-primary mx-1 px-3 mb-2 fw-bold"
-      type="button"
-    >
-      <div class="d-flex align-items-center mx-2">
-        <div *ngIf="!merged">Merge</div>
-        <div *ngIf="merged">Close</div>
-        <div
-          *ngIf="merging"
-          class="spinner-border ms-2"
-          style="width: 25px; height: 25px"
-          role="status"
-          aria-hidden="true"
-        ></div>
+        <div class="d-flex align-items-center">
+          <div *ngIf="!commit.status || commit.status == 'OPEN'">Merge</div>
+          <div *ngIf="commit.status == 'CLOSED'">Closed</div>
+          <div *ngIf="commit.status == 'MERGED'">Merged</div>
+          <div
+            *ngIf="merging"
+            class="spinner-border ms-2"
+            style="width: 25px; height: 25px"
+            role="status"
+            aria-hidden="true"
+          ></div>
+        </div>
+      </button>
+      <div style="font-size: 17px" class="text-black font-monospace">
+        <b class="me-1"> {{ commit.changes.length }}</b> tables and
+        <b class="mx-1"> {{ nb_lines }}</b> lines
+        {{ merged ? "where" : "will be" }} updated.
       </div>
-    </button>
+    </div>
+    <div class="mx-5 w-100 border-start" style="height: 20px"></div>
+    <div class="rounded border w-100 py-4 ps-3 d-flex align-items-center">
+      <div class="fs-6 mx-2">
+        <span class="fw-bold"> Pipeline</span> <span class="mx-3">-</span>
+        {{ this.pipeline.stages.length }} stages {{ this.pipeline.status }}
+      </div>
+      <div
+        class="w-50 ms-5 ps-5 d-flex align-items-center justify-content-between"
+      >
+        <div
+          class="d-flex align-items-start flex-grow-1"
+          style="position: relative"
+          *ngFor="let stage of this.pipeline.stages; let i = index"
+        >
+          <div
+            *ngIf="i != 0"
+            class="flex-grow-1 my-auto"
+            style="height: 2px; background-color: #0000007a"
+          ></div>
+          <button
+            id="{{ 'stage-' + i }}"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+            type="button"
+            [title]="stage.title + ' : ' + stage.status"
+            class="rounded-pill border border-2 border-{{
+              stage.style
+            }} p-1 bg-light text-{{ stage.style }}"
+            style="width: 30; height: 30"
+          >
+            <svg
+              *ngIf="stage.status == 'done'"
+              xmlns="http://www.w3.org/2000/svg"
+              width="30"
+              height="30"
+              fill="currentColor"
+              class="bi bi-check2"
+              viewBox="0 0 16 16"
+              style="font-size: 30px"
+            >
+              <path
+                d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"
+              />
+            </svg>
+            <svg
+              *ngIf="stage.status == 'error'"
+              xmlns="http://www.w3.org/2000/svg"
+              width="25"
+              height="25"
+              fill="currentColor"
+              class="bi bi-x-lg"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"
+              />
+            </svg>
+            <svg
+              *ngIf="stage.status == 'pending'"
+              xmlns="http://www.w3.org/2000/svg"
+              width="25"
+              height="25"
+              fill="currentColor"
+              class="bi bi-hourglass"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="M2 1.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-1v1a4.5 4.5 0 0 1-2.557 4.06c-.29.139-.443.377-.443.59v.7c0 .213.154.451.443.59A4.5 4.5 0 0 1 12.5 13v1h1a.5.5 0 0 1 0 1h-11a.5.5 0 1 1 0-1h1v-1a4.5 4.5 0 0 1 2.557-4.06c.29-.139.443-.377.443-.59v-.7c0-.213-.154-.451-.443-.59A4.5 4.5 0 0 1 3.5 3V2h-1a.5.5 0 0 1-.5-.5zm2.5.5v1a3.5 3.5 0 0 0 1.989 3.158c.533.256 1.011.791 1.011 1.491v.702c0 .7-.478 1.235-1.011 1.491A3.5 3.5 0 0 0 4.5 13v1h7v-1a3.5 3.5 0 0 0-1.989-3.158C8.978 9.586 8.5 9.052 8.5 8.351v-.702c0-.7.478-1.235 1.011-1.491A3.5 3.5 0 0 0 11.5 3V2h-7z"
+              />
+            </svg>
+            <svg
+              *ngIf="stage.status == 'warning'"
+              xmlns="http://www.w3.org/2000/svg"
+              width="30"
+              height="30"
+              fill="currentColor"
+              class="bi bi-exclamation-lg"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="M7.005 3.1a1 1 0 1 1 1.99 0l-.388 6.35a.61.61 0 0 1-1.214 0L7.005 3.1ZM7 12a1 1 0 1 1 2 0 1 1 0 0 1-2 0Z"
+              />
+            </svg>
+            <svg
+              *ngIf="stage.status == 'running'"
+              xmlns="http://www.w3.org/2000/svg"
+              width="30"
+              height="25"
+              fill="currentColor"
+              class="bi bi-arrow-clockwise spinner-border border-0 p-0 m-0 rounded-circle"
+              viewBox="0 0 16 16"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"
+              />
+              <path
+                d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z"
+              />
+            </svg>
+            <div
+              class="dropdown-menu m-3 px-3 py-2 alert alert-{{ stage.style }}"
+              role="alert"
+              aria-labelledby="{{ 'stage-' + i }}"
+            >
+              {{ stage.title }}
+            </div>
+          </button>
+
+          <div
+            *ngIf="i != this.pipeline.stages.length - 1"
+            class="flex-grow-1 my-auto"
+            style="height: 2px; background-color: #0000007a"
+          ></div>
+        </div>
+      </div>
+    </div>
+    <div class="mx-5 w-100 border-start" style="height: 20px"></div>
+    <quill-editor
+      [styles]="{ height: '120px' }"
+      [placeholder]="'Write a comment here...'"
+      class="w-100"
+    ></quill-editor>
+    <div class="mx-5 w-100 border-start" style="height: 20px"></div>
+    <div class="rounded border w-100 py-4 ps-3 d-flex align-items-center">
+      <div class="btn-group">
+        <button
+          disabled
+          (click)="close()"
+          class="btn btn-outline-secondary"
+          type="button"
+        >
+          Comment
+        </button>
+        <button
+          *ngIf="
+            !(this.commit.status == 'CLOSED' || this.commit.status == 'MERGED')
+          "
+          [disabled]="merging"
+          (click)="close()"
+          class="btn btn-outline-secondary ms-3"
+          type="button"
+        >
+          Close merge request
+        </button>
+      </div>
+    </div>
   </div>
 </div>
+
 <app-compare
-  class="w-100"
-  *ngIf="!loading"
+  *ngIf="!loading && showing === 'CHANGES'"
+  class="w-100 mx-3"
   [commit]="commit"
   [change_with_initial]="commit.change_with_initial"
   [changed_tables]="this.commit.changed_tables"

@@ -1,8 +1,5 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Configuration, Delta } from 'src/app/models/models';
-import { NotifierService } from 'angular-notifier';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import * as moment from 'moment';
 
 @Component({
   selector: 'app-compare',
