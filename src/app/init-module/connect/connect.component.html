@@ -5,25 +5,25 @@
       style="margin-inline: 7rem; z-index: 11"
     >
       <div class="input-group mb-1">
-        <span class="input-group-text w-25 bg-primary text-white"
+        <span class="input-group-text w-25 bg2"
           >Hostname</span
         >
         <input
           [disabled]="this.current_configuration.source_connection.valid"
           [(ngModel)]="this.current_configuration.source_connection.hostname"
           type="text"
-          class="form-control"
+          class="bg2 p-2 rounded border flex-grow-1"
         />
       </div>
       <div class="input-group mb-1">
-        <span class="input-group-text w-25 bg-primary text-white">Type</span>
+        <span class="input-group-text w-25 bg2">Type</span>
         <select
           (change)="defaultPort()"
           [disabled]="this.current_configuration.source_connection.valid"
           [(ngModel)]="
             this.current_configuration.source_connection.databaseType
           "
-          class="form-select"
+          class="bg2 p-2 rounded border flex-grow-1"
           aria-label="Default select example"
         >
           <option selected>Database vendor</option>
@@ -34,38 +34,38 @@
         </select>
       </div>
       <div class="input-group mb-1">
-        <span class="input-group-text w-25 bg-primary text-white">Port</span>
+        <span class="input-group-text w-25 bg2">Port</span>
         <input
           [disabled]="this.current_configuration.source_connection.valid"
           [(ngModel)]="this.current_configuration.source_connection.port"
           type="number"
-          class="form-control"
+          class="bg2 p-2 rounded border flex-grow-1"
         />
       </div>
 
       <div class="input-group mb-1">
-        <span class="input-group-text w-25 bg-primary text-white"
+        <span class="input-group-text w-25 bg2"
           >Database</span
         >
         <input
           [disabled]="this.current_configuration.source_connection.valid"
           [(ngModel)]="this.current_configuration.source_connection.database"
           type="text"
-          class="form-control"
+          class="bg2 p-2 rounded border flex-grow-1"
         />
       </div>
       <div class="input-group mb-1">
-        <span class="input-group-text w-25 bg-primary text-white">User</span>
+        <span class="input-group-text w-25 bg2">User</span>
         <input
           [disabled]="this.current_configuration.source_connection.valid"
           autocomplete="off"
           [(ngModel)]="this.current_configuration.source_connection.user"
           type="text"
-          class="form-control"
+          class="bg2 p-2 rounded border flex-grow-1"
         />
       </div>
       <div class="input-group">
-        <span class="input-group-text w-25 bg-primary text-white"
+        <span class="input-group-text w-25 bg2"
           >Password</span
         >
         <input
@@ -73,7 +73,7 @@
           [disabled]="this.current_configuration.source_connection.valid"
           [(ngModel)]="this.current_configuration.source_connection.password"
           type="password"
-          class="form-control"
+          class="bg2 p-2 rounded border flex-grow-1"
         />
       </div>
       <div class="d-flex align-items-start ms-2 my-1">
@@ -190,7 +190,7 @@
     <div class="btn-group">
       <button
         (click)="step_back()"
-        class="btn btn-secondary mx-1 px-5 fw-bold"
+        class="btn btn-light mx-1 px-5 fw-bold"
         type="button"
       >
         Back

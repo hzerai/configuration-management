@@ -21,4 +21,6 @@ pre {
 }
 .table > tbody > tr > td.active {
   background-color: #f7fac8;
+  color: black;
+  border: black;
 }
