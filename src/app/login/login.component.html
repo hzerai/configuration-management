@@ -1,0 +1,47 @@
+<div
+  style="padding-left: 3rem; padding-top: 3rem; height: 100vh"
+  class="header-dark d-flex"
+>
+  <div class="mx-5 mb-5"><img src="assets\img\logo.png" alt="logo1" /></div>
+  <div
+    class="bg2 mx-5 d-flex flex-column align-items-center"
+    style="width: 450px; height: 450px; border-radius: 25px; margin-top: 6rem"
+  >
+    <div style="margin-top: 4rem" class="fs-3">Sign In</div>
+    <form class="mt-5 w-100 text-center">
+      <div class="w-100">
+        <input
+          (keyup)="this.invalid = false"
+          [(ngModel)]="current_user"
+          type="text"
+          name="username"
+          required
+          autofocus
+          autocomplete="off"
+          aria-label="Email"
+          autocapitalize="none"
+          placeholder="Email"
+          spellcheck="false"
+          class="email fst-italic bg-black py-2 w-75 rounded border-secondary text-white"
+        />
+        <div
+          *ngIf="invalid"
+          class="bg-warning text-black p-1 w-75 mx-auto"
+          style="font-size: 12px"
+        >
+          Please choose a unique and valid username.
+        </div>
+      </div>
+      <div class="mt-5">
+        <button
+          (click)="login()"
+          type="submit"
+          style="padding-right: 85px; padding-left: 85px"
+          class="btn btn-orange btn-lg fs-6 fw-bold"
+        >
+          Continue
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

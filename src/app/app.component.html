@@ -1,2 +1,36 @@
-<router-outlet></router-outlet>
+<div *ngIf="current_user">
+  <div class="header header-dark" style="position: relative">
+    <a href="/" class="mx-auto">
+      <div class="advisor">
+        <div class="mt-1">
+          <img src="assets\img\logo.png" alt="logo1" width="50px" />
+        </div>
+        <img src="assets\img\palmyraLogo.png" alt="logo" class="logo" />
+      </div>
+    </a>
+    <div
+      class="d-flex align-items-center"
+      style="position: absolute; right: 0px"
+    >
+      <div
+        class="text-white fs-6 mx-3 text-uppercase rounded-pill bg-primary"
+        style="padding: 13px"
+      >
+        {{ current_user.substring(0, 2) }}
+      </div>
+
+      <div class="text-white fs-6 mx-3">{{ current_user }}</div>
+      <div role="button" (click)="logout()" class="text-white p-1 mx-4">
+        <i class="fa fa-power-off ps-icon-shutdown"></i>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div id="APP" class="mb-3" style="margin-top: 1rem">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>
+
+<app-login (user)="login($event)" *ngIf="!current_user"></app-login>
 <notifier-container></notifier-container>

@@ -21,6 +21,6 @@ import { InitWizardComponent } from './init-wizard/init-wizard.component';
     GitComponent,
     InitializationComponent,
   ],
-  imports: [FormsModule, CommonModule, CommonModule, InitRoutingModule],
+  imports: [FormsModule, CommonModule, InitRoutingModule],
 })
 export class InitModule {}
