@@ -1,10 +1,11 @@
 <div *ngIf="record.expanded">
   <table
     *ngIf="record.expanded"
-    class="m-0 table {{
-      record.operation === 'INSERT' ? 'table-success' : ''
-    }} table-hover table-striped table-bordered border-dark"
+    class="m-0 table table-dark table-hover table-striped table-bordered border-light"
   >
+    <!-- {{
+      record.operation === 'INSERT' ? 'table-success' : ''
+    }} -->
     <thead>
       <tr>
         <th scope="col">#</th>
@@ -14,14 +15,15 @@
     </thead>
     <tbody>
       <tr *ngFor="let key of allKeys; let i = index">
-        <th  scope="row">
+        <th scope="row">
           {{ i }}
         </th>
-        <td class="{{ record.operation === 'INSERT' ? '' : 'active' }}">
+        <!-- class="{{ record.operation === 'INSERT' ? '' : 'active' }}" -->
+        <td>
           {{ key }}
         </td>
 
-        <td class="{{ record.operation === 'INSERT' ? '' : 'active' }}">
+        <td>
           {{ record.state[key] }}
         </td>
       </tr>

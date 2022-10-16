@@ -3,7 +3,7 @@
   <div class="d-flex align-items-center justify-content-between my-2">
     <div class="d-flex align-items-center">
       <div
-        class="d-flex align-items-center rounded-pill text-secondary px-2 py-1"
+        class="d-flex align-items-center rounded-pill text-black px-2 py-1"
         [ngStyle]="{
           'background-color':
             this.commit.status == 'CLOSED'
@@ -42,16 +42,16 @@
           }}
         </div>
       </div>
-      <div class="mb-1" style="color: rgba(0, 0, 0, 0.747)">
-        <span class="fw-bold ms-3" style="color: rgba(0, 0, 0, 0.827)">
+      <div class="mb-1" style="color: rgb(220, 220, 220)">
+        <span class="fw-bold ms-3" style="color: white">
           {{ this.commit.commit_author }}</span
         >
         requested to merge
-        <span class="fw-bold" style="color: rgba(0, 0, 0, 0.827)">{{
+        <span class="fw-bold" style="color: white">{{
           this.commit.commit_id
         }}</span>
         into baseline
-        <span class="fw-bold" style="color: rgba(0, 0, 0, 0.827)">{{
+        <span class="fw-bold" style="color: white">{{
           fromNowDate(this.commit.commited_at)
         }}</span>
       </div>
@@ -66,7 +66,7 @@
       (click)="showing = 'OVERVIEW'"
       class="pb-1"
       [ngClass]="{
-        'border-bottom border-3 border-primary ': showing === 'OVERVIEW'
+        'border-bottom border-3 border-white ': showing === 'OVERVIEW'
       }"
     >
       Overview
@@ -77,7 +77,7 @@
       (click)="showing = 'CHANGES'"
       class="ms-4 pb-1"
       [ngClass]="{
-        'border-bottom border-3 border-primary ': showing === 'CHANGES'
+        'border-bottom border-3 border-white ': showing === 'CHANGES'
       }"
     >
       Changes
@@ -87,10 +87,10 @@
     <div class="rounded border w-100 mt-3 py-4 ps-3 d-flex align-items-center">
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        width="22"
-        height="22"
-        fill="currentColor"
-        class="bi bi-check2 rounded-pill border border-2 border-success p-1 bg-light text-success"
+        width="26"
+        height="26"
+        fill="white"
+        class="bi bi-check2 rounded-pill border border-2 border-white p-1"
         viewBox="0 0 16 16"
         style="font-size: 30px"
       >
@@ -108,10 +108,10 @@
       <svg
         *ngIf="!this.commit.status || this.commit.status == 'OPEN'"
         xmlns="http://www.w3.org/2000/svg"
-        width="22"
-        height="22"
-        fill="currentColor"
-        class="bi bi-check2 rounded-pill border border-2 border-success p-1 bg-light text-success"
+        width="26"
+        height="26"
+        fill="white"
+        class="bi bi-check2 rounded-pill border border-2 border-white p-1"
         viewBox="0 0 16 16"
       >
         <path
@@ -120,7 +120,9 @@
       </svg>
 
       <button
-        [disabled]="merging || merged || !(!commit.status || commit.status == 'OPEN')"
+        [disabled]="
+          merging || merged || !(!commit.status || commit.status == 'OPEN')
+        "
         (click)="merge()"
         class="btn btn-{{
           this.commit.status == 'CLOSED'
@@ -144,7 +146,7 @@
           ></div>
         </div>
       </button>
-      <div style="font-size: 17px" class="text-black font-monospace">
+      <div style="font-size: 17px" class="font-monospace">
         <b class="me-1"> {{ commit.changes.length }}</b> tables and
         <b class="mx-1"> {{ nb_lines }}</b> lines
         {{ merged ? "where" : "will be" }} updated.
@@ -167,7 +169,7 @@
           <div
             *ngIf="i != 0"
             class="flex-grow-1 my-auto"
-            style="height: 2px; background-color: #0000007a"
+            style="height: 2px; background-color: white"
           ></div>
           <button
             id="{{ 'stage-' + i }}"
@@ -262,35 +264,39 @@
           <div
             *ngIf="i != this.pipeline.stages.length - 1"
             class="flex-grow-1 my-auto"
-            style="height: 2px; background-color: #0000007a"
+            style="height: 2px; background-color: white"
           ></div>
         </div>
       </div>
     </div>
-    <div class="mx-5 w-100 border-start" style="height: 20px"></div>
+    <!-- <div class="mx-5 w-100 border-start" style="height: 20px"></div>
     <quill-editor
       [styles]="{ height: '120px' }"
       [placeholder]="'Write a comment here...'"
       class="w-100"
-    ></quill-editor>
-    <div class="mx-5 w-100 border-start" style="height: 20px"></div>
-    <div class="rounded border w-100 py-4 ps-3 d-flex align-items-center">
+    ></quill-editor> -->
+    <div *ngIf="
+    !(this.commit.status == 'CLOSED' || this.commit.status == 'MERGED')
+  " class="mx-5 w-100 border-start" style="height: 20px"></div>
+    <div
+      *ngIf="
+        !(this.commit.status == 'CLOSED' || this.commit.status == 'MERGED')
+      "
+      class="rounded border w-100 py-4 ps-3 d-flex align-items-center"
+    >
       <div class="btn-group">
-        <button
+        <!-- <button
           disabled
           (click)="close()"
-          class="btn btn-outline-secondary"
+          class="btn btn-outline-light"
           type="button"
         >
           Comment
-        </button>
+        </button> -->
         <button
-          *ngIf="
-            !(this.commit.status == 'CLOSED' || this.commit.status == 'MERGED')
-          "
           [disabled]="merging"
           (click)="close()"
-          class="btn btn-outline-secondary ms-3"
+          class="btn btn-outline-light ms-3"
           type="button"
         >
           Close merge request

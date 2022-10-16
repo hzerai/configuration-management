@@ -17,8 +17,8 @@
   </div>
   <div *ngIf="configs.length > 0">
     <div class="d-flex justify-content-between align-items-center">
-      <p class="fs-4 ms-2">Saved configurations</p>
-      <a class="btn btn-success" type="button" [routerLink]="['/init']"
+      <p class="fs-5 mt-2 ms-2">Saved configurations</p>
+      <a class="btn btn-outline-light" type="button" [routerLink]="['/init']"
         >New configuration</a
       >
     </div>
@@ -26,10 +26,10 @@
       <div
         role="button"
         *ngFor="let config of configs; let i = index"
-        class="list-group-item list-group-item-action border rounded shadow mb-4 pointer-cursor"
+        class="list-group-item bg2 border rounded shadow mb-4 pointer-cursor"
       >
         <div class="d-flex w-100 justify-content-between">
-          <h5 class="mb-1 text-black fw-bold">{{ config.name }}</h5>
+          <h5 class="mb-1 text-white fw-bold">{{ config.name }}</h5>
           <small>{{ config.created_at | date: "full" }}</small>
         </div>
         <div class="d-flex w-100 justify-content-between">
@@ -64,7 +64,7 @@
             <button
               [title]="config.initialized ? 'Initialized' : 'Not Initialized'"
               [disabled]="!this.config.initialized"
-              class="btn btn-primary"
+              class="btn btn-primary fs-5"
               type="button"
               (click)="step(config)"
             >
