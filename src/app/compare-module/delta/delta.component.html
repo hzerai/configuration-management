@@ -1,5 +1,5 @@
 <div class="w-50 mx-auto mt-5">
-  <div style="height: 400px">
+  <div class="{{advanced ? 'p-3 pt-1' : 'bg2 p-3'}} rounded " style="height: 400px">
     <div *ngIf="!advanced">
       Lorem ipsum dolor sit, amet consectetur adipisicing elit. Reiciendis a
       pariatur hic mollitia, odio consequuntur voluptates rerum iste dolor nam
@@ -125,7 +125,7 @@
     <div class="btn-group">
       <button
         (click)="step_back()"
-        class="btn btn-secondary mx-1 px-5 fw-bold"
+        class="btn btn-light mx-1 px-5 fw-bold"
         type="button"
       >
         Back
