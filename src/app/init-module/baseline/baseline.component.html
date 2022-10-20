@@ -1,10 +1,10 @@
-<div class="w-75 mx-auto mt-5">
+<div class="mx-auto mt-5" style="width: 60vw">
   <div style="height: 400px">
     <div
-      class="shadow rounded border px-5 pt-3 mt-3"
+      class="shadow rounded border px-5 py-4 mt-3"
       style="margin-inline: 7rem; z-index: 11; font-size: 14px"
     >
-      <p>
+      <!-- <p>
         The <b>Baseline</b> is the initial state of the target environment. It's
         represented by the state of configration tables dumped into json files.
         These files must be present under the repository folder :
@@ -50,54 +50,157 @@
           class="badge rounded-pill bg-success text-white"
           ><i>generate now</i></span
         >
-      </p>
+      </p> -->
+      <div class="d-flex">
+        <p class="fw-bold">HEAD source :</p>
+        <div class="d-flex flex-column ms-3">
+          <div class="form-check">
+            <input
+              [value]="'SCRATCH'"
+              class="form-check-input"
+              type="radio"
+              name="baseline_source"
+              id="SCRATCH"
+              [(ngModel)]="this.current_configuration.baseline.source"
+            />
+            <label class="form-check-label" for="SCRATCH"
+              >Start from scratch
+            </label>
+          </div>
+          <div class="form-check">
+            <input
+              [value]="'GIT'"
+              class="form-check-input"
+              type="radio"
+              name="baseline_source"
+              id="GIT"
+              [(ngModel)]="this.current_configuration.baseline.source"
+            />
+            <label class="form-check-label" for="GIT"
+              >Use git repository
+            </label>
+          </div>
+          <div class="form-check">
+            <input
+              [value]="'DB'"
+              class="form-check-input"
+              type="radio"
+              name="baseline_source"
+              id="DB"
+              [(ngModel)]="this.current_configuration.baseline.source"
+            />
+            <label class="form-check-label" for="DB"
+              >Generate from current database
+            </label>
+            <div
+              *ngIf="this.current_configuration.baseline.source == 'DB'"
+              class="d-flex"
+            >
+              <div class="form-check form-switch" role="group">
+                <input
+                  (change)="generateChanged()"
+                  [(ngModel)]="this.current_configuration.baseline.generate"
+                  type="checkbox"
+                  class="form-check-input"
+                  id="generate"
+                  autocomplete="off"
+                />
+                <label class="form-check-label" for="generate">Generate</label>
+              </div>
+              <div class="form-check form-switch ms-3" role="group">
+                <input
+                  disabled
+                  [(ngModel)]="this.current_configuration.baseline.commit"
+                  type="checkbox"
+                  class="form-check-input"
+                  id="commit"
+                  autocomplete="off"
+                />
+                <label class="form-check-label" for="commit">Commit</label>
+              </div>
+              <div class="form-check form-switch ms-3" role="group">
+                <input
+                  (change)="
+                    !this.current_configuration.baseline.download
+                      ? (this.current_configuration.baseline.commit = true)
+                      : ''
+                  "
+                  [disabled]="!this.current_configuration.baseline.generate"
+                  [(ngModel)]="this.current_configuration.baseline.download"
+                  type="checkbox"
+                  class="form-check-input"
+                  id="download"
+                  autocomplete="off"
+                />
+                <label class="form-check-label" for="download">Download</label>
+              </div>
+            </div>
+          </div>
+          <div class="form-check">
+            <input
+              [value]="'MANUAL'"
+              class="form-check-input"
+              type="radio"
+              name="baseline_source"
+              id="MANUAL"
+              [(ngModel)]="this.current_configuration.baseline.source"
+            />
+            <label class="form-check-label" for="MANUAL"
+              >Manual generation
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="alert alert-info mt-2" role="alert">
+        <div *ngIf="!this.current_configuration.baseline.source">
+          <h5 class="alert-heading">Select source:</h5>
+          <p>
+            In this step you can configure the HEAD configuration for the
+            selected repository and branch.
+            <br />
+            Each repository and branch can have only one HEAD.
+            <br />
+            Few options are available to configure the HEAD configuration
+          </p>
+        </div>
 
-      <div *ngIf="advanced" class="d-flex mb-4">
-        <small ><b>Generation options :</b></small>
-        <div class="ms-3">
-          <div class="form-check form-switch" role="group">
-            <input
-              (change)="generateChanged()"
-              [(ngModel)]="this.current_configuration.baseline.generate"
-              type="checkbox"
-              class="form-check-input"
-              id="generate"
-              autocomplete="off"
-            />
-            <label class="form-check-label" for="generate">Generate</label>
-          </div>
-          <div class="form-check form-switch" role="group">
-            <input
-              (change)="
-                !this.current_configuration.baseline.commit
-                  ? (this.current_configuration.baseline.download = true)
-                  : ''
-              "
-              [disabled]="!this.current_configuration.baseline.generate"
-              [(ngModel)]="this.current_configuration.baseline.commit"
-              type="checkbox"
-              class="form-check-input"
-              id="commit"
-              autocomplete="off"
-            />
-            <label class="form-check-label" for="commit">Commit</label>
-          </div>
-          <div class="form-check form-switch" role="group">
-            <input
-              (change)="
-                !this.current_configuration.baseline.download
-                  ? (this.current_configuration.baseline.commit = true)
-                  : ''
-              "
-              [disabled]="!this.current_configuration.baseline.generate"
-              [(ngModel)]="this.current_configuration.baseline.download"
-              type="checkbox"
-              class="form-check-input"
-              id="download"
-              autocomplete="off"
-            />
-            <label class="form-check-label" for="download">Download</label>
-          </div>
+        <div *ngIf="this.current_configuration.baseline.source == 'SCRATCH'">
+          <h5 class="alert-heading">Start with an empty HEAD</h5>
+          <p>
+            You can choose this option when you first start a new project with
+            no existing configuration
+          </p>
+        </div>
+
+        <div *ngIf="this.current_configuration.baseline.source == 'GIT'">
+          <h5 class="alert-heading">
+            Use the HEAD available in the repository
+          </h5>
+          <p>
+            In case you have a configured HEAD in the selected Git Repository in
+            the previous step, which will be the case when you start a new
+            Release or Patch
+          </p>
+        </div>
+        <div *ngIf="this.current_configuration.baseline.source == 'DB'">
+          <h5 class="alert-heading">Use the current database as HEAD</h5>
+          <p>
+            You can choose this option when you want to start from the
+            configuration available in the selected database in the previous
+            step
+          </p>
+        </div>
+        <div *ngIf="this.current_configuration.baseline.source == 'MANUAL'">
+          <h5 class="alert-heading">
+            Generate a HEAD configuration from a remote database
+          </h5>
+          <p>
+            In case you want to start with configurations stored in a different
+            database (it can be the client's database for example), you can
+            generate a HEAD by following the steps described in this section
+            then load it
+            <a class="text-underline text-primary" role="button">here</a>.
+          </p>
         </div>
       </div>
     </div>

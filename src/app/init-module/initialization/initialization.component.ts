@@ -115,7 +115,7 @@ export class InitializationComponent {
   started: boolean = false;
   finished: boolean = false;
   executed: boolean = false;
-  executing : boolean = false;
+  executing: boolean = false;
   hasErrors: boolean = true;
   constructor() {
     mermaid.initialize({});
@@ -124,6 +124,9 @@ export class InitializationComponent {
   init(): void {
     this.started = true;
     this.createFlowchart();
+    setTimeout(() => {
+      this.execute()
+    }, 700);
   }
 
   createFlowchart() {
@@ -454,5 +457,11 @@ export class InitializationComponent {
       flow.innerHTML = this.flowChart.join('\n');
       mermaid.init(undefined, flow);
     }, 2000);
+  }
+
+  @Output('save')
+  save_event = new EventEmitter<any>();
+  save() {
+    this.save_event.emit(null);
   }
 }

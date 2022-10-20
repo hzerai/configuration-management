@@ -35,6 +35,7 @@ export class Git {
 }
 
 export class Baseline {
+  source : string;
   generate: boolean;
   generated: boolean;
   download: boolean;

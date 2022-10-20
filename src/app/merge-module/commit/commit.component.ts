@@ -49,31 +49,31 @@ export class CommitComponent implements OnInit {
             stages: [
               {
                 stage: 1,
-                title: 'generate update script',
+                title: 'generate update scripts',
                 style: 'secondary',
                 status: 'pending',
               },
               {
                 stage: 2,
-                title: 'commit update script',
+                title: 'generate rollback scripts',
                 style: 'secondary',
                 status: 'pending',
               },
               {
                 stage: 3,
-                title: 'update baseline',
+                title: 'create delivery file',
                 style: 'secondary',
                 status: 'pending',
               },
               {
                 stage: 4,
-                title: 'commit baseline',
+                title: 'track_changes update',
                 style: 'secondary',
                 status: 'pending',
               },
               {
                 stage: 5,
-                title: 'update database',
+                title: 'push to HEAD',
                 style: 'secondary',
                 status: 'pending',
               },

@@ -1,10 +1,10 @@
-<div >
+<div>
   <div class="text-center">
     <h3>Configuration setup</h3>
   </div>
   <div
     class="mt-2 mx-auto d-flex align-items-center justify-content-center"
-    style="width: 50vw"
+    style="width: 35%"
   >
     <div style="position: relative">
       <div
@@ -19,8 +19,8 @@
       <div style="position: absolute; bottom: -30px; left: 20%">Git</div>
     </div>
     <div
-      class="rounded-pill flex-grow-1 mx-2"
-      style="height: 10px; background-color: #e7eeec"
+      class="rounded-pill flex-grow-1 mx-0"
+      style="height: 5px; background-color: #e7eeec"
     ></div>
     <div style="position: relative">
       <div
@@ -35,8 +35,8 @@
       <div style="position: absolute; bottom: -30px; left: -30%">Database</div>
     </div>
     <div
-      class="rounded-pill flex-grow-1 mx-2"
-      style="height: 10px; background-color: #e7eeec"
+      class="rounded-pill flex-grow-1 mx-0"
+      style="height: 5px; background-color: #e7eeec"
     ></div>
     <div style="position: relative">
       <div
@@ -51,8 +51,8 @@
       <div style="position: absolute; bottom: -30px">Tables</div>
     </div>
     <div
-      class="rounded-pill flex-grow-1 mx-2"
-      style="height: 10px; background-color: #e7eeec"
+      class="rounded-pill flex-grow-1 mx-0"
+      style="height: 5px; background-color: #e7eeec"
     ></div>
     <div style="position: relative">
       <div
@@ -64,11 +64,11 @@
       >
         4
       </div>
-      <div style="position: absolute; bottom: -30px; left: -10%">Baseline</div>
+      <div style="position: absolute; bottom: -30px; left: 5%">HEAD</div>
     </div>
     <div
-      class="rounded-pill flex-grow-1 mx-2"
-      style="height: 10px; background-color: #e7eeec"
+      class="rounded-pill flex-grow-1 mx-0"
+      style="height: 5px; background-color: #e7eeec"
     ></div>
     <div style="position: relative">
       <div
@@ -110,17 +110,18 @@
   <app-summary
     *ngIf="currentStep == 5 && !starting && !started"
     (step_back)="step_back($event)"
+    (save)="save($event)"
     (starter)="start($event)"
     [current_configuration]="this.current_configuration"
   ></app-summary>
   <app-initialization
-  [current_configuration]="this.current_configuration"
-></app-initialization>
+    (save)="save()"
+    [current_configuration]="this.current_configuration"
+  ></app-initialization>
 </div>
-<div *ngIf="starting && !started" class="text-center" style="z-index: 999;">
+<div *ngIf="starting && !started" class="text-center" style="z-index: 999">
   <img src="assets\img\rocket.gif" />
 </div>
-
 
 <!-- Modal -->
 <div
@@ -164,6 +165,7 @@
           [disabled]="!this.current_configuration.name || saved"
           type="button"
           class="btn btn-primary"
+          data-bs-dismiss="modal"
         >
           Save changes
         </button>

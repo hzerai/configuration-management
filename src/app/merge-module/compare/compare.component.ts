@@ -24,6 +24,7 @@ export class CompareComponent implements OnInit {
   constructor(private router: Router) {}
 
   ngOnInit(): void {
+    window.addEventListener('scroll', this.scrollEvent, true);
     this.table_names_filtered = [...this.changed_tables];
     this.filter();
   }
@@ -64,4 +65,18 @@ export class CompareComponent implements OnInit {
   back() {
     this.router.navigateByUrl('/merge');
   }
+
+  scrollEvent = (event: any): void => {
+    const n = event.srcElement?.scrollingElement?.scrollTop;
+    console.log(n)
+    if (n > 150) {
+      document.getElementById('nav_left_merge').style.top = '2%';
+      document.getElementById('nav_left_merge').style.height = '97%';
+      // document.getElementById('tables_list').style.height = '550px';
+    } else {
+      // document.getElementById('tables_list').style.height = '400px';
+      document.getElementById('nav_left_merge').style.height = '65%';
+      document.getElementById('nav_left_merge').style.top = '32%';
+    }
+  };
 }

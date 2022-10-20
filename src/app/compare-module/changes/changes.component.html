@@ -12,10 +12,12 @@
       style="font-size: 14px"
     >
       <div
+        id="left_nav"
         class="col-2 d-flex flex-column align-items-center position-fixed"
         style="height: 500px; left: 50px"
       >
         <div
+          id="tables_list"
           class="border shadow-lg rounded"
           style="height: 400px; overflow: auto; width: 100%"
         >
@@ -87,6 +89,7 @@
               class="hoverable-row d-flex align-items-center font-monospace mt-1"
               *ngFor="let t of table_names_filtered"
               (click)="scroll('scroll-' + t)"
+              [title]="t"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -100,7 +103,9 @@
                   d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm15 2h-4v3h4V4zm0 4h-4v3h4V8zm0 4h-4v3h3a1 1 0 0 0 1-1v-2zm-5 3v-3H6v3h4zm-5 0v-3H1v2a1 1 0 0 0 1 1h3zm-4-4h4V8H1v3zm0-4h4V4H1v3zm5-3v3h4V4H6zm4 4H6v3h4V8z"
                 />
               </svg>
-              <p class="mb-1 ms-2 text-truncate" style="max-width: 150px;">{{ t }}</p>
+              <p class="mb-1 ms-2 text-truncate" style="max-width: 150px">
+                {{ t }}
+              </p>
             </div>
           </div>
         </div>
@@ -122,10 +127,12 @@
         ></app-view-one-change>
       </div>
       <div
+        id="right_nav"
         class="col-2 d-flex flex-column align-items-center position-fixed"
         style="height: 500px; right: 50px"
       >
         <app-view-filter
+          id="filter"
           class="shadow-lg"
           style="height: 400px; overflow: auto; width: 100%"
           [delta]="delta"
@@ -134,11 +141,11 @@
           [disabled]="commiting"
           style="z-index: 99"
           (click)="step()"
-          class="btn btn-primary mt-2 px-3 fw-bold"
+          class="btn btn-primary mt-2 px-5 fw-bold"
           type="button"
         >
           <div class="d-flex align-items-center">
-            <div>Commit changes</div>
+            <div>Next</div>
             <div
               *ngIf="commiting"
               class="spinner-border ms-2"

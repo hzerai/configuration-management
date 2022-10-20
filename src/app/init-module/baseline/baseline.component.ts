@@ -10,8 +10,6 @@ export class BaseLineComponent implements OnInit {
   @Input('current_configuration')
   current_configuration: Configuration;
 
-  advanced: boolean = false;
-
   @Output('step')
   stepEvent = new EventEmitter<any>();
 
@@ -21,12 +19,20 @@ export class BaseLineComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    this.advanced =  this.current_configuration.baseline.generate;
+    if (
+      !this.current_configuration.baseline.source &&
+      this.current_configuration.baseline.generate
+    )
+      this.current_configuration.baseline.source = 'DB';
   }
 
   step() {
     this.current_configuration.baseline.generated =
       this.current_configuration.baseline.generate;
+    if (this.current_configuration.baseline.source == 'SCRATCH') {
+      this.current_configuration.baseline.commit = true;
+      this.current_configuration.baseline.generate = true;
+    }
     this.stepEvent.emit(null);
   }
 
@@ -37,8 +43,11 @@ export class BaseLineComponent implements OnInit {
   }
 
   generateChanged() {
-    this.current_configuration.baseline.download =
-      this.current_configuration.baseline.commit =
-        this.current_configuration.baseline.generate;
+    if (!this.current_configuration.baseline.generate) {
+      this.current_configuration.baseline.download = false;
+      this.current_configuration.baseline.commit = false;
+    } else {
+      this.current_configuration.baseline.commit = true;
+    }
   }
 }

@@ -19,6 +19,7 @@
         </th>
         <td class="{{ record.operation === 'INSERT' ? '' : 'active' }}">
           <div
+            [title]="key"
             class="hide-scroll-bar"
             style="max-width: 480px; overflow: scroll"
           >
@@ -28,6 +29,7 @@
 
         <td class="{{ record.operation === 'INSERT' ? '' : 'active' }}">
           <div
+            [title]="record.state[key]"
             class="hide-scroll-bar"
             style="max-width: 480px; overflow: scroll"
           >

@@ -1,6 +1,6 @@
 <div class="w-50 mx-auto mt-5">
   <div style="height: 400px">
-    <div *ngIf="!advanced">
+    <!-- <div *ngIf="!advanced">
       Lorem ipsum dolor sit, amet consectetur adipisicing elit. Reiciendis a
       pariatur hic mollitia, odio consequuntur voluptates rerum iste dolor nam
       sed distinctio delectus illo tempore qui, aliquam, consequatur omnis
@@ -13,36 +13,13 @@
         consectetur adipisicing elit. Enim aliquam, illo ab a voluptatem veritatis
         ut labore. Sint ullam numquam praesentium at doloremque quaerat laboriosam
         reprehenderit aut magnam. Atque, rerum.</p>
-    </div>
+    </div> -->
 
-    <div class="d-flex align-items-center my-1">
-      <b>Partial extraction </b>
-      <div id="expand-no-expand" class="ms-2 mb-1 fw-bold">
-        <div *ngIf="advanced" (click)="advanced = !advanced" role="button">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="12"
-            height="12"
-            fill="currentColor"
-            class="bi bi-chevron-down"
-            viewBox="0 0 16 16"
-          >
-            <path
-              fill-rule="evenodd"
-              d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"
-            />
-          </svg>
-        </div>
-        <div *ngIf="!advanced" (click)="advanced = !advanced" role="button">
-          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-chevron-up" viewBox="0 0 16 16">
-            <path fill-rule="evenodd" d="M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z"/>
-          </svg>
-        </div>
-      </div>
-    </div>
-    <div *ngIf="advanced">
+    <div>
       <div class="input-group mb-1">
-        <span class="input-group-text w-25 bg-primary text-white">Start & End date</span>
+        <span class="input-group-text w-25 bg-primary text-white"
+          >Start & End date</span
+        >
         <input
           [(ngModel)]="this.delta.start_date"
           type="datetime-local"
@@ -56,43 +33,47 @@
       </div>
 
       <div class="input-group mb-1">
-        <span class="input-group-text w-25 bg-primary text-white">Issues list</span>
+        <span class="input-group-text w-25 bg-primary text-white"
+          >Issues list</span
+        >
         <input
           [(ngModel)]="this.delta.issues"
-          placeholder="example : ISSUE-1001, ISSUE-1002, ISSUE-1003... (this should be a multiselect, get issues from db)"
           type="text"
           class="form-control"
         />
       </div>
       <div class="input-group mb-1">
-        <span class="input-group-text w-25 bg-primary text-white">Modules list</span>
+        <span class="input-group-text w-25 bg-primary text-white"
+          >Modules list</span
+        >
         <input
           [(ngModel)]="this.delta.modules"
-          placeholder="example : presentation, mapping ... (this should be a multiselect, get modules from db)"
           type="text"
           class="form-control"
         />
       </div>
       <div class="input-group mb-1">
-        <span class="input-group-text w-25 bg-primary text-white">Tables list</span>
+        <span class="input-group-text w-25 bg-primary text-white"
+          >Tables list</span
+        >
         <input
           [(ngModel)]="this.delta.tables"
-          placeholder="example : ent_screen, ing_mapping... (this should be a multiselect, get tables from config)"
           type="text"
           class="form-control"
         />
       </div>
       <div class="input-group mb-1">
-        <span class="input-group-text w-25 bg-primary text-white">configurator</span>
+        <span class="input-group-text w-25 bg-primary text-white"
+          >configurator</span
+        >
         <input
           [(ngModel)]="this.delta.user"
-          placeholder="username of the configurator"
           type="text"
           class="form-control"
         />
       </div>
     </div>
-    <div *ngIf="advanced">
+    <div>
       <svg xmlns="http://www.w3.org/2000/svg" style="display: none">
         <symbol id="info-fill" fill="currentColor" viewBox="0 0 16 16">
           <path
@@ -113,10 +94,26 @@
         >
           <use xlink:href="#info-fill" />
         </svg>
-        <div style="font-size: 13px">
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Recusandae nesciunt ducimus quas illo qui provident suscipit veritatis commodi perferendis cumque tempore, dolore enim ex consectetur earum doloremque natus quam similique?
+        <div style="font-size: 14px">
+          <p>
+            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Recusandae
+            nesciunt ducimus quas illo qui provident suscipit veritatis commodi
+            perferendis cumque tempore, dolore enim ex consectetur earum
+            doloremque natus quam similique?
+          </p>
+          <p>
+            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Recusandae
+            nesciunt ducimus quas illo qui provident suscipit veritatis commodi
+            perferendis cumque tempore, dolore enim ex consectetur earum
+            doloremque natus quam similique?
+          </p>
         </div>
-        <button type="button" class="ms-auto btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        <button
+          type="button"
+          class="ms-auto btn-close"
+          data-bs-dismiss="alert"
+          aria-label="Close"
+        ></button>
       </div>
     </div>
   </div>

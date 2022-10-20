@@ -1,11 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Configuration, Delta } from 'src/app/models/models';
-import {  table_changes } from '../changes/fakedata';
+import { table_changes } from '../changes/fakedata';
 import { NotifierService } from 'angular-notifier';
 import { Router } from '@angular/router';
 import { initial_state_mock } from '../changes/initial_state_mock';
-
-
 
 @Component({
   selector: 'app-compare',
@@ -47,6 +45,8 @@ export class CompareComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    window.addEventListener('scroll', this.scrollEvent, true);
+
     // this.table_changes = this.delta.changes; // TO DO CHANGES BACK
     this.table_changes = table_changes; // TO DO CHANGES BACK
     this.table_changes.forEach((tc) => {
@@ -121,7 +121,7 @@ export class CompareComponent implements OnInit {
     //   'configuration_management_commits',
     //   JSON.stringify(commits)
     // );
-    this.notifierService.notify('info', 'Pushing to the cloud!', 'COMMIT');
+    this.notifierService.notify('info', 'Pushing to GIT!', 'COMMIT');
     this.pushing = true;
     var cm_commits_str = window.localStorage.getItem('cm_commits');
     var cm_commits = [];
@@ -147,7 +147,7 @@ export class CompareComponent implements OnInit {
       this.notifierService.hide('COMMIT');
       this.notifierService.notify(
         'success',
-        'Your commit was pushed successfully!'
+        'Merge request created successfully!'
       );
       this.pushing = false;
       this.pushed = true;
@@ -161,4 +161,17 @@ export class CompareComponent implements OnInit {
   step_back() {
     this.step_back_event.emit(null);
   }
+
+  scrollEvent = (event: any): void => {
+    const n = event.srcElement?.scrollingElement?.scrollTop;
+    if (n > 0) {
+      document.getElementById('right_nav').style.top = '17px';
+      document.getElementById('right_nav_tables').style.height = '72vh';
+      // document.getElementById('tables_list').style.height = '550px';
+    } else {
+      // document.getElementById('tables_list').style.height = '400px';
+      document.getElementById('right_nav_tables').style.height = '58vh';
+      document.getElementById('right_nav').style.top = '100px';
+    }
+  };
 }

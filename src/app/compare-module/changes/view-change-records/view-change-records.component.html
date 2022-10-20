@@ -7,8 +7,8 @@
         <th scope="col">Identifier</th>
         <th scope="col">Date</th>
         <th scope="col">User</th>
-        <th scope="col">Modules</th>
-        <th scope="col">Issues</th>
+        <th scope="col">Module</th>
+        <th scope="col">Tag</th>
       </tr>
     </thead>
     <tbody *ngFor="let record of records">
@@ -65,11 +65,21 @@
           </div>
         </td>
         <td>{{ record.operation }}</td>
-        <td class="text-truncate" style="max-width: 210px;">{{ record.identifier }}</td>
+        <td
+          [title]="record.identifier"
+          class="text-truncate"
+          style="max-width: 210px"
+        >
+          {{ record.identifier }}
+        </td>
         <td>{{ record.date | date: "short" }}</td>
-        <td>{{ record.user }}</td>
-        <td>{{ record.modules }}</td>
-        <td>{{ record.issues }}</td>
+        <td [title]="record.user">{{ record.user }}</td>
+        <td [title]="record.modules">{{ record.modules }}</td>
+        <td [title]="record.issues">
+          <a href="https://jira.vermeg.com/browse/{{ record.issues }}">{{
+            record.issues
+          }}</a>
+        </td>
       </tr>
       <tr *ngIf="record.expanded">
         <td colspan="7 m-0 p-0">

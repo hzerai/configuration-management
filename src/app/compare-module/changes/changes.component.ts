@@ -1,4 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  HostListener,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { Cursor } from 'src/app/Cursor';
 import { Configuration, Delta } from 'src/app/models/models';
 
@@ -25,7 +32,7 @@ export class ChangesComponent implements OnInit {
   table_names: string[] = [];
   table_names_filtered: string[] = [];
   selectedTable: string;
-  commiting : boolean = false;
+  commiting: boolean = false;
 
   @Output('step')
   stepEvent = new EventEmitter<any>();
@@ -34,8 +41,27 @@ export class ChangesComponent implements OnInit {
   step_back_event = new EventEmitter<any>();
 
   constructor() {}
+  scrollEvent = (event: any): void => {
+    const n = event.srcElement?.scrollingElement?.scrollTop;
+    if (n > 0) {
+      document.getElementById('left_nav').style.top = '17px';
+      document.getElementById('left_nav').style.height = '700px';
+      document.getElementById('tables_list').style.height = '650px';
+      document.getElementById('right_nav').style.top = '17px';
+      document.getElementById('right_nav').style.height = '700px';
+      document.getElementById('filter').style.height = '650px';
+    } else {
+      document.getElementById('tables_list').style.height = '400px';
+      document.getElementById('left_nav').style.height = '500px';
+      document.getElementById('left_nav').style.top = '35%';
+      document.getElementById('filter').style.height = '400px';
+      document.getElementById('right_nav').style.height = '500px';
+      document.getElementById('right_nav').style.top = '35%';
+    }
+  };
 
   ngOnInit(): void {
+    window.addEventListener('scroll', this.scrollEvent, true);
     this.delta.changes.forEach((t) => {
       this.table_names.push(t.table_name);
       this.total_inserts += t.inserts;
@@ -152,10 +178,15 @@ export class ChangesComponent implements OnInit {
     setTimeout(() => {
       this.commiting = false;
       this.stepEvent.emit(null);
-    }, 1000);
+    }, 500);
   }
 
   step_back() {
     this.step_back_event.emit(null);
   }
+
+  // @HostListener('window:scroll', ['$event']) // for window scroll events
+  // onScroll(event) {
+  //   console.log(event);
+  // }
 }

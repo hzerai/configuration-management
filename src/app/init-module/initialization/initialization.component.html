@@ -12,7 +12,8 @@
         width="80px"
         height="70px"
       />
-      <img class="mt-1"
+      <img
+        class="mt-1"
         *ngIf="finished"
         src="assets\img\done.png"
         width="120px"
@@ -40,6 +41,16 @@
     </button>
     <!-- Button trigger modal -->
     <button
+      *ngIf="this.current_configuration.name"
+      type="button"
+      (click)="save()"
+      role="button"
+      class="mx-2 btn btn-success"
+    >
+      Save and quit
+    </button>
+    <button
+      *ngIf="!this.current_configuration.name"
       type="button"
       data-bs-toggle="modal"
       data-bs-target="#save"

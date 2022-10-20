@@ -53,7 +53,9 @@
     </div>
     <div style="width: 13px; height: 13px" class="border mt-1 bg-warning"></div>
     <div class="w-100 d-flex justify-content-between fw-bold ms-1">
-      <div class="text-truncate" style="max-width: 800px">{{ identifier }}</div>
+      <div [title]="identifier" class="text-truncate" style="max-width: 700px">
+        {{ identifier }}
+      </div>
       <div>
         <span
           style="width: 150px"
@@ -100,6 +102,7 @@
             *ngIf="(dirtyKeys.includes(key) && expand == 'B') || expand == 'C'"
           >
             <div
+              [title]="key"
               class="hide-scroll-bar"
               style="max-width: 200px; overflow: scroll"
             >
@@ -111,8 +114,9 @@
             class="{{ dirtyKeys.includes(key) ? 'active' : 'text-secondary' }}"
           >
             <div
+              [title]="old[key]"
               class="hide-scroll-bar"
-              style="max-width: 300px; overflow: scroll"
+              style="max-width: 280px; overflow: scroll"
             >
               {{ old[key] }}
             </div>
@@ -122,8 +126,9 @@
             class="{{ dirtyKeys.includes(key) ? 'active' : 'text-secondary' }}"
           >
             <div
+              [title]="new[key]"
               class="hide-scroll-bar"
-              style="max-width: 300px; overflow: scroll"
+              style="max-width: 280px; overflow: scroll"
             >
               {{ new[key] }}
             </div>

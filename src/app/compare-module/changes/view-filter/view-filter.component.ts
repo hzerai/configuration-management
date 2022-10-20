@@ -38,14 +38,14 @@ export class ViewFilterComponent implements OnInit {
       });
     });
 
-    function onlyUnique(value, index, self) {
+    function onlyUnique(value: string, index, self) {
       return self.indexOf(value) === index;
     }
 
-    this.tables = this.tables.filter(onlyUnique);
-    this.issues = this.issues.filter(onlyUnique);
-    this.modules = this.modules.filter(onlyUnique);
-    this.users = this.users.filter(onlyUnique);
+    this.tables = this.tables.filter(onlyUnique).filter(o => o && o.trim() != '').map(o => o.toLowerCase()).sort();
+    this.issues = this.issues.filter(onlyUnique).filter(o => o && o.trim() != '').sort();
+    this.modules = this.modules.filter(onlyUnique).filter(o => o && o.trim() != '').map(o => o.toLowerCase()).sort();
+    this.users = this.users.filter(onlyUnique).filter(o => o && o.trim() != '').map(o => o.toLowerCase()).sort();
     // this.users.push(...this.users)
     // this.users.push(...this.users)
     // this.users.push(...this.users)

@@ -13,6 +13,9 @@ export class SummaryComponent implements OnInit {
   @Output('step_back')
   step_back_event = new EventEmitter<any>();
 
+  @Output('save')
+  save_event = new EventEmitter<any>();
+
   @Input('current_configuration')
   current_configuration: Configuration;
 
@@ -26,5 +29,9 @@ export class SummaryComponent implements OnInit {
 
   start() {
     this.starter.emit(null);
+  }
+
+  save() {
+    this.save_event.emit();
   }
 }

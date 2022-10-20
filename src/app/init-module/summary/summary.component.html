@@ -1,4 +1,4 @@
-<div class="w-75 mx-auto mt-5">
+<div class="mx-auto mt-5" style="width: 60vw">
   <div style="height: 400px; font-size: 13px">
     <div
       class="shadow rounded border px-5 pt-3 mt-3"
@@ -117,8 +117,8 @@
       >
         Back
       </button>
-
       <button
+        *ngIf="!this.current_configuration.name"
         type="button"
         class="btn btn-success"
         data-bs-toggle="modal"
@@ -128,13 +128,27 @@
         Save
       </button>
       <button
+        *ngIf="this.current_configuration.name"
+        type="button"
+        class="btn btn-success"
+        class="btn btn-success mx-1 px-5 fw-bold"
+        (click)="save()"
+      >
+        Save
+      </button>
+      <button
         role="button"
         (click)="start()"
         *ngIf="!this.current_configuration.initialized"
         class="btn btn-primary mx-1 ps-5 fw-bold"
       >
-        Start
-        <img class="text-white mx-3 " role="button" src="assets\img\launch.webp" height="25px" />
+        Finish
+        <img
+          class="text-white mx-3"
+          role="button"
+          src="assets\img\launch.webp"
+          height="25px"
+        />
       </button>
     </div>
   </div>

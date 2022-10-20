@@ -1,32 +1,47 @@
-<div class="rounded border shadow" style="height: 100%;">
+<div class="rounded border shadow" style="height: 100%">
   <div
     class="d-flex flex-column px-3 py-2 mb-auto"
-    style="font-size: 12px; height: 92%; overflow: auto;"
+    style="font-size: 12px; height: 92%; overflow: auto"
   >
     <div>
-      <p class="mb-0" style="font-size: 14px; font-weight: bold">Issues</p>
+      <p class="mb-0" style="font-size: 14px; font-weight: bold">Tags</p>
       <div *ngFor="let issue of issues">
         <input
+          *ngIf="issue && issue.trim() !== ''"
           type="checkbox"
           value=""
           id="{{ issue }}"
           (change)="filter({ key: 'issue', value: issue })"
         />
-        <label class="ms-1 text-truncate" style="max-width: 150px;" for="{{ issue }}">
+        <label
+          [title]="issue"
+          *ngIf="issue && issue.trim() !== ''"
+          class="ms-1 text-truncate"
+          style="max-width: 150px"
+          for="{{ issue }}"
+        >
           {{ issue }}
         </label>
       </div>
     </div>
     <div class="mt-2">
       <p class="mb-0" style="font-size: 14px; font-weight: bold">Modules</p>
-      <div *ngFor="let module of modules" >
+      <div *ngFor="let module of modules">
         <input
+          [title]="module"
+          *ngIf="module && module.trim() !== ''"
           type="checkbox"
           value=""
           id="{{ module }}"
           (change)="filter({ key: 'module', value: module })"
         />
-        <label class="ms-1 text-truncate" style="max-width: 150px;"  for="{{ module }}">
+        <label
+          [title]="module"
+          *ngIf="module && module.trim() !== ''"
+          class="ms-1 text-truncate"
+          style="max-width: 150px"
+          for="{{ module }}"
+        >
           {{ module }}
         </label>
       </div>
@@ -40,7 +55,11 @@
           id="{{ table }}"
           (change)="filter({ key: 'table', value: table })"
         />
-        <label class="ms-1 text-truncate" style="max-width: 150px;" for="{{ table }}">
+        <label
+          class="ms-1 text-truncate"
+          style="max-width: 150px"
+          for="{{ table }}"
+        >
           {{ table }}
         </label>
       </div>
@@ -49,19 +68,28 @@
       <p class="mb-0" style="font-size: 14px; font-weight: bold">Users</p>
       <div *ngFor="let user of users">
         <input
+          *ngIf="user && user.trim() !== ''"
           type="checkbox"
           value=""
           id="{{ user }}"
           (change)="filter({ key: 'user', value: user })"
         />
-        <label class="ms-1 text-truncate" style="max-width: 150px;" for="{{ user }}">
+        <label
+          *ngIf="user && user.trim() !== ''"
+          class="ms-1 text-truncate"
+          style="max-width: 150px"
+          for="{{ user }}"
+        >
           {{ user }}
         </label>
       </div>
     </div>
   </div>
-  <div class="text-center " style="font-size: 10px; width: 100%;">
-    <button (click)="resetFilter()" class="w-75 btn btn-outline-secondary py-0 fw-bold">
+  <div class="text-center" style="font-size: 10px; width: 100%">
+    <button
+      (click)="resetFilter()"
+      class="w-75 btn btn-outline-secondary py-0 fw-bold"
+    >
       Reset
     </button>
   </div>

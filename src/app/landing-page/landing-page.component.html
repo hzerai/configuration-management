@@ -1,112 +1,99 @@
-<div class="my-5 row container container-fluid mx-auto">
-  <!-- <div class="col-1"></div> -->
-  <div class="col-4 ">
-    <div role="button" [routerLink]="['init']" class="pb-3 shadow border bg-body rounded">
-      <div
-        class="zoom d-flex justify-content-center align-items-center"
-        style="height: 250px"
-      >
-        <img
-          src="assets\img\new-config.png"
-          class="zoom"
-          alt="Triggers"
-          height="200"
-        />
+<div class="my-5 container container-fluid">
+  <div class="d-flex flex-column justify-content-between" style="height: 80vh">
+    <div class="row">
+      <div class="col-4">
+        <div
+          role="button"
+          [routerLink]="['init']"
+          class="pb-3 shadow border bg-body rounded"
+        >
+          <div
+            class="zoom d-flex justify-content-center align-items-center"
+            style="height: 250px"
+          >
+            <img
+              src="assets\img\new-config.png"
+              class="zoom"
+              alt="Triggers"
+              height="200"
+            />
+          </div>
+          <div class="card-body w-100 d-flex justify-content-center">
+            <p class="card-text fs-5 fw-bolder">Configuration setup</p>
+          </div>
+        </div>
       </div>
-      <div class="card-body w-100 d-flex justify-content-center">
-        <p class="card-text fs-5 fw-bolder">New configuration</p>
+
+      <div class="col-4">
+        <div
+          role="button"
+          [routerLink]="['compare']"
+          class="pb-3 shadow border bg-body rounded"
+        >
+          <div
+            class="zoom d-flex justify-content-center align-items-center"
+            style="height: 250px"
+          >
+            <img
+              src="assets\img\compare.png"
+              class="zoom"
+              alt="Compare environments"
+              height="220"
+            />
+          </div>
+          <div class="card-body w-100 d-flex justify-content-center">
+            <p class="card-text fs-5 fw-bolder">Compare</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-4">
+        <div [routerLink]="'merge'" class="pb-3 shadow border bg-body rounded">
+          <div
+            class="zoom d-flex justify-content-center align-items-center"
+            style="height: 250px"
+          >
+            <img
+              src="assets\img\merge.jpg"
+              class="zoom"
+              alt="Merge"
+              height="200"
+            />
+          </div>
+          <div class="card-body w-100 d-flex justify-content-center">
+            <p class="card-text fs-5 fw-bolder">Merge</p>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-
-  <!-- <div class="col-3 px-2 pb-3 shadow border bg-body rounded m-2">
-    <a href="head" style="text-decoration: none">
-      <div class="zoom d-flex justify-content-center align-items-center">
-        <img
-          src="assets\img\master.png"
-          class="zoom"
-          alt="Head"href="
-          height="250"
-        />
-      </div>
-      <div class="card-body w-100 d-flex justify-content-center">
-        <p class="card-text text-dark fs-5 fw-bolder">Head</p>
-      </div></a
-    >
-  </div> -->
-
-  <!-- <div class="col-3 px-2 pb-3 shadow border bg-body rounded m-2">
-    <a href="delta" style="text-decoration: none">
-      <div class="zoom d-flex justify-content-center align-items-center">
-        <img
-          src="assets\img\delta.png"
-          class="zoom"
-          alt="Create a new Delta"
-          height="250"
-        />
-      </div>
-      <div class="card-body w-100 d-flex justify-content-center">
-        <p class="card-text text-dark fs-5 fw-bolder">Diff</p>
-      </div>
-    </a>
-  </div> -->
-  <!-- <div class="col-1"></div>
-  <div class="col-1"></div> -->
-  <div class="col-4 ">
     <div
+      class="mx-auto d-flex align-items-center text-primary"
+      style="position: relative"
+      (click)="gotodoc()"
       role="button"
-      [routerLink]="['compare']"
-      class="pb-3 shadow border bg-body  rounded "
     >
-      <div
-        class="zoom d-flex justify-content-center align-items-center"
-        style="height: 250px"
+      <span class="fw-bold me-2">Documentation</span>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="16"
+        height="16"
+        fill="currentColor"
+        class="bi bi-chevron-double-down"
+        viewBox="0 0 16 16"
       >
-        <img
-          src="assets\img\compare.png"
-          class="zoom"
-          alt="Compare environments"
-          height="220"
+        <path
+          fill-rule="evenodd"
+          d="M1.646 6.646a.5.5 0 0 1 .708 0L8 12.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"
         />
-      </div>
-      <div class="card-body w-100 d-flex justify-content-center">
-        <p class="card-text  fs-5 fw-bolder">Compare</p>
-      </div>
+        <path
+          fill-rule="evenodd"
+          d="M1.646 2.646a.5.5 0 0 1 .708 0L8 8.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"
+        />
+      </svg>
     </div>
   </div>
 
-  <div class="col-4 ">
-    <div [routerLink]="'merge'" class="pb-3 shadow border bg-body  rounded ">
-      <div
-        class="zoom d-flex justify-content-center align-items-center"
-        style="height: 250px"
-      >
-        <img
-          src="assets\img\merge.jpg"
-          class="zoom"
-          alt="Merge"
-          height="200"
-        />
-      </div>
-      <div class="card-body w-100 d-flex justify-content-center">
-        <p class="card-text  fs-5 fw-bolder">Merge</p>
-      </div>
-    </div>
+  <div id="doc" class="col-12" style="margin-top: 8rem">
+    <img src="assets/img/doc.PNG" width="100%" />
   </div>
-
-  <!-- <div class="col-3 px-2 pb-3 shadow border bg-body rounded m-2">
-    <a href="" style="text-decoration: none">
-      <div class="zoom d-flex justify-content-center align-items-center">
-        <img
-          src="assets\img\push.svg"
-          class="zoom"
-          alt="commit"
-          height="250"
-        />
-      </div>
-      <div class="card-body w-100 d-flex justify-content-center">
-        <p class="card-text text-dark fs-5 fw-bolder">Push</p>
-      </div>
-    </a>
-  </div> -->
 </div>

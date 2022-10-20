@@ -83,7 +83,17 @@ export class GitComponent implements OnInit {
   }
 
   refreshBranches() {
-    this.branches = ['Select a branch', 'dev', '13.2.0-RC', '13.2.0.0'];
+    this.branches = [
+      'Select a branch',
+      'dev',
+      '23.1.0-RC1',
+      '23.1.0-RC1_SPRINT-1',
+      '23.1.0-RC1_SPRINT-2',
+      '22.1.0-RC-SNAPSHOT',
+      '21.7.0-RC-SNAPSHOT',
+      '21.1.0-RC-SNAPSHOT',
+      '20.7.0-RC-SNAPSHOT',
+    ];
   }
 
   refreshAttributes() {
@@ -99,7 +109,7 @@ export class GitComponent implements OnInit {
     this.current_configuration.git.triggers.name =
       this.current_configuration.git.folder.name + '/triggers';
     this.current_configuration.git.tables.name =
-      this.current_configuration.git.folder.name + '/tables.txt';
+      this.current_configuration.git.folder.name + '/tables.json';
     this.current_configuration.git.delivery.name =
       this.current_configuration.git.folder.name + '/delivery_scripts';
   }

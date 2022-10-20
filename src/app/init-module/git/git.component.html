@@ -1,4 +1,4 @@
-<div class="w-75 mx-auto mt-5">
+<div class="w-50 mx-auto mt-5">
   <div style="height: 400px">
     <div
       class="rounded px-2 py-2 mt-3"
@@ -93,7 +93,7 @@
           <span
             class="input-group-text bg-primary text-white"
             style="width: 35%"
-            >Configuration's tables file</span
+            >Tables file</span
           >
           <input
             [disabled]="true"
@@ -135,6 +135,11 @@
             >Delivery folder</span
           >
           <input
+            [value]="
+              this.current_configuration.git.delivery.name +
+              '/' +
+              this.current_configuration.git.branch
+            "
             [disabled]="true"
             [(ngModel)]="this.current_configuration.git.delivery.name"
             type="text"

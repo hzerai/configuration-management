@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { NotifierService } from 'angular-notifier';
 import { Configuration } from 'src/app/models/models';
 import { InitializationComponent } from '../initialization/initialization.component';
 
@@ -15,11 +16,14 @@ export class InitWizardComponent implements OnInit {
 
   starting: boolean = false;
   started: boolean = false;
-  saved : boolean = false;
+  saved: boolean = false;
   @ViewChild(InitializationComponent)
   private initialization = {} as InitializationComponent;
 
-  constructor(private activatedRouter: ActivatedRoute) {}
+  constructor(
+    private activatedRouter: ActivatedRoute,
+    private notifierService: NotifierService
+  ) {}
 
   ngOnInit(): void {
     const edit = this.activatedRouter.snapshot.queryParams['edit'];
@@ -79,6 +83,7 @@ export class InitWizardComponent implements OnInit {
         all_tables: null,
 
         baseline: {
+          source: null,
           generate: null,
           generated: null,
           downloaded: null,
@@ -160,6 +165,8 @@ export class InitWizardComponent implements OnInit {
       JSON.stringify(db)
     );
     this.saved = true;
+    this.notifierService.notify('success', 'Saved successfully!');
+    // document.getElementById('save')
   }
 
   start() {

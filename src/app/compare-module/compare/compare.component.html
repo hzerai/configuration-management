@@ -23,12 +23,14 @@
       </div>
     </div>
     <div
+      id="right_nav"
       class="col-2 d-flex flex-column align-items-center position-fixed"
-      style="height: 700px; right: 50px; top: 100px"
+      style="right: 50px; top: 100px"
     >
       <div
+        id="right_nav_tables"
+        style="height: 58vh; overflow: auto; width: 100%"
         class="border shadow rounded"
-        style="height: 400px; overflow: auto; width: 100%"
       >
         <div
           class="input-group rounded position-fixed"
@@ -66,6 +68,7 @@
             class="hoverable-row d-flex align-items-center font-monospace mt-1"
             *ngFor="let t of table_names_filtered"
             (click)="scroll('scroll-compare-' + t)"
+            [title]="t"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -86,37 +89,53 @@
         </div>
       </div>
 
-      <div style="height: 150px; overflow: auto; width: 100%">
-        <div class="shadow rounded border p-2 mt-3" *ngIf="!pushed">
+      <div style="overflow: auto; width: 100%">
+        <div
+          class="shadow rounded border p-2 mt-2"
+          style="height: 110px"
+          *ngIf="!pushed && !pushing"
+        >
           <label class="ms-3" for="commit-message fw-bold"
             ><small>Commit message :</small></label
           >
           <textarea
+            name="commit_message"
             [(ngModel)]="commit_message"
+            [pattern]="
+              '(feat|fix|refactor|style|test|docs|config): [A-Z]+-[0-9]{1,7} .+'
+            "
+            #cm="ngModel"
             style="font-size: 11px"
+            [ngStyle]="{ height: cm?.errors?.pattern ? '50%' : '80%' }"
             class="form-control mx-auto p-1 rounded border-secondary"
             name="commit-message"
             id="commit-message"
           ></textarea>
+          <div
+            class="bg-warning text-black p-1 mx-1 rounded mt-1"
+            style="font-size: 9px"
+            *ngIf="cm.errors?.pattern"
+          >
+            {{
+              "commit message must follow this regex [feat|fix|refactor|style|test|docs|config]: [${Jira_ID}-0000] [message]."
+            }}
+          </div>
         </div>
         <div
-          *ngIf="pushed"
-          class="p-2 d-flex flex-column shadow-lg rounded border"
+          *ngIf="pushed || pushing"
+          class="p-2 d-flex flex-column shadow-lg rounded border h-75"
           style="font-size: 12px"
         >
-          <span
-            >Changes : <b>{{ changed_tables.length }}</b></span
-          >
           <span>Message : {{ this.commit_message }}</span>
           <span>Author : {{ this.commit_author }}</span>
           <span>date : {{ this.commit_date | date: "short" }}</span>
         </div>
       </div>
-      <div class="btn-group mt-2">
+      <div class="btn-group mt-3">
         <button
           (click)="step_back()"
           style="z-index: 99"
-          class="btn btn-secondary px-5 fw-bold"
+          class="btn btn-secondary px-1"
           type="button"
         >
           Back
@@ -125,11 +144,12 @@
           [disabled]="!commit_message || pushing"
           style="z-index: 99"
           (click)="commit()"
-          class="btn btn-primary ms-1 px-3 fw-bold"
+          class="btn btn-primary ms-1 px-2 fw-bold"
           type="button"
         >
           <div class="d-flex align-items-center">
-            <div *ngIf="!pushed">Commit</div>
+            <div *ngIf="!pushed && !pushing">Create merge request</div>
+            <div *ngIf="pushing">Pushing</div>
             <div *ngIf="pushed">Close</div>
             <div
               *ngIf="pushing"

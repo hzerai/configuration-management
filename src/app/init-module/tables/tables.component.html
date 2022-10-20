@@ -1,4 +1,4 @@
-<div class="w-75 mx-auto mt-5 overflow-hidden">
+<div class="mx-auto mt-5 overflow-hidden" style="width: 60vw">
   <div style="height: 400px">
     <div
       class="rounded px-2 py-2 h-100"
@@ -72,33 +72,22 @@
         </div>
       </div>
       <div *ngIf="!all_tables && !tables_loading" class="w-100 h-100">
-        <div *ngIf="!tables_source" class="fs-5">
-          <button
-            disabled
+        <div *ngIf="tables_source == 'FILE'" class="">
+          <label
+            for="tablesFromFileInput"
             type="submit"
             class="btn btn-outline-primary w-100 fw-bold"
           >
-            Select source
-          </button>
-        </div>
-        <div *ngIf="tables_source == 'FILE'" class="">
-          <div class="mb-3">
-            <label
-              for="tablesFromFileInput"
-              type="submit"
-              class="btn btn-outline-primary w-100 fw-bold"
-            >
-              Load
-              <img src="assets\img\file.png" width="25px" class="ms-3" />
-            </label>
-            <input
-              (change)="loadFromFile($event)"
-              class="form-control form-control-sm"
-              id="tablesFromFileInput"
-              type="file"
-              style="display: none"
-            />
-          </div>
+            Load
+            <img src="assets\img\file.png" width="25px" class="ms-3" />
+          </label>
+          <input
+            (change)="loadFromFile($event)"
+            class="form-control form-control-sm"
+            id="tablesFromFileInput"
+            type="file"
+            style="display: none"
+          />
         </div>
         <div *ngIf="tables_source == 'DB'" class="">
           <button
@@ -133,10 +122,10 @@
           </button>
         </div>
         <div *ngIf="tables_source == 'API'" class="">
-          <div class="input-group input-group-sm mb-3">
+          <div class="input-group input-group-sm">
             <span
               class="input-group-text bg-primary text-light fw-bold"
-              style="width: 15%"
+              style="width: 20%"
               id="inputGroup-sizing-sm"
               >link</span
             >
@@ -148,15 +137,102 @@
               aria-describedby="inputGroup-sizing-sm"
             />
           </div>
+          <div class="input-group input-group-sm">
+            <span
+              class="input-group-text bg-primary text-light fw-bold"
+              style="width: 20%"
+              id="inputGroup-sizing-sm"
+              >user</span
+            >
+            <input
+              type="text"
+              class="form-control"
+              aria-label="Sizing example input"
+              aria-describedby="inputGroup-sizing-sm"
+            />
+          </div>
+          <div class="input-group input-group-sm">
+            <span
+              class="input-group-text bg-primary text-light fw-bold"
+              style="width: 20%"
+              id="inputGroup-sizing-sm"
+              >password</span
+            >
+            <input
+              type="password"
+              class="form-control"
+              aria-label="Sizing example input"
+              aria-describedby="inputGroup-sizing-sm"
+            />
+          </div>
           <button
             [disabled]="!apiLink"
             (click)="loadFromAPI()"
             type="submit"
-            class="btn btn-outline-primary w-100 fw-bold"
+            class="btn btn-outline-primary w-100 fw-bold mt-2"
           >
             Load
             <img src="assets\img\api.png" width="20px" class="ms-3" />
           </button>
+        </div>
+        <div class="alert alert-info mt-2" role="alert">
+          <div *ngIf="!tables_source">
+            <h5 class="alert-heading">Select source:</h5>
+
+            <p>
+              The process of export/import takes as input a JSON file listing
+              all configuration entities, their categories and identifiers (not
+              necessarly Primary Keys)
+              <br />
+              To generate the template of the file please click
+              <a class="text-underline text-primary" role="button">here</a>.
+            </p>
+            <p>
+              To generate a JSON file in case of Palmyra application please
+              follow the steps described in this
+              <a class="text-underline text-primary" role="button">link</a>.
+            </p>
+          </div>
+          <div *ngIf="tables_source == 'GIT'">
+            <h5 class="alert-heading">Git</h5>
+            <p>
+              you can choose this option if the file is available in the
+              configured Git Repository
+            </p>
+            <p class="fw-bold mx-auto">
+              {{
+                "https://git.vermeg.com/" +
+                  this.current_configuration.git.repository +
+                  this.current_configuration.git.tables?.name
+              }}
+            </p>
+          </div>
+          <div *ngIf="tables_source == 'FILE'">
+            <h5 class="alert-heading">Upload</h5>
+            <p>
+              In case you have the file in your local machine, you can upload it
+              through this option
+            </p>
+          </div>
+          <div *ngIf="tables_source == 'DB'">
+            <h5 class="alert-heading">Database</h5>
+
+            <p>
+              With this option, you can select the configuration tables one by
+              one.
+              <br />
+              The primary keys will be considered as identifiers of the
+              configuration but the feature of grouping configuration entities
+              by category will not be available
+            </p>
+          </div>
+          <div *ngIf="tables_source == 'API'">
+            <h5 class="alert-heading">Link</h5>
+            <p>
+              Palmyra based applications publish a webservice that returns that
+              JSON file.
+            </p>
+          </div>
         </div>
       </div>
       <div
@@ -191,9 +267,7 @@
                 />
               </svg>
             </div>
-            <div
-              style="max-height: 300px; overflow-y: auto"
-            >
+            <div style="max-height: 300px; overflow-y: auto">
               <table class="table table-striped table-hover">
                 <tbody>
                   <tr
@@ -206,7 +280,7 @@
                       >
                         <div>{{ table.table }}</div>
                         <svg
-                        role="button"
+                          role="button"
                           (click)="add(table)"
                           xmlns="http://www.w3.org/2000/svg"
                           width="20"
@@ -250,9 +324,7 @@
                 />
               </svg>
             </div>
-            <div
-              style="max-height: 300px; overflow-y: auto"
-            >
+            <div style="max-height: 300px; overflow-y: auto">
               <table class="table table-striped table-hover">
                 <tbody>
                   <tr
@@ -263,7 +335,8 @@
                       <div
                         class="d-flex justify-content-between align-items-center"
                       >
-                        <svg role="button"
+                        <svg
+                          role="button"
                           (click)="remove(table)"
                           xmlns="http://www.w3.org/2000/svg"
                           width="27"

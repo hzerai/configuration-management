@@ -59,6 +59,7 @@ export class CompareWizardComponent implements OnInit {
   step(step) {
     if (this.currentStep == 1) {
       this.current_configuration = step;
+      this.current_configuration.baseline.generated = true; // dont show baseline
     }
     this.currentStep++;
   }
