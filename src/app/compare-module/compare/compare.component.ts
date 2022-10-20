@@ -163,7 +163,11 @@ export class CompareComponent implements OnInit {
   }
 
   scrollEvent = (event: any): void => {
-    const n = event.srcElement?.scrollingElement?.scrollTop;
+    const se: any = !event.srcElement?.scrollingElement;
+    if (!se) {
+      return;
+    }
+    const n = se.scrollTop;
     if (n > 0) {
       document.getElementById('right_nav').style.top = '17px';
       document.getElementById('right_nav_tables').style.height = '72vh';

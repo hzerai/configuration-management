@@ -67,8 +67,11 @@ export class CompareComponent implements OnInit {
   }
 
   scrollEvent = (event: any): void => {
-    const n = event.srcElement?.scrollingElement?.scrollTop;
-    console.log(n)
+    const se: any = !event.srcElement?.scrollingElement;
+    if (!se) {
+      return;
+    }
+    const n = se.scrollTop;
     if (n > 150) {
       document.getElementById('nav_left_merge').style.top = '2%';
       document.getElementById('nav_left_merge').style.height = '97%';

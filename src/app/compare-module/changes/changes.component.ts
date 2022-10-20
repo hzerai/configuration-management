@@ -42,7 +42,11 @@ export class ChangesComponent implements OnInit {
 
   constructor() {}
   scrollEvent = (event: any): void => {
-    const n = event.srcElement?.scrollingElement?.scrollTop;
+    const se: any = !event.srcElement?.scrollingElement;
+    if (!se) {
+      return;
+    }
+    const n = se.scrollTop;
     if (n > 0) {
       document.getElementById('left_nav').style.top = '17px';
       document.getElementById('left_nav').style.height = '700px';
