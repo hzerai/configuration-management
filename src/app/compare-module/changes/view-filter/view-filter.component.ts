@@ -74,6 +74,7 @@ export class ViewFilterComponent implements OnInit {
     if (!this.filters) {
       this.filters = [];
     }
+    var changes = JSON.parse(JSON.stringify(this.delta_changes_copy));
     if (filter) {
       if (!this.filters[filter.key]) {
         this.filters[filter.key] = [];
@@ -85,10 +86,11 @@ export class ViewFilterComponent implements OnInit {
       } else {
         this.filters[filter.key].push(filter.value);
       }
-      var changes = JSON.parse(JSON.stringify(this.delta_changes_copy));
       if (this.filters['table'] && this.filters['table'].length > 0) {
         changes = changes.filter((t) =>
-          this.filters['table'].find((tf) => tf === t.table_name)
+          this.filters['table'].find(
+            (tf) => tf.toLowerCase() === t.table_name.toLowerCase()
+          )
         );
       }
       if (this.filters['issue'] && this.filters['issue'].length > 0) {
@@ -96,7 +98,11 @@ export class ViewFilterComponent implements OnInit {
           let records = t.records.filter((r) =>
             r.issues
               .split(',')
-              .find((i) => this.filters['issue'].find((fi) => fi === i))
+              .find((i) =>
+                this.filters['issue'].find(
+                  (fi) => fi.toLowerCase() === i.toLowerCase()
+                )
+              )
           );
           t.records = records;
         });
@@ -106,7 +112,11 @@ export class ViewFilterComponent implements OnInit {
           let records = t.records.filter((r) =>
             r.modules
               .split(',')
-              .find((i) => this.filters['module'].find((fi) => fi === i))
+              .find((i) =>
+                this.filters['module'].find(
+                  (fi) => fi.toLowerCase() === i.toLowerCase()
+                )
+              )
           );
           t.records = records;
         });
@@ -114,7 +124,9 @@ export class ViewFilterComponent implements OnInit {
       if (this.filters['user'] && this.filters['user'].length > 0) {
         changes.forEach((t) => {
           let records = t.records.filter((r) =>
-            this.filters['user'].find((fi) => fi === r.user)
+            this.filters['user'].find(
+              (fi) => r.user && fi.toLowerCase() === r.user.toLowerCase()
+            )
           );
           t.records = records;
         });

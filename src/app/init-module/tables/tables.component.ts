@@ -1,17 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Configuration } from 'src/app/models/models';
-
-const tables_mock = [
-  'com_employee',
-  'com_person',
-  'config_presentation',
-  'config_widgets',
-  'config_resources',
-  'sla_config',
-  'lifecycle_configs',
-  'mappings_conf',
-  'traces_config',
-];
+import { tables_mock } from './tables';
 
 @Component({
   selector: 'app-tables',

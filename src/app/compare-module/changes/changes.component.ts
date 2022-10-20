@@ -42,18 +42,17 @@ export class ChangesComponent implements OnInit {
 
   constructor() {}
   scrollEvent = (event: any): void => {
-    const se: any = !event.srcElement?.scrollingElement;
-    if (!se) {
+    if (event.srcElement.scrollingElement == null) {
       return;
     }
-    const n = se.scrollTop;
+    const n = event.srcElement.scrollingElement.scrollTop;
     if (n > 0) {
       document.getElementById('left_nav').style.top = '17px';
       document.getElementById('left_nav').style.height = '700px';
       document.getElementById('tables_list').style.height = '650px';
       document.getElementById('right_nav').style.top = '17px';
       document.getElementById('right_nav').style.height = '700px';
-      document.getElementById('filter').style.height = '650px';
+      document.getElementById('filter').style.height = '680px';
     } else {
       document.getElementById('tables_list').style.height = '400px';
       document.getElementById('left_nav').style.height = '500px';

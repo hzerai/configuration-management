@@ -280,6 +280,10 @@
                       >
                         <div>{{ table.table }}</div>
                         <svg
+                          *ngIf="
+                            this.tables_source == 'DB' ||
+                            this.tables_source == 'FILE'
+                          "
                           role="button"
                           (click)="add(table)"
                           xmlns="http://www.w3.org/2000/svg"
@@ -336,6 +340,10 @@
                         class="d-flex justify-content-between align-items-center"
                       >
                         <svg
+                          *ngIf="
+                            this.tables_source == 'DB' ||
+                            this.tables_source == 'FILE'
+                          "
                           role="button"
                           (click)="remove(table)"
                           xmlns="http://www.w3.org/2000/svg"
